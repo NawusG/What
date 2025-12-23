@@ -1,0 +1,179 @@
+_G.Auto = not _G.Auto
+repeat task.wait()
+until game:IsLoaded()
+local Replica = game:GetService("ReplicatedStorage")
+local Package = Replica.Packages
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+function Placeunit(unit, cf)
+    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
+end
+
+function UpAll()
+        for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+            if #monbyte.Name > 10 then
+                Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
+            end
+        end
+    end
+
+    function replay()
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
+    end
+
+    task.spawn(function()
+    while _G.Auto do task.wait()
+        local Wave = Workspace:GetAttribute("Wave")
+        if Players.LocalPlayer.PlayerGui.GameUI.HUD.Vote.Visible == true then
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
+            task.wait(2)
+            game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
+            task.wait(2)
+            Placeunit(3, CFrame.new(-15.845394134521484, 299.98406982421875, -233.03311157226562))
+            continue
+        end
+        if game:GetService("Players").LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Visible == true then
+            replay()
+            task.wait(2)
+            continue
+        end
+        task.wait(.3)
+        Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+        task.wait(.3)
+        Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
+        task.wait(.3)
+        if Wave > 7 then
+            Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
+        end
+        task.wait(.3)
+        UpAll()
+        task.wait(.3)
+        if Wave > 10 and Wave <= 12 then
+            Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
+        end
+    end
+end)
+
+
+local Priority = {
+    -- [ Death ] --
+    [".50 Cal"] = 2, -- เธ”เธตเธกเธฒเธ เธ–เนเธฒเธ•เธตเนเธ”เธเธ•เธฑเธงเน€เธ”เธตเธขเธง เธ•เธตเนเธฃเธ 200 %
+    ["Sure Fire"] = 3, -- เธเธฑเธ”เนเธฃเธ 100 % เธฅเธ”เธ—เธตเธฅเธฐ 20 %
+    ["Red Chamber"] = 99999999999993,
+    ["Rapid Shot"] = 24,
+    ["Hawk-Eyed"] = 25, -- เน€เธเธขเน เธฅเธ”เธงเธ เธ•เธตเนเธเธฅ
+    ["Dead-Eye"] = 26, -- เธ”เธต
+    ["Accurate"] = 27,
+    ["Fleet Footed"] = 30,
+    ["Sniper Rifle"] = 29, -- เธฅเธ” Aoe เน€เธเธดเนเธก เธฐเธฃเธขเธฐ เธ”เธฒเธฒเน€เธกเธ
+    ["Spy Glass"] = 28, -- เธ”เธต
+    ["The Harder They Fall"] = 31,
+    -- [ Magician ] --
+    ["Corruption"] = 1, -- เธ”เธต radioactive
+    ["Weakened"] = 11, -- เธกเธญเธเธ—เธตเนเธ•เธดเธ”เธชเธ–เธฒเธเธฐเธเธฐเนเธ”เธเธ”เธฒเน€เธกเธเนเธฃเธเธเธถเนเธ 20 %
+    ["Mirrored"] = 14, -- เน€เธกเธทเนเธญเน€เธญเธเน€เธเธเธซเธกเธ” เธกเธตเนเธญเธเธฒเธชเธฃเธต 10 %
+    ["Slow But Steady"] = 5, -- เธ”เธฒเน€เธกเธเน€เธญเธเน€เธเธ DoT เน€เธเธดเนเธก 100 % // เธ•เธตเธเนเธฒ 50 % 
+    ["Plague"] = 4, -- เธ”เธต เธชเธ–เธฒเธเธฐ เนเธฃเธ
+    ["Avatar"] = 10,  -- เธเนเธญเธขเน€เธเธดเนเธกเธ—เธตเธฅเธฐ 5 % เธ”เธฒเน€เธกเธเธเธฒเธ•เธธ
+    ["Bad Blood"] = 6, -- เธ”เธตเธเนเธน เน€เธเธดเนเธกเธเธงเธฒเธกเนเธฃเธ DoT 40 %
+    ["Elementalist"] = 7, -- เน€เธเธดเนเธกเธเธงเธฒเธกเนเธฃเธเธเธเธฐเธเธฒเธ•เธธ 50 % 
+    ["Stasis"] = 8, -- เธ–เนเธฒเธกเธญเธเธ•เธดเธ”เธชเนเธฅเธง เน€เธเธดเนเธกเธ”เธฒเน€เธกเธเนเธซเนเธ—เธตเธก
+    ["Toxic"] = 9, -- เน€เธเธดเนเธกเธ”เธฒเน€เธกเธ DoT 5 % 50 % 
+    -- [ Lovers ] --
+    ["Repetition"] = 99999999999991, -- เธ—เธธเธเธเธฒเธฃเธเนเธฒ 500 เธ•เธฑเธง เธฃเธตเน€เธเนเธ•เธชเธเธดเธฅเธ—เธฑเนเธเธซเธกเธ”
+    ["Chromed"] = 23, -- เธ—เธธเธเธเธฒเธฃเธญเธฑเธเน€เธเธฃเธ”เน€เธเธดเนเธกเธฃเธฐเธขเธฐ 3 %
+    ["Chippin' In"] = 15, -- เธ—เธธเธเธเธฒเธฃเธญเธฑเธเน€เธเธฃเธ”เน€เธเธดเนเธกเธ”เธฒเน€เธกเธ 5 %
+    ["Max Reps"] = 16, -- เธ—เธธเธเน€เธงเธเน€เธเธดเนเธกเธ”เธฒเน€เธกเธ 2 % ( 30 % )
+    ["Marathon"] = 17, -- เธ—เธธเธเน€เธงเธเธฅเธ”เธเธนเธฅเธ”เธฒเธงเธเน 0.5 % ( 10 % )
+    ["Binoculars"] = 18, -- เธ—เธธเธเน€เธงเธเน€เธเธดเนเธกเน€เธเธดเนเธกเธฃเธฐเธขเธฐ 1 % ( 20 % )
+    ["Teamwide Carnage"] = 99999999999992, -- เธ—เธธเธเธเธฒเธฃเธเนเธฒเธเธญเธเธขเธนเธเธดเธ•เธเธฐเน€เธเธดเนเธกเธ”เธฒเน€เธกเธ 0.1 % ( 30 % )
+    ["Battery Charged"] = 19, -- เธเธฑเธเนเธฃเธเธเธถเนเธ 20 % 
+    ["Hyper Speed"] = 20, -- เธขเธนเธเธดเธ•เธเธฐเธ•เธตเนเธงเธเธถเนเธเน€เธกเธทเนเธญเธกเธตเธขเธนเธเธดเธ•เธ•เธฑเธงเธญเธทเนเธเธญเธขเนเธนเนเธเธงเธเนเธเธกเธ•เธต 1% ( 10 %)
+    ["Shared Vision"] = 22, -- เธขเธนเธเธดเธ•เธเธฐเธ•เธตเนเธเธฅเธเธถเนเธเน€เธกเธทเนเธญเธกเธตเธขเธนเธเธดเธ•เธ•เธฑเธงเธญเธทเนเธเธญเธขเนเธนเนเธเธงเธเนเธเธกเธ•เธต 2 % ( 20 % )
+    ["Teamwork"] = 21, -- เธขเธนเธเธดเธ•เธเธฐเธ•เธตเนเธฃเธเธเธถเนเธเน€เธกเธทเนเธญเธกเธตเธขเธนเธเธดเธ•เธ•เธฑเธงเธญเธทเนเธเธญเธขเนเธนเนเธเธงเธเนเธเธกเธ•เธต 3 % ( 30 % )
+    -- [ Emperor ] --
+    ["Falied Targeting"] = 999,
+    ["Planet Buster"] = 998,
+    ["Fireworks"] = 1, -- เธ”เธตเธชเธธเธ”
+    ["Null Factor"] = 997, -- เธฅเธ”เธ”เธฒเน€เธกเธ เน€เธเธดเนเธก AOE
+    ["Ramping Area"] = 996,
+    ["Slow Reactions"] = 995,
+    ["Widespread"] = 994, -- เธฅเธ”เธ”เธฒเน€เธกเธเธ•เนเธญเน€เธงเธ 60 % / 30 %
+    ["Global Range"] = 1000,
+    ["Intercontinental"] = 993,
+    ["Rapid Response"] = 2,
+    ["Solo Bomber"] = 9999,
+    ["The Bigger They Are"] = 1001, --เน€เธเธดเนเธกเธงเธ 15 % เธ”เธฅเธ”เธฒเน€เธกเธ 10
+    -- [ Fortune ] --
+    ["Second Account"] = 10000, -- เธญเธฐเนเธฃ
+    ["Uncapped Wealth"] = 10001, -- เน€เธเธดเนเธกเธงเธฒเธเธ•เธฑเธงเธกเธญเธ
+    ["Share The Wealth"] = 10002, -- เธ—เธธเธเนเธชเธเน€เธขเธ
+    ["Trust Fund"] = 10003, -- เนเธเนเธเน€เธเธดเธ 20 %
+    ["Prosperous"] = 10004, --
+    ["Investment"] = 10005,
+    ["Growth Fund"] = 32, -- เธ—เธธเธเน€เธงเธ เน€เธเธดเนเธกเธเธฒเธฃเธเธฅเธดเธ•เน€เธเธดเธ 3 % ( 30 % )
+    ["Farmer"] = 33, -- เน€เธเธดเนเธกเน€เธเธดเธ 20 %
+    ["Increased Funding"] = 34, -- เน€เธเธดเนเธกเธ”เธฒเน€เธกเธ 100 % // เธญเธฑเธเนเธเธ 2 เน€เธ—เนเธฒ
+    ["Lambo"] = 9999999, -- เธ•เธตเนเธง 50 % // เธญเธฑเธเนเธเธ 2 เน€เธ—เนเธฒ
+    ["Opportunist"] = 10006,
+    ["Telescope"] = 9999999999999 -- เธ•เธตเนเธเธฅ 75// เธญเธฑเธเนเธเธ 2 เน€เธ—เนเธฒ
+}
+
+
+-- ["[Death]"] = 1,
+-- ["[Magician]"] = 2,
+-- ["[Lovers]"] = 3,
+-- ["[Emperor]"] = 4,
+-- ["[Fortune]"] = 5
+task.spawn(function()
+    while _G.Auto do task.wait(1)
+        local CardFound = {}
+        if game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then
+            print("Enter here")
+            for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                if v.Name == "Card" then
+                    local CardNum = v.LayoutOrder
+                    local Top = v:FindFirstChild("TopTitle")
+                    local Rare = v:FindFirstChild("Rarity")
+                    local Title = v:FindFirstChild("Title")
+                    local Des = v:FindFirstChild('Text')
+                    if Top then
+                        local v_text = Top:FindFirstChild("Text")
+                        if v_text then
+                            local Class = v_text.Text
+                            local Name = Title.Text
+                            table.insert(CardFound, {
+                                CardNum = v.LayoutOrder,
+                                Class = Class,
+                                Title = Name,
+                                Rare = Rare.Text,
+                                Des = Des.Text,
+                                Priorities = Priority[Name]
+                            })
+                        end
+                    end
+                end
+            end
+        else
+            print("Exit here")
+        end
+        
+        if #CardFound > 0 then
+            for leg,kaw in pairs(CardFound) do
+                print(leg, "Name:", kaw.Title)
+            end
+        end
+        if #CardFound > 0 then
+            print("Card more than 0")
+            table.sort(CardFound, function(a, b)
+                return a.Priorities < b.Priorities
+            end)
+            local select = CardFound[1]
+            if select then 
+                print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
+                game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
+            end
+        end
+    end
+end)
