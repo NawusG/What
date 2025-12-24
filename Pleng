@@ -4,7 +4,8 @@ local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
-
+--check--
+local Finish = Workspace:GetAttribute("MatchFinished")
 ---webhook---
 local HttpService = game:GetService("HttpService")
 local Webhook_Url = "https://discord.com/api/webhooks/1453500771697037454/Y6Ry4z_j1gw7XTLpKyK5lBpwDim1p5tCDGDQBnyRRqd3Qie4nmX2F0adiMYsjwCG0QPN"
@@ -69,41 +70,41 @@ local Damage = DamageNum()
 --     end)
 -- end
 function Webhook()
-local response = Request(
-{
-    Url = Webhook_Url,
-    Method = "POST",
-    Headers = {
-        ["Content-Type"] = "application/json"
-    },
-    Body = HttpService:JSONEncode({
-        ["content"] = "",
-        ["embeds"] = {{
-            ["title"] = "End Round ! ",
-            ["description"] = game.Players.LocalPlayer.DisplayName.." has finished the round.",
-            ["type"] = "rich",
-            ["color"] = tonumber("A6DC41", 16),
-            ["fields"] = {
-                {
-                    ["name"] = "Player Info",
-                    ["value"] = "Player : "..tostring(LocalName).." | Level : "..tostring(Level),
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Info",
-                    ["value"] = "Total Virtual Tokens : "..tostring(VirtualTokens).."\nTotal Gems : "..tostring(Gems),
-                    ["inline"] = false
-                },     
-                {
-                    ["name"] = "Round Info",
-                    ["value"] = "Round Time : "..Time.."\nTotal Damage : "..Damage ,
-                    ["inline"] = false
-                } 
-            }
-        }}
-    })
-}
-)
+    local response = Request(
+    {
+        Url = Webhook_Url,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode({
+            ["content"] = "",
+            ["embeds"] = {{
+                ["title"] = "End Round ! ",
+                ["description"] = game.Players.LocalPlayer.DisplayName.." has finished the round.",
+                ["type"] = "rich",
+                ["color"] = tonumber("A6DC41", 16),
+                ["fields"] = {
+                    {
+                        ["name"] = "Player Info",
+                        ["value"] = "Player : "..tostring(LocalName).." | Level : "..tostring(Level),
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Info",
+                        ["value"] = "Total Virtual Tokens : "..tostring(VirtualTokens).."\nTotal Gems : "..tostring(Gems),
+                        ["inline"] = false
+                    },     
+                    {
+                        ["name"] = "Round Info",
+                        ["value"] = "Round Time : "..Time.."\nTotal Damage : "..Damage ,
+                        ["inline"] = false
+                    } 
+                }
+            }}
+        })
+    }
+    )
 end
 
 function Placeunit(unit, cf)
@@ -121,19 +122,22 @@ function UpAll()
     function replay()
         Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
     end
+    
 
     task.spawn(function()
     while _G.Auto do task.wait()
         local Wave = Workspace:GetAttribute("Wave")
         if Players.LocalPlayer.PlayerGui.GameUI.HUD.Vote.Visible == true then
-            task.wait()
-            Webhook()
+            task.wait(.3)
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
             task.wait(2)
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
             task.wait(2)
             Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
             continue
+        end
+        if Finish then
+            task.wait()
         end
         if Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Visible == true then
             replay()
@@ -162,7 +166,10 @@ function UpAll()
             task.wait(.3)
             Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
         end
-
+        if Wave == 1 then
+            task.wait(30)
+            Webhook()
+        end
     end
 end)
 
