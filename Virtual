@@ -30,7 +30,7 @@ function UpAll()
             task.wait(2)
             game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
             task.wait(2)
-            Placeunit(3, CFrame.new(-15.845394134521484, 299.98406982421875, -233.03311157226562))
+            Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
             continue
         end
         if game:GetService("Players").LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Visible == true then
