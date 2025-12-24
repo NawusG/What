@@ -102,7 +102,7 @@ local Priority = {
     ["Widespread"] = 994, -- ลดดาเมจต่อเวฟ 60 % / 30 %
     ["Global Range"] = 1000,
     ["Intercontinental"] = 993,
-    ["Rapid Response"] = 2,
+    ["Rapid Response"] = 999999999999999999999999,
     ["Solo Bomber"] = 9999,
     ["The Bigger They Are"] = 1001, --เพิ่มวง 15 % ดลดาเมจ 10
     -- [ Fortune ] --
