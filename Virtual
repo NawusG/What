@@ -95,7 +95,7 @@ local Priority = {
     -- [ Emperor ] --
     ["Failed Targeting"] = 999,
     ["Planet Buster"] = 998,
-    ["Fireworks"] = 1, -- ดีสุด
+    ["Fireworks"] = 35, -- ดีสุด
     ["Null Factor"] = 997, -- ลดดาเมจ เพิ่ม AOE
     ["Ramping Area"] = 996,
     ["Slow Reactions"] = 995,
