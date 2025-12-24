@@ -5,6 +5,8 @@ local Request = (syn and syn.request) or request or (http and http.request)
 
 local LocalName = game.Players.LocalPlayer.Name
 local Level = workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text
+local VirtualTokens = game.Players.LocalPlayer:GetAttribute("VirtualTokens")
+local Gems = game.Players.LocalPlayer:GetAttribute("Gems")
 
 local response = Request(
 {
@@ -23,12 +25,12 @@ local response = Request(
             ["fields"] = {
                 {
                     ["name"] = "Player",
-                    ["value"] = "Player : "..tostring(game:GetService("Players").LocalPlayer).." | Level : "..tostring(Level),
+                    ["value"] = "Player : "..tostring(LocalName).." | Level : "..tostring(Level),
                     ["inline"] = false
                 },
                 {
                     ["name"] = "Info",
-                    ["value"] = "Total Virtual Tokens : "..tostring(game.Players.LocalPlayer:GetAttribute("VirtualTokens")).."\nTotal Gems : "..tostring(game.Players.LocalPlayer:GetAttribute("Gems")),
+                    ["value"] = "Total Virtual Tokens : "..tostring(VirtualTokens).."\nTotal Gems : "..tostring(Gems),
                     ["inline"] = false
                 } 
             }
