@@ -9,6 +9,7 @@ local VirtualTokens = game.Players.LocalPlayer:GetAttribute("VirtualTokens")
 local Gems = game.Players.LocalPlayer:GetAttribute("Gems")
 
 local Play = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()
+
 function PlayTime()
     for i,v in pairs(Play) do
         if v.Name == "Stat" then
@@ -23,6 +24,26 @@ function PlayTime()
     end
 end
 local Time = PlayTime()
+
+function DamageNum()
+    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+        if v.Name == "Stat" then
+            for _,child in pairs(v:GetChildren()) do
+                if child:IsA("TextLabel") then
+                    if string.match(child.Text, ",") then
+                        return child.Text
+                    end
+                end
+            end
+        end
+    end
+end
+local Damage = DamageNum()
+
+
+local Reward = game:GetService("Players").LocalPlayer.PlayerGui.Rewards.ViewReward.UnitInformation.HoverFrame.Frame.UnitName.Text
+
+
 
 local response = Request(
 {
@@ -40,7 +61,7 @@ local response = Request(
             ["color"] = tonumber("A6DC41", 16),
             ["fields"] = {
                 {
-                    ["name"] = "Player",
+                    ["name"] = "Player Info",
                     ["value"] = "Player : "..tostring(LocalName).." | Level : "..tostring(Level),
                     ["inline"] = false
                 },
@@ -51,7 +72,7 @@ local response = Request(
                 },     
                 {
                     ["name"] = "Round Info",
-                    ["value"] = "Round Time : "..Time,
+                    ["value"] = "Round Time : "..Time.."Total Damage : "..Damage,
                     ["inline"] = false
                 } 
             }
