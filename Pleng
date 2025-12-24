@@ -7,7 +7,7 @@ local Players = game:GetService("Players")
 
 ---webhook---
 local HttpService = game:GetService("HttpService")
-local Webhook_Url = "https://discord.com/api/webhooks/1453376649734262947/D-uqNnATmtJ_QS_xhijXR4KNPcGeRPseKGguWykIFkJV8LC0wgKEQPIs3I02mRW_CYZw"
+local Webhook_Url = "https://discord.com/api/webhooks/1453500771697037454/Y6Ry4z_j1gw7XTLpKyK5lBpwDim1p5tCDGDQBnyRRqd3Qie4nmX2F0adiMYsjwCG0QPN"
 local Request = (syn and syn.request) or request or (http and http.request)
 
 local LocalName = game.Players.LocalPlayer.Name
