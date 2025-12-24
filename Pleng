@@ -5,6 +5,107 @@ local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 
+---webhook---
+local HttpService = game:GetService("HttpService")
+local Webhook_Url = "https://discord.com/api/webhooks/1453376649734262947/D-uqNnATmtJ_QS_xhijXR4KNPcGeRPseKGguWykIFkJV8LC0wgKEQPIs3I02mRW_CYZw"
+local Request = (syn and syn.request) or request or (http and http.request)
+
+local LocalName = game.Players.LocalPlayer.Name
+local Level = workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text
+local VirtualTokens = game.Players.LocalPlayer:GetAttribute("VirtualTokens")
+local Gems = game.Players.LocalPlayer:GetAttribute("Gems")
+
+local Play = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()
+
+function PlayTime()
+    for i,v in pairs(Play) do
+        if v.Name == "Stat" then
+            for _,child in pairs(v:GetChildren()) do
+                if child:IsA("TextLabel") then
+                    if string.match(child.Text, "00:") then
+                        return child.Text
+                    end
+                end
+            end
+        end
+    end
+end
+local Time = PlayTime()
+
+function DamageNum()
+    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+        if v.Name == "Stat" then
+            for _,child in pairs(v:GetChildren()) do
+                if child:IsA("TextLabel") then
+                    if string.match(child.Text, ",") then
+                        return child.Text
+                    end
+                end
+            end
+        end
+    end
+end
+local Damage = DamageNum()
+
+-- local Reward = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Rewards")
+-- local s = {}
+-- function ItemGet()
+--     task.wait()
+--     local confunc = Reward.ChildAdded:Connect(function(child)
+--     local itemName = game:GetService("Players").LocalPlayer.PlayerGui.Rewards.ViewReward.UnitInformation.HoverFrame.Frame.UnitName.Text
+--     local RareName = game:GetService("Players").LocalPlayer.PlayerGui.Rewards.ViewReward.UnitInformation.HoverFrame.Frame.Rarity.Text
+--     table.insert(s, {Name = itemName,Rarity = RareName})
+--     return s
+-- end)
+
+--     local Reward = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Rewards")
+--     local s = {}
+--     local confunc = Reward.ChildAdded:Connect(function(child)
+--         task.wait()
+--         local itemName = Reward.ViewReward.UnitInformation.HoverFrame.Frame.UnitName.Text
+--         local RareName = Reward.ViewReward.UnitInformation.HoverFrame.Frame.Rarity.Text
+--         table.insert(s, {Name = itemName,Rarity = RareName})
+--         return s
+--     end)
+-- end
+function Webhook()
+local response = Request(
+{
+    Url = Webhook_Url,
+    Method = "POST",
+    Headers = {
+        ["Content-Type"] = "application/json"
+    },
+    Body = HttpService:JSONEncode({
+        ["content"] = "",
+        ["embeds"] = {{
+            ["title"] = "End Round ! ",
+            ["description"] = game.Players.LocalPlayer.DisplayName.." has finished the round.",
+            ["type"] = "rich",
+            ["color"] = tonumber("A6DC41", 16),
+            ["fields"] = {
+                {
+                    ["name"] = "Player Info",
+                    ["value"] = "Player : "..tostring(LocalName).." | Level : "..tostring(Level),
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Info",
+                    ["value"] = "Total Virtual Tokens : "..tostring(VirtualTokens).."\nTotal Gems : "..tostring(Gems),
+                    ["inline"] = false
+                },     
+                {
+                    ["name"] = "Round Info",
+                    ["value"] = "Round Time : "..Time.."\nTotal Damage : "..Damage ,
+                    ["inline"] = false
+                } 
+            }
+        }}
+    })
+}
+)
+end
+
 function Placeunit(unit, cf)
     Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
 end
@@ -25,6 +126,8 @@ function UpAll()
     while _G.Auto do task.wait()
         local Wave = Workspace:GetAttribute("Wave")
         if Players.LocalPlayer.PlayerGui.GameUI.HUD.Vote.Visible == true then
+            task.wait()
+            Webhook()
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
             task.wait(2)
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
@@ -183,3 +286,6 @@ task.spawn(function()
         end
     end
 end)
+
+
+--game:GetService("Players").LocalPlayer.PlayerGui.Rewards.ViewReward.UnitInformation.HoverFrame.Frame.UnitName
