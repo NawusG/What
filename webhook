@@ -24,7 +24,7 @@ local response = Request(
                 {
                     ["name"] = "Player",
                     ["value"] = "Player : "..tostring(game:GetService("Players").LocalPlayer).." | Level : "..tostring(Level),
-                    ["inline"] = true
+                    ["inline"] = false
                 },
                 {
                     ["name"] = "Info",
