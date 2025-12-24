@@ -168,7 +168,7 @@ function UpAll()
         end
         if Wave == 1 then
             Webhook()
-            task.wait(120)
+            task.wait(300)
         end
     end
 end)
