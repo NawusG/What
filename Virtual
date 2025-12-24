@@ -1,4 +1,4 @@
-_G.Auto = not true
+_G.Auto = not _G.Auto
 repeat task.wait()
 until game:IsLoaded()
 local Replica = game:GetService("ReplicatedStorage")
