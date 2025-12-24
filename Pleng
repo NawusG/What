@@ -1,0 +1,185 @@
+repeat task.wait()
+until game:IsLoaded()
+local Replica = game:GetService("ReplicatedStorage")
+local Package = Replica.Packages
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+function Placeunit(unit, cf)
+    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
+end
+
+function UpAll()
+        for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+            if #monbyte.Name > 10 then
+                Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
+            end
+        end
+    end
+
+    function replay()
+        Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
+    end
+
+    task.spawn(function()
+    while _G.Auto do task.wait()
+        local Wave = Workspace:GetAttribute("Wave")
+        if Players.LocalPlayer.PlayerGui.GameUI.HUD.Vote.Visible == true then
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
+            task.wait(2)
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
+            task.wait(2)
+            Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
+            continue
+        end
+        if Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Visible == true then
+            replay()
+            task.wait(2)
+            continue
+        end
+        task.wait(.3)
+        Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
+        task.wait(.3)
+        if Wave > 7 then
+            Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
+            task.wait(.3)
+            Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+        end
+        task.wait(.3)
+        UpAll()
+        task.wait(.3)
+        if Wave >= 20 then
+            Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
+            task.wait(.3)
+        end
+        if game:GetService("Players").LocalPlayer:GetAttribute("Yen") > 10000 then
+            Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
+            task.wait(.3)
+            Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
+            task.wait(.3)
+            Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
+        end
+
+    end
+end)
+
+
+local Priority = {
+    -- [ Death ] --
+    [".50 Cal"] = 2, -- ดีมาก ถ้าตีโดนตัวเดียว ตีแรง 200 %
+    ["Sure Fire"] = 3, -- นัดแรก 100 % ลดทีละ 20 %
+    ["Red Chamber"] = 99999999999993,
+    ["Rapid Shot"] = 24,
+    ["Hawk-Eyed"] = 25, -- เฉยๆ ลดวง ตีไกล
+    ["Dead-Eye"] = 26, -- ดี
+    ["Accurate"] = 27,
+    ["Fleet Footed"] = 30,
+    ["Sniper Rifle"] = 29, -- ลด Aoe เพิ่ม ะรยะ ดาาเมจ
+    ["Spy Glass"] = 28, -- ดี
+    ["The Harder They Fall"] = 31,
+    -- [ Magician ] --
+    ["Corruption"] = 1, -- ดี radioactive
+    ["Weakened"] = 11, -- มอนที่ติดสถานะจะโดนดาเมจแรงขึ้น 20 %
+    ["Mirrored"] = 14, -- เมื่อเอฟเฟคหมด มีโอกาสรี 10 %
+    ["Slow But Steady"] = 5, -- ดาเมจเอฟเฟค DoT เพิ่ม 100 % // ตีช้า 50 % 
+    ["Plague"] = 4, -- ดี สถานะ แรง
+    ["Avatar"] = 10,  -- ค่อยเพิ่มทีละ 5 % ดาเมจธาตุ
+    ["Bad Blood"] = 6, -- ดีคู่ เพิ่มความแรง DoT 40 %
+    ["Elementalist"] = 7, -- เพิ่มความแรงชนะธาตุ 50 % 
+    ["Stasis"] = 8, -- ถ้ามอนติดสโลว เพิ่มดาเมจให้ทีม
+    ["Toxic"] = 9, -- เพิ่มดาเมจ DoT 5 % 50 % 
+    -- [ Lovers ] --
+    ["Repetition"] = 99999999999991, -- ทุกการฆ่า 500 ตัว รีเซ็ตสกิลทั้งหมด
+    ["Chromed"] = 23, -- ทุกการอัพเกรดเพิ่มระยะ 3 %
+    ["Chippin' In"] = 15, -- ทุกการอัพเกรดเพิ่มดาเมจ 5 %
+    ["Max Reps"] = 16, -- ทุกเวฟเพิ่มดาเมจ 2 % ( 30 % )
+    ["Marathon"] = 17, -- ทุกเวฟลดคูลดาวน์ 0.5 % ( 10 % )
+    ["Binoculars"] = 18, -- ทุกเวฟเพิ่มเพิ่มระยะ 1 % ( 20 % )
+    ["Teamwide Carnage"] = 99999999999992, -- ทุกการฆ่าของยูนิตจะเพิ่มดาเมจ 0.1 % ( 30 % )
+    ["Battery Charged"] = 19, -- บัพแรงขึ้น 20 % 
+    ["Hyper Speed"] = 20, -- ยูนิตจะตีไวขึ้นเมื่อมียูนิตตัวอื่นอยู่ในวงโจมตี 1% ( 10 %)
+    ["Shared Vision"] = 22, -- ยูนิตจะตีไกลขึ้นเมื่อมียูนิตตัวอื่นอยู่ในวงโจมตี 2 % ( 20 % )
+    ["Teamwork"] = 21, -- ยูนิตจะตีแรงขึ้นเมื่อมียูนิตตัวอื่นอยู่ในวงโจมตี 3 % ( 30 % )
+    -- [ Emperor ] --
+    ["Failed Targeting"] = 999,
+    ["Planet Buster"] = 998,
+    ["Fireworks"] = 35, -- ดีสุด
+    ["Null Factor"] = 997, -- ลดดาเมจ เพิ่ม AOE
+    ["Ramping Area"] = 996,
+    ["Slow Reactions"] = 995,
+    ["Widespread"] = 994, -- ลดดาเมจต่อเวฟ 60 % / 30 %
+    ["Global Range"] = 1000,
+    ["Intercontinental"] = 993,
+    ["Rapid Response"] = 999999999999999999999999,
+    ["Solo Bomber"] = 9999,
+    ["The Bigger They Are"] = 1001, --เพิ่มวง 15 % ดลดาเมจ 10
+    -- [ Fortune ] --
+    ["Second Account"] = 10000, -- อะไร
+    ["Uncapped Wealth"] = 10001, -- เพิ่มวางตัวมอน
+    ["Share The Wealth"] = 10002, -- ทุกแสนเยน
+    ["Trust Fund"] = 10003, -- แบ่งเงิน 20 %
+    ["Prosperous"] = 10004, --
+    ["Investment"] = 10005,
+    ["Growth Fund"] = 32, -- ทุกเวฟ เพิ่มการผลิตเงิน 3 % ( 30 % )
+    ["Farmer"] = 33, -- เพิ่มเงิน 20 %
+    ["Increased Funding"] = 34, -- เพิ่มดาเมจ 100 % // อัพแพง 2 เท่า
+    ["Lambo"] = 9999999, -- ตีไว 50 % // อัพแพง 2 เท่า
+    ["Opportunist"] = 10006,
+    ["Telescope"] = 9999999999999 -- ตีไกล 75// อัพแพง 2 เท่า
+}
+
+
+-- ["[Death]"] = 1,
+-- ["[Magician]"] = 2,
+-- ["[Lovers]"] = 3,
+-- ["[Emperor]"] = 4,
+-- ["[Fortune]"] = 5
+task.spawn(function()
+    while _G.Auto do task.wait(1)
+        local CardFound = {}
+        if Players.LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then
+            for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                if v.Name == "Card" then
+                    local CardNum = v.LayoutOrder
+                    local Top = v:FindFirstChild("TopTitle")
+                    local Rare = v:FindFirstChild("Rarity")
+                    local Title = v:FindFirstChild("Title")
+                    local Des = v:FindFirstChild('Text')
+                    if Top then
+                        local v_text = Top:FindFirstChild("Text")
+                        if v_text then
+                            local Class = v_text.Text
+                            local Name = Title.Text
+                            table.insert(CardFound, {
+                                CardNum = v.LayoutOrder,
+                                Class = Class,
+                                Title = Name,
+                                Rare = Rare.Text,
+                                Des = Des.Text,
+                                Priorities = Priority[Name]
+                            })
+                        end
+                    end
+                end
+            end
+        end
+        
+        if #CardFound > 0 and #CardFound < 5 then
+            for leg,kaw in pairs(CardFound) do
+                print(leg, "Name:", kaw.Title)
+            end
+        end
+        if #CardFound > 0 and #CardFound < 5 then
+            print("Found :", #CardFound)
+            print("Folder is sorting !!!")
+            table.sort(CardFound, function(a, b)
+                return a.Priorities < b.Priorities
+            end)
+            local select = CardFound[1]
+            if select then 
+                print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
+                Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
+            end
+        end
+    end
+end)
