@@ -167,8 +167,8 @@ function UpAll()
             Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
         end
         if Wave == 1 then
-            task.wait(30)
             Webhook()
+            task.wait(120)
         end
     end
 end)
