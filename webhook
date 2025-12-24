@@ -72,7 +72,7 @@ local response = Request(
                 },     
                 {
                     ["name"] = "Round Info",
-                    ["value"] = "Round Time : "..Time.."Total Damage : "..Damage,
+                    ["value"] = "Round Time : "..Time.."\nTotal Damage : "..Damage,
                     ["inline"] = false
                 } 
             }
