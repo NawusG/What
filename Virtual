@@ -130,7 +130,6 @@ task.spawn(function()
     while _G.Auto do task.wait(1)
         local CardFound = {}
         if game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then
-            print("Enter here")
             for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                 if v.Name == "Card" then
                     local CardNum = v.LayoutOrder
@@ -155,8 +154,6 @@ task.spawn(function()
                     end
                 end
             end
-        else
-            print("Exit here")
         end
         
         if #CardFound > 0 and #CardFound < 5 then
