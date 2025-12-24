@@ -18,7 +18,7 @@ function UpAll()
     end
 
     function replay()
-        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
+        Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
     end
 
     task.spawn(function()
@@ -27,12 +27,12 @@ function UpAll()
         if Players.LocalPlayer.PlayerGui.GameUI.HUD.Vote.Visible == true then
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
             task.wait(2)
-            game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
             task.wait(2)
             Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
             continue
         end
-        if game:GetService("Players").LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Visible == true then
+        if Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Visible == true then
             replay()
             task.wait(2)
             continue
@@ -51,6 +51,14 @@ function UpAll()
         if Wave > 10 and Wave <= 12 then
             Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
         end
+        if game:GetService("Players").LocalPlayer:GetAttribute("Yen") > 10000 then
+            Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
+            task.wait(.3)
+            Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
+            task.wait(.3)
+            Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
+        end
+
     end
 end)
 
@@ -128,8 +136,8 @@ local Priority = {
 task.spawn(function()
     while _G.Auto do task.wait(1)
         local CardFound = {}
-        if game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then
-            for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+        if Players.LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then
+            for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                 if v.Name == "Card" then
                     local CardNum = v.LayoutOrder
                     local Top = v:FindFirstChild("TopTitle")
@@ -169,7 +177,7 @@ task.spawn(function()
             local select = CardFound[1]
             if select then 
                 print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
-                game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
+                Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
             end
         end
     end
