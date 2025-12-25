@@ -167,9 +167,7 @@ task.spawn(function()
         if Players.LocalPlayer.PlayerGui.GameUI.HUD.Vote.Visible == true then
             task.wait(.3)
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
-            task.wait(2)
-            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
-            task.wait(2)
+            task.wait(1.5)
             Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
             continue
         end
@@ -309,11 +307,11 @@ task.spawn(function()
 
         
         if #CardFound > 0 and #CardFound < 5 then
-        for leg,kaw in pairs(CardFound) do
-            print(leg, "Name:", kaw.Title)
+            for leg,kaw in pairs(CardFound) do
+                print(leg, "Name:", kaw.Title)
             end
-            end
-            if #CardFound > 0 and #CardFound < 5 then
+        end
+        if #CardFound > 0 and #CardFound < 5 then
             print("Found :", #CardFound)
             print("Folder is sorting !!!")
             table.sort(CardFound, function(a, b)
@@ -324,6 +322,8 @@ task.spawn(function()
                 print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
                 Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
             end
+        if #CardFound >= 5 then 
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
         end
     end
 end)
