@@ -165,7 +165,7 @@ task.spawn(function()
         local Wave = Workspace:GetAttribute("Wave")
         if Wave == 1 then
             Webhook()
-            task.wait(300)
+            task.wait(180)
         end
     end
 end)
