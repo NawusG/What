@@ -1,14 +1,33 @@
+repeat task.wait()
+until game:IsLoaded()
+
+local Replica = game:GetService("ReplicatedStorage")
+local Package = Replica.Packages
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+local Light = game:GetService("Lighting")
+
+-- Reduce Effect --
+Light:WaitForChild("Bloom").Enabled = false
+-- Stage Check --
+local AutoCard = false
+local ActName =  Workspace:GetAttribute("ActName")
+if string.match(ActName, "Virtual") then
+    task.wait(.5)
+    AutoCard = true
+end
+
 ---webhook---
 local HttpService = game:GetService("HttpService")
 local Webhook_Url = "https://discord.com/api/webhooks/1453376649734262947/D-uqNnATmtJ_QS_xhijXR4KNPcGeRPseKGguWykIFkJV8LC0wgKEQPIs3I02mRW_CYZw"
 local Request = (syn and syn.request) or request or (http and http.request)
 
-local LocalName = game.Players.LocalPlayer.Name
+local LocalName = Players.LocalPlayer.Name
 local Level = workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text
-local VirtualTokens = game.Players.LocalPlayer:GetAttribute("VirtualTokens")
-local Gems = game.Players.LocalPlayer:GetAttribute("Gems")
+local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
+local Gems = Players.LocalPlayer:GetAttribute("Gems")
 
-local Play = game:GetService("Players").LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()
+local Play = Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()
 
 function PlayTime()
     for i,v in pairs(Play) do
@@ -26,7 +45,7 @@ end
 local Time = PlayTime()
 
 function DamageNum()
-    for i,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+    for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         if v.Name == "Stat" then
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
@@ -39,47 +58,87 @@ function DamageNum()
     end
 end
 local Damage = DamageNum()
+-------- Check item------------
 
+local seen = {}
+local s = {}
 
-local Reward = game:GetService("Players").LocalPlayer.PlayerGui.Rewards.ViewReward.UnitInformation.HoverFrame.Frame.UnitName.Text
+local Rewards = Players.LocalPlayer.PlayerGui:FindFirstChild("Rewards")
 
-
-
-local response = Request(
-{
-    Url = Webhook_Url,
-    Method = "POST",
-    Headers = {
-        ["Content-Type"] = "application/json"
-    },
-    Body = HttpService:JSONEncode({
-        ["content"] = "",
-        ["embeds"] = {{
-            ["title"] = "End Round ! ",
-            ["description"] = game.Players.LocalPlayer.DisplayName.." has finished the round.",
-            ["type"] = "rich",
-            ["color"] = tonumber("A6DC41", 16),
-            ["fields"] = {
-                {
-                    ["name"] = "Player Info",
-                    ["value"] = "Player : "..tostring(LocalName).." | Level : "..tostring(Level),
-                    ["inline"] = false
-                },
-                {
-                    ["name"] = "Info",
-                    ["value"] = "Total Virtual Tokens : "..tostring(VirtualTokens).."\nTotal Gems : "..tostring(Gems),
-                    ["inline"] = false
-                },     
-                {
-                    ["name"] = "Round Info",
-                    ["value"] = "Round Time : "..Time.."\nTotal Damage : "..Damage,
-                    ["inline"] = false
-                } 
-            }
-        }}
-    })
-}
-)
-
-
---game:GetService("Players").LocalPlayer.PlayerGui.Rewards.ViewReward.UnitInformation.HoverFrame.Frame.UnitName
+function GetReward()
+    if #Rewards:GetChildren() <= 0 then
+        return
+    end
+    task.wait(.3)
+    local ViewReward = Rewards:FindFirstChild("ViewReward")
+    if not ViewReward then
+        return
+    end
+    local UnitInformation = ViewReward:WaitForChild("UnitInformation")
+    local HoverFrame = UnitInformation:WaitForChild("HoverFrame")
+    local Frame = HoverFrame:WaitForChild("Frame")
+    local itemName = Frame:WaitForChild("UnitName").Text
+    local RareName = Frame:WaitForChild("Rarity").Text
+    local Stats = Frame:WaitForChild("Stat"):WaitForChild("Stat")
+    local Amount = Stats.Text
+    task.wait(.1)
+    print("item is "..itemName, Amount, "Rarity : "..RareName)
+    local key = itemName .. "|" .. RareName .."|" .. Amount
+    print(key)
+    if not seen[key] then
+        print("Set key:", key)
+        seen[key] = true
+        table.insert(s, {
+            item = itemName,
+            Rarity = RareName,
+            Count = Amount
+        })
+    end
+end
+function CallTable()
+    for i,v in pairs(s) do
+        return v.item
+    end
+end
+local CCC = CallTable()
+-- เช็คจำนวน Reward ----
+function Webhook()
+    local Damage = DamageNum()
+    local Time = PlayTime()
+    local CCC = CallTable()
+    local response = Request(
+    {
+        Url = Webhook_Url,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode({
+            ["content"] = "",
+            ["embeds"] = {{
+                ["title"] = "End Round ! ",
+                ["description"] = Players.LocalPlayer.DisplayName.." has finished the round.",
+                ["type"] = "rich",
+                ["color"] = tonumber("A6DC41", 16),
+                ["fields"] = {
+                    {
+                        ["name"] = "Player Info",
+                        ["value"] = "Player : ".. tostring(LocalName).." | Level : ".. tostring(Level),
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Info",
+                        ["value"] = "Total Virtual Tokens : ".. tostring(VirtualTokens).."\nTotal Gems : ".. tostring(Gems),
+                        ["inline"] = false
+                    },     
+                    {
+                        ["name"] = "Round Info",
+                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: " .. CCC,
+                        ["inline"] = false
+                    } 
+                }
+            }}
+        })
+    }
+    )
+end
