@@ -5,7 +5,10 @@ local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
+local Light = game:GetService("Lighting")
 
+-- Reduce Effect --
+Light:WaitForChild("Bloom").Enabled = false
 -- Stage Check --
 local AutoCard = false
 local ActName =  Workspace:GetAttribute("ActName")
@@ -13,6 +16,7 @@ if string.match(ActName, "Virtual") then
     task.wait(.5)
     AutoCard = true
 end
+
 ---webhook---
 local HttpService = game:GetService("HttpService")
 local Webhook_Url = "https://discord.com/api/webhooks/1453376649734262947/D-uqNnATmtJ_QS_xhijXR4KNPcGeRPseKGguWykIFkJV8LC0wgKEQPIs3I02mRW_CYZw"
