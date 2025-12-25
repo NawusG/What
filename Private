@@ -1,7 +1,7 @@
 repeat task.wait()
 until game:IsLoaded()
 
-_G.AutoCard = false
+
 
 
 
@@ -279,7 +279,7 @@ local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 task.spawn(function()
-    while _G.Auto do 
+    while _G.AutoCard do 
         task.wait(1)
         local CardFound = {}
         if Players.LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then
@@ -328,6 +328,7 @@ task.spawn(function()
                 Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
             end
         elseif #CardFound >= 5 then
+            task.wait()
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
         end
     end
