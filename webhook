@@ -50,6 +50,21 @@ function DamageNum()
 end
 print(DamageNum())
 
+function Placeunit(unit, cf)
+    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
+end
+
+function UpAll()
+    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if #monbyte.Name > 10 then
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
+        end
+    end
+end
+
+function replay()
+    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
+end
 -------- Check item------------
 
 local seen = {}
@@ -160,21 +175,6 @@ end)
 
 -- เช็คจำนวน Reward ----
 
-function Placeunit(unit, cf)
-    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
-end
-
-function UpAll()
-    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
-        if #monbyte.Name > 10 then
-            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
-        end
-    end
-end
-
-function replay()
-    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
-end
 
 
 task.spawn(function()
