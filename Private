@@ -5,12 +5,15 @@ until game:IsLoaded()
 
 
 
-
 local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 
+local ActName =  Workspace:GetAttribute("ActName")
+
+
+if string.match(ActName, Virtual)
 ---webhook---
 local HttpService = game:GetService("HttpService")
 local Webhook_Url = "https://discord.com/api/webhooks/1453376649734262947/D-uqNnATmtJ_QS_xhijXR4KNPcGeRPseKGguWykIFkJV8LC0wgKEQPIs3I02mRW_CYZw"
@@ -57,8 +60,7 @@ local Damage = DamageNum()
 
 local seen = {}
 local s = {}
-_G.open = not _G.open
-print(_G.open)
+
 local Rewards = Players.LocalPlayer.PlayerGui:FindFirstChild("Rewards")
 
 function GetReward()
@@ -70,10 +72,13 @@ function GetReward()
     if not ViewReward then
         return
     end
-    local HoverFrame = Rewards.ViewReward.UnitInformation.HoverFrame
-    local itemName = HoverFrame.Frame:WaitForChild("UnitName").Text
-    local RareName = HoverFrame.Frame:WaitForChild("Rarity").Text
-    local Amount = HoverFrame.Frame.Stat.Stat.Text
+    local UnitInformation = ViewReward:WaitForChild("UnitInformation")
+    local HoverFrame = UnitInformation:WaitForChild("HoverFrame")
+    local Frame = HoverFrame:WaitForChild("Frame")
+    local itemName = Frame:WaitForChild("UnitName").Text
+    local RareName = Frame:WaitForChild("Rarity").Text
+    local Stats = Frame:WaitForChild("Stat"):WaitForChild("Stat")
+    local Amount = Stats.Text
     task.wait(.1)
     print("item is "..itemName, Amount, "Rarity : "..RareName)
     local key = itemName .. "|" .. RareName .."|" .. Amount
@@ -95,9 +100,10 @@ function GetInfo()
     end
     return RoundInfo
 end
-local ResultItem = GetInfo()
+
 -- เช็คจำนวน Reward ----
 function Webhook()
+    local ResultItem = GetInfo()
     local response = Request(
     {
         Url = Webhook_Url,
@@ -125,7 +131,7 @@ function Webhook()
                     },     
                     {
                         ["name"] = "Round Info",
-                        ["value"] = "Round Time : ".. tostring(Time).."\nTotal Damage : ".. tostring(Damage) .. "\n" .. ResultItem,
+                        ["value"] = "Round Time : ".. tostringTime.."\nTotal Damage : ".. Damage .. "\n" .. ResultItem,
                         ["inline"] = false
                     } 
                 }
