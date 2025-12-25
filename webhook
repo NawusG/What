@@ -115,7 +115,7 @@ task.spawn(function()
         if Wave == 1 and #s >= 3 then
             local asdd = FormatRewards(s)
             task.wait(3)
-            print(asdd)
+            print(type(asdd))
             Webhook(Result)
             task.wait(150)
         end
