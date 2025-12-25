@@ -103,7 +103,22 @@ local function FormatRewards(list)
     end
     return text
 end
-
+task.spawn(function()
+    while _G.Auto do task.wait()
+        local Wave = Workspace:GetAttribute("Wave")
+        local Finish = Workspace:GetAttribute("MatchFinished")
+        if Finish == true then
+            GetReward()
+            task.wait(.2)
+        end
+        if Wave == 1 and #s >= 3 then
+            FormatRewards(s)
+            task.wait(3)
+            Webhook()
+            task.wait(150)
+        end
+    end
+end)
 
 -- เช็คจำนวน Reward ----
 function Webhook()
@@ -162,19 +177,7 @@ end
 function replay()
     Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
 end
-task.spawn(function()
-    while _G.Auto do task.wait()
-        local Wave = Workspace:GetAttribute("Wave")
-        if Wave == 1 then
-            if #s >= 3 then
-                FormatRewards(s)
-                task.wait(3)
-                Webhook()
-                task.wait(180)
-            end
-        end
-    end
-end)
+
 
 task.spawn(function()
     while _G.Auto do task.wait()
