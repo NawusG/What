@@ -105,6 +105,7 @@ local function FormatRewards(list)
 end
 task.spawn(function()
     while _G.Auto do task.wait()
+        print(#s)
         local Wave = Workspace:GetAttribute("Wave")
         local Finish = Workspace:GetAttribute("MatchFinished")
         if Finish == true then
