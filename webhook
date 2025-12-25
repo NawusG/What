@@ -53,6 +53,42 @@ function DamageNum()
 end
 local Damage = DamageNum()
 
+local seen = {}
+local s = {}
+
+local Rewards = game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Rewards")
+function GetReward()
+    if #Rewards:GetChildren() <= 0 then
+        return
+    end
+    print(#Rewards:GetChildren())
+    task.wait(1)
+    local ViewReward = Rewards:FindFirstChild("ViewReward")
+    if not ViewReward then
+        return
+    end
+    local itemName = Rewards.ViewReward.UnitInformation.HoverFrame.Frame:WaitForChild("UnitName").Text
+    local RareName = Rewards.ViewReward.UnitInformation.HoverFrame.Frame:WaitForChild("Rarity").Text
+    local Amount = Rewards.ViewReward.UnitInformation.HoverFrame.Frame.Stat.Stat.Text
+    task.wait(.3)
+    print("item is "..itemName, Amount, "Rarity : "..RareName)
+    local key = itemName .. "|" .. RareName .."|" .. Amount
+    print(key)
+    if not seen[key] then
+        print("Set key:", key)
+        seen[key] = true
+        table.insert(s, {
+            item = itemName,
+            Rarity = RareName,
+            Count = Amount
+        })
+    end
+end
+task.spawn(function()
+    while true do task.wait()
+        for i,v in pairs(s)
+    end
+end)
 -- เช็คจำนวน Reward ----
 function Webhook()
     local Damage = DamageNum()
