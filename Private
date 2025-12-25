@@ -323,10 +323,12 @@ task.spawn(function()
         
         if #CardFound > 0 and #CardFound < 5 then
             for leg,kaw in pairs(CardFound) do
+                task.wait()
                 print(leg, "Name:", kaw.Title)
             end
         end
         if #CardFound > 0 and #CardFound < 5 then
+            task.wait()
             print("Found :", #CardFound)
             print("Folder is sorting !!!")
             table.sort(CardFound, function(a, b)
@@ -334,6 +336,7 @@ task.spawn(function()
             end)
             local select = CardFound[1]
             if select then 
+                task.wait()
                 print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
                 Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
             end
