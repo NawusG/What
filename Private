@@ -103,7 +103,6 @@ end
 local CCC = CallTable()
 -- เช็คจำนวน Reward ----
 function Webhook()
-    local ResultItem = GetInfo()
     local Damage = DamageNum()
     local Time = PlayTime()
     local CCC = CallTable()
