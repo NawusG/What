@@ -113,16 +113,17 @@ task.spawn(function()
             task.wait(.2)
         end
         if Wave == 1 and #s >= 3 then
-            FormatRewards(s)
+            local asdd = FormatRewards(s)
             task.wait(3)
-            Webhook()
+            print(asdd)
+            Webhook(Result)
             task.wait(150)
         end
     end
 end)
 
 -- เช็คจำนวน Reward ----
-function Webhook()
+function Webhook(Result)
     local Damage = DamageNum()
     local Time = PlayTime()
     local RewardText = FormatRewards(s)
@@ -153,7 +154,7 @@ function Webhook()
                     },     
                     {
                         ["name"] = "Round Info",
-                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: " .. CCC,
+                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: " .. Result,
                         ["inline"] = false
                     } 
                 }
