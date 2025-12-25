@@ -150,6 +150,15 @@ end
 function replay()
     Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
 end
+task.spawn(function()
+    while _G.Auto do task.wait()
+        local Wave = Workspace:GetAttribute("Wave")
+        if Wave == 1 then
+            Webhook()
+            task.wait(300)
+        end
+    end
+end)
     
 task.spawn(function()
     while _G.Auto do task.wait()
@@ -163,10 +172,6 @@ task.spawn(function()
             task.wait(2)
             Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
             continue
-        end
-        if Wave == 1 then
-            Webhook()
-            task.wait(300)
         end
         if Finish == true then
             task.wait(.3)
@@ -198,10 +203,6 @@ task.spawn(function()
             Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
             task.wait(.3)
             Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
-        end
-        if Wave == 1 then
-            Webhook()
-            task.wait(300)
         end
         if Finish == true then
             task.wait()
