@@ -116,7 +116,7 @@ task.spawn(function()
             local asdd = FormatRewards(s)
             task.wait(3)
             print(type(asdd))
-            Webhook(Result)
+            Webhook(asdd)
             task.wait(150)
         end
     end
