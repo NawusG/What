@@ -57,7 +57,6 @@ local Damage = DamageNum()
 function Webhook()
     local Damage = DamageNum()
     local Time = PlayTime()
-    local CCC = CallTable()
     local response = Request(
     {
         Url = Webhook_Url,
@@ -85,7 +84,7 @@ function Webhook()
                     },     
                     {
                         ["name"] = "Round Info",
-                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: " .. CCC,
+                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: ",
                         ["inline"] = false
                     } 
                 }
