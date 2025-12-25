@@ -1,19 +1,18 @@
 repeat task.wait()
 until game:IsLoaded()
 
-
-
-
-
 local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 
+-- Stage Check --
+local AutoCard = false
 local ActName =  Workspace:GetAttribute("ActName")
-
-
-if string.match(ActName, Virtual)
+if string.match(ActName, "Virtual") then
+    task.wait(.5)
+    AutoCard = true
+end
 ---webhook---
 local HttpService = game:GetService("HttpService")
 local Webhook_Url = "https://discord.com/api/webhooks/1453376649734262947/D-uqNnATmtJ_QS_xhijXR4KNPcGeRPseKGguWykIFkJV8LC0wgKEQPIs3I02mRW_CYZw"
@@ -285,8 +284,8 @@ local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 task.spawn(function()
-    while _G.AutoCard do 
-        task.wait(1)
+    while AutoCard do 
+        task.wait(.3)
         local CardFound = {}
         if Players.LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then
             for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
