@@ -25,7 +25,7 @@ local Play = Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Conten
 
 function PlayTime()
     for i,v in pairs(Play) do
-        local Stat = v:WaitForChild("Stat")
+        local Stat = v:FindFirstChild("Stat")
         if Stat and v.Name == "Stat" then
             for _,child in pairs(Stat:GetChildren()) do
                 if child:IsA("TextLabel") then
@@ -41,7 +41,7 @@ local Time = PlayTime()
 
 function DamageNum()
     for i,v in pairs(Play) do
-        local Stat = v:WaitForChild("Stat")
+        local Stat = v:FindFirstChild("Stat")
         if Stat and v.Name == "Stat"
             for _,child in pairs(Stat:GetChildren()) do
                 if child:IsA("TextLabel") then
