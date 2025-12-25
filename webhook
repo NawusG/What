@@ -52,49 +52,7 @@ function DamageNum()
     end
 end
 local Damage = DamageNum()
--------- Check item------------
 
-local seen = {}
-local s = {}
-
-local Rewards = Players.LocalPlayer.PlayerGui:FindFirstChild("Rewards")
-
-function GetReward()
-    if #Rewards:GetChildren() <= 0 then
-        return
-    end
-    task.wait(.3)
-    local ViewReward = Rewards:FindFirstChild("ViewReward")
-    if not ViewReward then
-        return
-    end
-    local UnitInformation = ViewReward:WaitForChild("UnitInformation")
-    local HoverFrame = UnitInformation:WaitForChild("HoverFrame")
-    local Frame = HoverFrame:WaitForChild("Frame")
-    local itemName = Frame:WaitForChild("UnitName").Text
-    local RareName = Frame:WaitForChild("Rarity").Text
-    local Stats = Frame:WaitForChild("Stat"):WaitForChild("Stat")
-    local Amount = Stats.Text
-    task.wait(.1)
-    print("item is "..itemName, Amount, "Rarity : "..RareName)
-    local key = itemName .. "|" .. RareName .."|" .. Amount
-    print(key)
-    if not seen[key] then
-        print("Set key:", key)
-        seen[key] = true
-        table.insert(s, {
-            item = itemName,
-            Rarity = RareName,
-            Count = Amount
-        })
-    end
-end
-function CallTable()
-    for i,v in pairs(s) do
-        return v.item
-    end
-end
-local CCC = CallTable()
 -- เช็คจำนวน Reward ----
 function Webhook()
     local Damage = DamageNum()
@@ -127,7 +85,7 @@ function Webhook()
                     },     
                     {
                         ["name"] = "Round Info",
-                        ["value"] = "Yay",
+                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: " .. CCC,
                         ["inline"] = false
                     } 
                 }
