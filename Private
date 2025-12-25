@@ -159,7 +159,7 @@ task.spawn(function()
         end
     end
 end)
-    
+
 task.spawn(function()
     while _G.Auto do task.wait()
         local Wave = Workspace:GetAttribute("Wave")
@@ -274,6 +274,10 @@ local Priority = {
     ["Telescope"] = 9999999999999 -- ตีไกล 75// อัพแพง 2 เท่า
 }
 
+local Replica = game:GetService("ReplicatedStorage")
+local Package = Replica.Packages
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
 task.spawn(function()
     while _G.Auto do task.wait(1)
         local CardFound = {}
@@ -322,11 +326,8 @@ task.spawn(function()
                 print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
                 Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
             end
-        if #CardFound >= 5 then 
+        if #CardFound >= 5 then
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
         end
     end
 end)
-
-
---game:GetService("Players").LocalPlayer.PlayerGui.Rewards.ViewReward.UnitInformation.HoverFrame.Frame.UnitName
