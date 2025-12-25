@@ -104,16 +104,12 @@ local function FormatRewards(list)
     return text
 end
 
-for i = 1, 10 do
-    task.wait(.3)
-    GetReward()
-end
-local TextRe = FormatRewards(s)
+
 -- เช็คจำนวน Reward ----
 function Webhook()
     local Damage = DamageNum()
     local Time = PlayTime()
-    local CCC = CallTable()
+    local RewardText = FormatRewards(s)
     local response = Request(
     {
         Url = Webhook_Url,
@@ -170,8 +166,12 @@ task.spawn(function()
     while _G.Auto do task.wait()
         local Wave = Workspace:GetAttribute("Wave")
         if Wave == 1 then
-            Webhook()
-            task.wait(180)
+            if #s >= 3 then
+                FormatRewards(s)
+                task.wait(3)
+                Webhook()
+                task.wait(180)
+            end
         end
     end
 end)
