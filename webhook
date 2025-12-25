@@ -130,12 +130,12 @@ function Webhook(Result)
                 ["fields"] = {
                     {
                         ["name"] = "Player Info",
-                        ["value"] = "Player : ".. tostring(LocalName).." | Level : ".. tostring(Level),
+                        ["value"] = "🐼 Player : ".. tostring(LocalName).." | Level : ".. tostring(Level),
                         ["inline"] = false
                     },
                     {
                         ["name"] = "Info",
-                        ["value"] = "Total Virtual Tokens : ".. tostring(VirtualTokens).."\n💎 Total Gems : ".. tostring(Gems),
+                        ["value"] = "🍀 Total Virtual Tokens : ".. tostring(VirtualTokens).."\n💎 Total Gems : ".. tostring(Gems),
                         ["inline"] = false
                     },     
                     {
