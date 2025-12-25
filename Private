@@ -1,7 +1,7 @@
 repeat task.wait()
 until game:IsLoaded()
 
-_G.AutoCard
+_G.AutoCard = false
 
 
 
@@ -13,7 +13,7 @@ local Players = game:GetService("Players")
 
 ---webhook---
 local HttpService = game:GetService("HttpService")
-local Webhook_Url = "https://discord.com/api/webhooks/1453500771697037454/Y6Ry4z_j1gw7XTLpKyK5lBpwDim1p5tCDGDQBnyRRqd3Qie4nmX2F0adiMYsjwCG0QPN"
+local Webhook_Url = "https://discord.com/api/webhooks/1453376649734262947/D-uqNnATmtJ_QS_xhijXR4KNPcGeRPseKGguWykIFkJV8LC0wgKEQPIs3I02mRW_CYZw"
 local Request = (syn and syn.request) or request or (http and http.request)
 
 local LocalName = Players.LocalPlayer.Name
@@ -52,6 +52,7 @@ function DamageNum()
     end
 end
 local Damage = DamageNum()
+
 -------- Check item------------
 
 local seen = {}
@@ -139,16 +140,16 @@ function Placeunit(unit, cf)
 end
 
 function UpAll()
-        for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
-            if #monbyte.Name > 10 then
-                Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
-            end
+    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if #monbyte.Name > 10 then
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
         end
     end
+end
 
-    function replay()
-        Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
-    end
+function replay()
+    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
+end
     
 task.spawn(function()
     while _G.Auto do task.wait()
@@ -206,7 +207,6 @@ task.spawn(function()
             task.wait()
             GetReward()
         end
-    end
     end
 end)
 
@@ -275,12 +275,6 @@ local Priority = {
     ["Telescope"] = 9999999999999 -- ตีไกล 75// อัพแพง 2 เท่า
 }
 
-
--- ["[Death]"] = 1,
--- ["[Magician]"] = 2,
--- ["[Lovers]"] = 3,
--- ["[Emperor]"] = 4,
--- ["[Fortune]"] = 5
 task.spawn(function()
     while _G.Auto do task.wait(1)
         local CardFound = {}
@@ -303,20 +297,22 @@ task.spawn(function()
                                 Title = Name,
                                 Rare = Rare.Text,
                                 Des = Des.Text,
-                                Priorities = Priority[Name]
+                            Priorities = Priority[Name]
                             })
                         end
                     end
                 end
             end
         end
+
+
         
         if #CardFound > 0 and #CardFound < 5 then
-            for leg,kaw in pairs(CardFound) do
-                print(leg, "Name:", kaw.Title)
+        for leg,kaw in pairs(CardFound) do
+            print(leg, "Name:", kaw.Title)
             end
-        end
-        if #CardFound > 0 and #CardFound < 5 then
+            end
+            if #CardFound > 0 and #CardFound < 5 then
             print("Found :", #CardFound)
             print("Folder is sorting !!!")
             table.sort(CardFound, function(a, b)
