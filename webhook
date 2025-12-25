@@ -35,7 +35,6 @@ function PlayTime()
         end
     end
 end
-local Time = PlayTime()
 
 function DamageNum()
     for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
@@ -51,7 +50,7 @@ function DamageNum()
         end
     end
 end
-local Damage = DamageNum()
+
 -------- Check item------------
 
 local seen = {}
@@ -122,8 +121,8 @@ end)
 
 -- เช็คจำนวน Reward ----
 function Webhook(Result)
-    local Damage = tostring(DamageNum())
-    local Time = tostring(PlayTime())
+    local Damage = tostring(DamageNum() or 0)
+    local Time = tostring(PlayTime() or "0:00")
     local response = Request(
     {
         Url = Webhook_Url,
