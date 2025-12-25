@@ -86,7 +86,11 @@ function GetReward()
 end
 task.spawn(function()
     while true do task.wait()
-        for i,v in pairs(s)
+        if #s > 0 then
+            for i,v in pairs(s) do
+                print(v.item)
+            end
+        end
     end
 end)
 -- เช็คจำนวน Reward ----
