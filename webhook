@@ -21,10 +21,8 @@ local Level = workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Tex
 local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
 local Gems = Players.LocalPlayer:GetAttribute("Gems")
 
-local Play = Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()
-
 function PlayTime()
-    for i,v in pairs(Play) do
+    for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         local Stat = v:FindFirstChild("Stat")
         if Stat and v.Name == "Stat" then
             for _,child in pairs(Stat:GetChildren()) do
@@ -40,7 +38,7 @@ end
 local Time = PlayTime()
 
 function DamageNum()
-    for i,v in pairs(Play) do
+    for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         local Stat = v:FindFirstChild("Stat")
         if Stat and v.Name == "Stat"
             for _,child in pairs(Stat:GetChildren()) do
