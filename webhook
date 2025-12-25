@@ -127,7 +127,7 @@ function Webhook()
                     },     
                     {
                         ["name"] = "Round Info",
-                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: " .. CCC,
+                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: ",
                         ["inline"] = false
                     } 
                 }
