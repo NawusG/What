@@ -34,7 +34,7 @@ function PlayTime()
         end
     end
 end
-print(PlayTime())
+
 local Players = game:GetService("Players")
 function DamageNum()
     for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
@@ -49,7 +49,7 @@ function DamageNum()
         end
     end
 end
-print(DamageNum())
+
 
 function Placeunit(unit, cf)
     Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
@@ -135,7 +135,7 @@ function Webhook(Result)
                     },
                     {
                         ["name"] = "Info",
-                        ["value"] = "Total Virtual Tokens : ".. tostring(VirtualTokens).."\nTotal Gems : ".. tostring(Gems),
+                        ["value"] = "Total Virtual Tokens : ".. tostring(VirtualTokens).."\n💎 Total Gems : ".. tostring(Gems),
                         ["inline"] = false
                     },     
                     {
@@ -152,7 +152,6 @@ end
 
 task.spawn(function()
     while _G.Auto do task.wait()
-        print(#s)
         local Wave = Workspace:GetAttribute("Wave")
         local Finish = Workspace:GetAttribute("MatchFinished")
         if Finish == true then
@@ -162,14 +161,8 @@ task.spawn(function()
         if Wave == 2 and #s >= 3 then
             local asdd = FormatRewards(s)
             task.wait(.3)
-            print(asdd)
-            task.wait(.2)
-            print(Damage)
-            task.wait(.2)
-            print(Time)
-            task.wait(.2)
             Webhook(asdd)
-            task.wait(150)
+            task.wait(180)
         end
     end
 end)
