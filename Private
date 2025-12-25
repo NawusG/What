@@ -95,9 +95,9 @@ function GetReward()
         })
     end
 end
-function GetInfo()
+function GetInfo(list)
     local RoundInfo = ""
-    for _,v in ipairs(s) do
+    for _,v in ipairs(list) do
         RoundInfo = RoundInfo .. "Item: " .. v.item .. " | :" .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
     end
     return RoundInfo
@@ -105,7 +105,7 @@ end
 
 -- เช็คจำนวน Reward ----
 function Webhook()
-    local ResultItem = GetInfo()
+    local ResultItem = GetInfo(s)
     local Damage = DamageNum()
     local Time = PlayTime()
     local response = Request(
@@ -135,7 +135,7 @@ function Webhook()
                     },     
                     {
                         ["name"] = "Round Info",
-                        ["value"] = "Round Time : ".. Time.."\nTotal Damage : ".. Damage .. "\n" .. ResultItem,
+                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\n" .. ResultItem,
                         ["inline"] = false
                     } 
                 }
