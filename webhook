@@ -23,9 +23,8 @@ local Gems = Players.LocalPlayer:GetAttribute("Gems")
 
 function PlayTime()
     for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
-        local Stat = v:FindFirstChild("Stat")
-        if Stat and v.Name == "Stat" then
-            for _,child in pairs(Stat:GetChildren()) do
+        if v.Name == "Stat" then
+            for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ":") then
                         return child.Text
@@ -38,9 +37,8 @@ end
 
 function DamageNum()
     for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
-        local Stat = v:FindFirstChild("Stat")
-        if Stat and v.Name == "Stat"
-            for _,child in pairs(Stat:GetChildren()) do
+        if v.Name == "Stat" then
+            for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ",") then
                         return child.Text
