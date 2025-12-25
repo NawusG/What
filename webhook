@@ -35,6 +35,7 @@ function PlayTime()
     end
 end
 print(PlayTime())
+local Players = game:GetService("Players")
 function DamageNum()
     for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         if v.Name == "Stat" then
@@ -158,7 +159,7 @@ task.spawn(function()
             GetReward()
             task.wait(.2)
         end
-        if Wave == 1 and #s >= 3 then
+        if Wave == 2 and #s >= 3 then
             local asdd = FormatRewards(s)
             task.wait(.3)
             print(asdd)
