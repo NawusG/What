@@ -124,9 +124,8 @@ end)
 
 -- เช็คจำนวน Reward ----
 function Webhook(Result)
-    local Damage = DamageNum()
-    local Time = PlayTime()
-    local RewardText = FormatRewards(s)
+    local Damage = tostring(DamageNum())
+    local Time = tostring(PlayTime())
     local response = Request(
     {
         Url = Webhook_Url,
