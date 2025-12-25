@@ -294,7 +294,7 @@ local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 task.spawn(function()
-    while AutoCard do 
+    while _G.Auto do 
         task.wait(.3)
         local CardFound = {}
         if Players.LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then task.wait()
