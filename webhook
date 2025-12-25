@@ -89,6 +89,7 @@ function GetReward()
 end
 task.spawn(function()
     while true do task.wait()
+        GetReward()
         if #s > 0 then
             for i,v in pairs(s) do
                 print(v.item)
