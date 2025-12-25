@@ -10,13 +10,6 @@ local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 -- Reduce Effect --
 Light:WaitForChild("Bloom").Enabled = false
--- Stage Check --
-local AutoCard = false
-local ActName =  Workspace:GetAttribute("ActName")
-if string.match(ActName, "Virtual") then
-    task.wait(.5)
-    AutoCard = true
-end
 
 ---webhook---
 local HttpService = game:GetService("HttpService")
