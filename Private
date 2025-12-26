@@ -10,39 +10,33 @@ local plrgui = player.PlayerGui
 local Light = game:GetService("Lighting")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
--- Reduce Effect --
-
--- black screen --
 
 
 Light:WaitForChild("Bloom").Enabled = _G.Optimize
-local BlackScreen = plrgui:FindFirstChild("BlackScreen")
+local BlackScreen = plrgui:FindFirstChild("BlackoutOverlay")
 
 if _G.Optimize then
     if not BlackScreen then
-        local gui = Instance.new("ScreenGui")
-        gui.Name = "BlackScreen"
-        gui.Enabled = true
-        gui.IgnoreGuiInset = true
-        gui.ResetOnSpawn = false
-        gui.Parent = player.PlayerGui
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "BlackoutOverlay"
+    screenGui.ResetOnSpawn = false
+    screenGui.IgnoreGuiInset = true
+    screenGui.DisplayOrder = 999999
+    screenGui.Parent = coreGui
 
-        local frame = Instance.new("Frame")
-        frame.Size = UDim2.fromScale(1, 1)
-        frame.Position = UDim2.fromScale(0, 0)
-        frame.BackgroundColor3 = Color3.new(0, 0, 0)
-        frame.BorderSizePixel = 0
-        frame.Parent = gui
+    local blackoutFrame = Instance.new("Frame")
+    blackoutFrame.Size = UDim2.new(1, 0, 1, 0)
+    blackoutFrame.Position = UDim2.new(0, 0, 0, 0)
+    blackoutFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+    blackoutFrame.BackgroundTransparency = 0
+    blackoutFrame.ZIndex = 999999
+    blackoutFrame.Parent = screenGui
     else
         if BlackScreen then
             BlackScreen.Enabled = _G.Optimize
         end
     end
 end
-if BlackScreen then
-    BlackScreen.Enabled = _G.Optimize
-end
-
 
 
 --- Webhook---
@@ -251,6 +245,8 @@ task.spawn(function()
         end
     end
 end)
+
+-------
 -----------------------------------------  Auto Card  -------------------------------------------------
 
 local Priority = {
