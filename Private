@@ -1,6 +1,6 @@
 repeat task.wait()
 until game:IsLoaded()
-
+print("Running Script")
 local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
@@ -289,7 +289,7 @@ local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 task.spawn(function()
     while _G.Auto do 
-        task.wait(.3)
+        task.wait(.1)
         local CardFound = {}
         if Players.LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then task.wait()
             for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
@@ -322,27 +322,27 @@ task.spawn(function()
         
         if #CardFound > 0 and #CardFound < 5 then task.wait(.3)
             for leg,kaw in pairs(CardFound) do
-                task.wait(.2)
+                task.wait()
                 print(leg, "Name:", kaw.Title)
             end
         end
         if #CardFound > 0 and #CardFound < 5 then
-            task.wait(.2)
+            task.wait()
             print("Found :", #CardFound)
-            task.wait(.2)
+            task.wait(.1)
             print("Folder is sorting !!!")
-            task.wait(.2)
+            task.wait(.1)
             table.sort(CardFound, function(a, b)
                 return a.Priorities < b.Priorities
             end)
             local select = CardFound[1]
             if select then 
-                task.wait(.2)
+                task.wait(.1)
                 print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
                 Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
             end
         elseif #CardFound >= 5 then
-            task.wait(.3)
+            task.wait(.2)
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
         end
     end
