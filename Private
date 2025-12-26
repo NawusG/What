@@ -204,7 +204,7 @@ task.spawn(function()
             GetReward()
             task.wait(.2)
         end
-        if Wave == 2 and #s >= 3 then
+        if Wave == 1 and #s >= 3 then
             local asdd = FormatRewards(s)
             task.wait(.3)
             Webhook(asdd)
@@ -221,22 +221,6 @@ task.spawn(function()
     while _G.Auto do task.wait()
         local Wave = Workspace:GetAttribute("Wave")
         local Finish = Workspace:GetAttribute("MatchFinished")
-        if plrgui.GameUI.HUD.Vote.Visible == true then
-            task.wait(.3)
-            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
-            task.wait(1.5)
-            Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
-            continue
-        end
-        if Finish == true then
-            task.wait(.3)
-            GetReward()
-        end
-        if plrgui.GameUI.MissionResultFrame.Main.Visible == true then
-            replay()
-            task.wait(2)
-            continue
-        end
         task.wait(.3)
         Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
         task.wait(.3)
@@ -262,7 +246,26 @@ task.spawn(function()
     end
 end)
 
--------
+task.spawn(function()
+    while _G.Auto do task.wait()
+        local Finish = Workspace:GetAttribute("MatchFinished")
+        if plrgui.GameUI.HUD.Vote.Visible == true then
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
+            task.wait(.3)
+            Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
+            task.wait(.2)
+        end
+        if Finish == true then
+            GetReward()
+            task.wait(.2)
+        end
+        if plrgui.GameUI.MissionResultFrame.Main.Visible == true then
+            replay()
+            task.wait(1)
+        end
+    end
+end)
+
 -----------------------------------------  Auto Card  -------------------------------------------------
 
 local Priority = {
