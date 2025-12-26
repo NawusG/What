@@ -320,17 +320,17 @@ task.spawn(function()
 
 
         
-        --if #CardFound > 0 and #CardFound < 5 then task.wait(.3)
-            --for leg,kaw in pairs(CardFound) do
-                --task.wait()
-                --print(leg, "Name:", kaw.Title)
-            --end
-        --end
+        if #CardFound > 0 and #CardFound < 5 then task.wait(.3)
+            for leg,kaw in pairs(CardFound) do
+                task.wait()
+                print(leg, "Name:", kaw.Title)
+            end
+        end
         if #CardFound > 0 and #CardFound < 5 then
-            --task.wait()
-            --print("Found :", #CardFound)
-            --task.wait(.1)
-            --print("Folder is sorting !!!")
+            task.wait()
+            print("Found :", #CardFound)
+            task.wait(.1)
+            print("Folder is sorting !!!")
             task.wait(.1)
             table.sort(CardFound, function(a, b)
                 return a.Priorities < b.Priorities
