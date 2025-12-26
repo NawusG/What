@@ -261,7 +261,7 @@ task.spawn(function()
         end
         if plrgui.GameUI.MissionResultFrame.Main.Visible == true then
             replay()
-            task.wait(1)
+            task.wait(2)
         end
     end
 end)
@@ -375,13 +375,13 @@ task.spawn(function()
         --     end
         -- end
         if #CardFound > 0 and #CardFound < 5 then
-            task.wait(.1)
+            task.wait(.2)
             table.sort(CardFound, function(a, b)
                 return a.Priorities < b.Priorities
             end)
             local select = CardFound[1]
             if select then 
-                task.wait(.1)
+                task.wait(.2)
                 print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
                 Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
             end
