@@ -46,7 +46,6 @@ end
 if _G.Optimize then
     for _,part in pairs(Workspace[LocalName]:GetChildren()) do
         if string.match(part.Name, "Blessing") then
-            print(part.Name)
             part:Destroy()
         end
     end
