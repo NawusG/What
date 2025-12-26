@@ -13,28 +13,29 @@ local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
 
 Light:WaitForChild("Bloom").Enabled = _G.Optimize
-local BlackScreen = plrgui:FindFirstChild("BlackoutOverlay")
+local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
 
 if _G.Optimize then
     if not BlackScreen then
-    local screenGui = Instance.new("ScreenGui")
-    screenGui.Name = "BlackoutOverlay"
-    screenGui.ResetOnSpawn = false
-    screenGui.IgnoreGuiInset = true
-    screenGui.DisplayOrder = -1
-    screenGui.Parent = coreGui
+        local screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "BlackoutOverlay"
+        screenGui.ResetOnSpawn = false
+        screenGui.IgnoreGuiInset = true
+        screenGui.DisplayOrder = -1
+        screenGui.Parent = coreGui
 
-    local blackoutFrame = Instance.new("Frame")
-    blackoutFrame.Size = UDim2.new(1, 0, 1, 0)
-    blackoutFrame.Position = UDim2.new(0, 0, 0, 0)
-    blackoutFrame.BackgroundColor3 = Color3.new(0, 0, 0)
-    blackoutFrame.BackgroundTransparency = 0
-    blackoutFrame.ZIndex = -1
-    blackoutFrame.Parent = screenGui
+        local blackoutFrame = Instance.new("Frame")
+        blackoutFrame.Size = UDim2.new(1, 0, 1, 0)
+        blackoutFrame.Position = UDim2.new(0, 0, 0, 0)
+        blackoutFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+        blackoutFrame.BackgroundTransparency = 0
+        blackoutFrame.ZIndex = -1
+        blackoutFrame.Parent = screenGui
     end
 end
-
-BlackScreen.Enabled = _G.Optimize
+if BlackScreen and not _G.Optimize then
+    BlackScreen:Destroy()
+end
 
 --- Webhook---
 local HttpService = game:GetService("HttpService")
