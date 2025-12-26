@@ -21,7 +21,7 @@ if _G.Optimize then
     screenGui.Name = "BlackoutOverlay"
     screenGui.ResetOnSpawn = false
     screenGui.IgnoreGuiInset = true
-    screenGui.DisplayOrder = 999999
+    screenGui.DisplayOrder = -1
     screenGui.Parent = coreGui
 
     local blackoutFrame = Instance.new("Frame")
@@ -29,7 +29,7 @@ if _G.Optimize then
     blackoutFrame.Position = UDim2.new(0, 0, 0, 0)
     blackoutFrame.BackgroundColor3 = Color3.new(0, 0, 0)
     blackoutFrame.BackgroundTransparency = 0
-    blackoutFrame.ZIndex = 999999
+    blackoutFrame.ZIndex = -1
     blackoutFrame.Parent = screenGui
     else
         if BlackScreen then
