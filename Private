@@ -42,6 +42,14 @@ if BlackScreen and not _G.Optimize then
     BlackScreen:Destroy()
 end
 
+if _G.Optimize then
+    for _,part in pairs(Workspace[player.Name]:GetChildren()) do
+        if string.match(part.Name, "Blessing") then
+            v:Destroy()
+        end
+    end
+end
+
 --- Webhook---
 local url = _G.webhook
 local HttpService = game:GetService("HttpService")
