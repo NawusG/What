@@ -17,7 +17,7 @@ local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
 
-Light:WaitForChild("Bloom").Enabled = not _G.Optimize
+Light:FindFirstChild("Bloom").Enabled = not _G.Optimize
 local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
 
 if _G.Optimize then
