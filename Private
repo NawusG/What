@@ -104,6 +104,7 @@ end
 function replay()
     Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
 end
+replay()
 -------- Check item------------
 
 local seen = {}
