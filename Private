@@ -326,7 +326,7 @@ task.spawn(function()
                 --print(leg, "Name:", kaw.Title)
             --end
         --end
-        --if #CardFound > 0 and #CardFound < 5 then
+        if #CardFound > 0 and #CardFound < 5 then
             --task.wait()
             --print("Found :", #CardFound)
             --task.wait(.1)
