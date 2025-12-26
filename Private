@@ -1,5 +1,10 @@
 repeat task.wait()
 until game:IsLoaded()
+if game.PlaceId == 133410800847665 then
+    return
+    print("Main World")
+end
+
 print("Running Script")
 local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
@@ -12,7 +17,7 @@ local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
 
-Light:WaitForChild("Bloom").Enabled = _G.Optimize
+Light:WaitForChild("Bloom").Enabled = not _G.Optimize
 local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
 
 if _G.Optimize then
@@ -38,8 +43,8 @@ if BlackScreen and not _G.Optimize then
 end
 
 --- Webhook---
+local url = _G.webhook
 local HttpService = game:GetService("HttpService")
-local Webhook_Url = "https://discord.com/api/webhooks/1453376649734262947/D-uqNnATmtJ_QS_xhijXR4KNPcGeRPseKGguWykIFkJV8LC0wgKEQPIs3I02mRW_CYZw"
 local Request = (syn and syn.request) or request or (http and http.request)
 
 local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
@@ -136,13 +141,16 @@ local function FormatRewards(list)
 end
 
 function Webhook(Result)
+    if typeof(url) ~= "string" or url == "" then
+        return
+    end
     local Damage = tostring(DamageNum() or 0)
     local Time = tostring(PlayTime() or "0:00")
     local LocalName = tostring(Players.LocalPlayer.Name)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
     local response = Request(
     {
-        Url = Webhook_Url,
+        Url = url,
         Method = "POST",
         Headers = {
             ["Content-Type"] = "application/json"
