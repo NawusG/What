@@ -1,8 +1,8 @@
 repeat task.wait()
 until game:IsLoaded()
 if game.PlaceId ~= 106402284955512 then
-    print("Not Virtual Marine")
     return
+    print("Not Virtual Marine")
 end
 
 print("Running Script")
@@ -16,6 +16,7 @@ local Light = game:GetService("Lighting")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
+local LocalName = tostring(Players.LocalPlayer.Name)
 
 Light:FindFirstChild("Bloom").Enabled = not _G.Optimize
 local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
@@ -43,7 +44,7 @@ if BlackScreen and not _G.Optimize then
 end
 
 if _G.Optimize then
-    for _,part in pairs(Workspace[player.Name]:GetChildren()) do
+    for _,part in pairs(Workspace[LocalName]:GetChildren()) do
         if string.match(part.Name, "Blessing") then
             v:Destroy()
         end
