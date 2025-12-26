@@ -1,8 +1,8 @@
 repeat task.wait()
 until game:IsLoaded()
-if game.PlaceId == 133410800847665 then
+if game.PlaceId ~= 106402284955512 then
     return
-    print("Main World")
+    print("Not Virtual Marine")
 end
 
 print("Running Script")
@@ -51,7 +51,7 @@ local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
 local Gems = Players.LocalPlayer:GetAttribute("Gems")
 
 function PlayTime()
-    for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+    for i,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         if v.Name == "Stat" then
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
@@ -66,7 +66,7 @@ end
 
 local Players = game:GetService("Players")
 function DamageNum()
-    for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+    for i,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         if v.Name == "Stat" then
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
@@ -101,7 +101,7 @@ local seen = {}
 local s = {}
 
 function GetReward()
-    local Rewards = Players.LocalPlayer.PlayerGui:FindFirstChild("Rewards")
+    local Rewards = plrgui:FindFirstChild("Rewards")
     if #Rewards:GetChildren() <= 0 then
         return
     end
@@ -211,7 +211,9 @@ end)
 ------------------------------------------------- -Marine Virtual -----------------------
 task.spawn(function()
     while _G.Auto do task.wait()
-        if Players.LocalPlayer.PlayerGui.GameUI.HUD.Vote.Visible == true then
+        local Wave = Workspace:GetAttribute("Wave")
+        local Finish = Workspace:GetAttribute("MatchFinished")
+        if plrgui.GameUI.HUD.Vote.Visible == true then
             task.wait(.3)
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
             task.wait(1.5)
@@ -222,7 +224,7 @@ task.spawn(function()
             task.wait(.3)
             GetReward()
         end
-        if Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Visible == true then
+        if plrgui.GameUI.MissionResultFrame.Main.Visible == true then
             replay()
             task.wait(2)
             continue
@@ -321,16 +323,15 @@ local Priority = {
 
 local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
-local Workspace = game:GetService("Workspace")
-local Players = game:GetService("Players")
+
 task.spawn(function()
     while _G.Auto do 
         task.wait(.1)
         local CardFound = {}
-        if Players.LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then task.wait()
-            for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+        if plrgui.GameUI.Paths.Enabled == true then task.wait()
+            for i,v in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                 if v.Name == "Card" then
-                    local CardNum = v.LayoutOrder
+                    local CardCount = v.LayoutOrder
                     local Top = v:FindFirstChild("TopTitle")
                     local Rare = v:FindFirstChild("Rarity")
                     local Title = v:FindFirstChild("Title")
@@ -341,7 +342,7 @@ task.spawn(function()
                             local Class = v_text.Text
                             local Name = Title.Text
                             table.insert(CardFound, {
-                                CardNum = v.LayoutOrder,
+                                CardNum = CardCount,
                                 Class = Class,
                                 Title = Name,
                                 Rare = Rare.Text,
@@ -363,10 +364,6 @@ task.spawn(function()
         --     end
         -- end
         if #CardFound > 0 and #CardFound < 5 then
-            task.wait()
-            print("Found :", #CardFound)
-            task.wait(.1)
-            print("Folder is sorting !!!")
             task.wait(.1)
             table.sort(CardFound, function(a, b)
                 return a.Priorities < b.Priorities
