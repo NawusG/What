@@ -1,208 +1,57 @@
 repeat task.wait()
 until game:IsLoaded()
-
 local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
-local Light = game:GetService("Lighting")
-local Wave = Workspace:GetAttribute("Wave")
-local Finish = Workspace:GetAttribute("MatchFinished")
--- Reduce Effect --
-Light:WaitForChild("Bloom").Enabled = false
-
---- Webhook---
-local HttpService = game:GetService("HttpService")
-local Webhook_Url = "https://discord.com/api/webhooks/1453376649734262947/D-uqNnATmtJ_QS_xhijXR4KNPcGeRPseKGguWykIFkJV8LC0wgKEQPIs3I02mRW_CYZw"
-local Request = (syn and syn.request) or request or (http and http.request)
-
-local LocalName = Players.LocalPlayer.Name
-local Level = workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text
-local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
-local Gems = Players.LocalPlayer:GetAttribute("Gems")
-
-function PlayTime()
-    for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
-        if v.Name == "Stat" then
-            for _,child in pairs(v:GetChildren()) do
-                if child:IsA("TextLabel") then
-                    if string.match(child.Text, ":") then
-                        return child.Text
-                    end
-                end
-            end
-        end
-    end
-end
-
-local Players = game:GetService("Players")
-function DamageNum()
-    for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
-        if v.Name == "Stat" then
-            for _,child in pairs(v:GetChildren()) do
-                if child:IsA("TextLabel") then
-                    if string.match(child.Text, ",") then
-                        return child.Text
-                    end
-                end
-            end
-        end
-    end
-end
-
 
 function Placeunit(unit, cf)
     Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
 end
 
 function UpAll()
-    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
-        if #monbyte.Name > 10 then
-            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
+        for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+            if #monbyte.Name > 10 then
+                Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
+            end
         end
     end
-end
 
-function replay()
-    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
-end
--------- Check item------------
-
-local seen = {}
-local s = {}
-
-local Rewards = Players.LocalPlayer.PlayerGui:FindFirstChild("Rewards")
-
-function GetReward()
-    if #Rewards:GetChildren() <= 0 then
-        return
+    function replay()
+        Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
     end
-    task.wait(.3)
-    local ViewReward = Rewards:FindFirstChild("ViewReward")
-    if not ViewReward then
-        return
-    end
-    local UnitInformation = ViewReward:WaitForChild("UnitInformation")
-    local HoverFrame = UnitInformation:WaitForChild("HoverFrame")
-    local Frame = HoverFrame:WaitForChild("Frame")
-    local itemName = Frame:WaitForChild("UnitName").Text
-    local RareName = Frame:WaitForChild("Rarity").Text
-    local Stats = Frame:WaitForChild("Stat"):WaitForChild("Stat")
-    local Amount = Stats.Text
-    task.wait(.1)
-    print("item is "..itemName, Amount, "Rarity : "..RareName)
-    local key = itemName .. "|" .. RareName .."|" .. Amount
-    print(key)
-    if not seen[key] then
-        print("Set key:", key)
-        seen[key] = true
-        table.insert(s, {
-            item = itemName,
-            Rarity = RareName,
-            Count = Amount
-        })
-    end
-end
-local function FormatRewards(list)
-    local text = ""
-    for _, v in ipairs(list) do
-        text = text .. "Item: " .. v.item .. " | Count: " .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
-    end
-    return text
-end
-function Webhook(Result)
-    local Damage = tostring(DamageNum() or 0)
-    local Time = tostring(PlayTime() or "0:00")
-    local response = Request(
-    {
-        Url = Webhook_Url,
-        Method = "POST",
-        Headers = {
-            ["Content-Type"] = "application/json"
-        },
-        Body = HttpService:JSONEncode({
-            ["content"] = "",
-            ["embeds"] = {{
-                ["title"] = "End Round ! ",
-                ["description"] = Players.LocalPlayer.DisplayName.." has finished the round.",
-                ["type"] = "rich",
-                ["color"] = tonumber("A6DC41", 16),
-                ["fields"] = {
-                    {
-                        ["name"] = "Player Info",
-                        ["value"] = "🐼 Player : ".. tostring(LocalName).." | Level : ".. tostring(Level),
-                        ["inline"] = false
-                    },
-                    {
-                        ["name"] = "Info",
-                        ["value"] = "🍀 Total Virtual Tokens : ".. tostring(VirtualTokens).."\n💎 Total Gems : ".. tostring(Gems),
-                        ["inline"] = false
-                    },     
-                    {
-                        ["name"] = "Round Info",
-                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: " .. Result,
-                        ["inline"] = false
-                    } 
-                }
-            }}
-        })
-    }
-    )
-end
 
-task.spawn(function()
+    task.spawn(function()
     while _G.Auto do task.wait()
         local Wave = Workspace:GetAttribute("Wave")
-        local Finish = Workspace:GetAttribute("MatchFinished")
-        if Finish == true then
-            GetReward()
-            task.wait(.2)
-        end
-        if Wave == 2 and #s >= 3 then
-            local asdd = FormatRewards(s)
-            task.wait(.3)
-            Webhook(asdd)
-            task.wait(180)
-        end
-    end
-end)
-
--- เช็คจำนวน Reward ----
-
-
-
-task.spawn(function()
-    while _G.Auto do task.wait()
         if Players.LocalPlayer.PlayerGui.GameUI.HUD.Vote.Visible == true then
-            task.wait(.3)
+            task.wait()
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
-            task.wait(1.5)
+            task.wait(2)
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
+            task.wait(2)
             Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
             continue
         end
-        if Finish == true then
-            task.wait(.3)
-            GetReward()
-        end
         if Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Visible == true then
+            task.wait()
             replay()
             task.wait(2)
             continue
         end
         task.wait(.3)
+        Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+        task.wait(.3)
         Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
         task.wait(.3)
         if Wave > 7 then
             Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
-            task.wait(.3)
-            Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
         end
         task.wait(.3)
         UpAll()
         task.wait(.3)
-        if Wave >= 20 then
+        if Wave > 10 then
             Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
-            task.wait(.3)
         end
         if game:GetService("Players").LocalPlayer:GetAttribute("Yen") > 10000 then
             Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
@@ -210,10 +59,6 @@ task.spawn(function()
             Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
             task.wait(.3)
             Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
-        end
-        if Finish == true then
-            task.wait()
-            GetReward()
         end
     end
 end)
@@ -277,21 +122,22 @@ local Priority = {
     ["Investment"] = 10005,
     ["Growth Fund"] = 32, -- ทุกเวฟ เพิ่มการผลิตเงิน 3 % ( 30 % )
     ["Farmer"] = 33, -- เพิ่มเงิน 20 %
-    ["Increased Funding"] = 999999999999999999999999999999999999999, -- เพิ่มดาเมจ 100 % // อัพแพง 2 เท่า
-    ["Lambo"] = 99999999999999999999999999, -- ตีไว 50 % // อัพแพง 2 เท่า
+    ["Increased Funding"] = 34, -- เพิ่มดาเมจ 100 % // อัพแพง 2 เท่า
+    ["Lambo"] = 9999999, -- ตีไว 50 % // อัพแพง 2 เท่า
     ["Opportunist"] = 10006,
     ["Telescope"] = 9999999999999 -- ตีไกล 75// อัพแพง 2 เท่า
 }
 
-local Replica = game:GetService("ReplicatedStorage")
-local Package = Replica.Packages
-local Workspace = game:GetService("Workspace")
-local Players = game:GetService("Players")
+
+-- ["[Death]"] = 1,
+-- ["[Magician]"] = 2,
+-- ["[Lovers]"] = 3,
+-- ["[Emperor]"] = 4,
+-- ["[Fortune]"] = 5
 task.spawn(function()
-    while _G.Auto do 
-        task.wait(.3)
+    while _G.Auto do task.wait(1)
         local CardFound = {}
-        if Players.LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then task.wait()
+        if Players.LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then
             for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                 if v.Name == "Card" then
                     local CardNum = v.LayoutOrder
@@ -310,41 +156,30 @@ task.spawn(function()
                                 Title = Name,
                                 Rare = Rare.Text,
                                 Des = Des.Text,
-                            Priorities = Priority[Name]
+                                Priorities = Priority[Name]
                             })
                         end
                     end
                 end
             end
         end
-
-
         
-        if #CardFound > 0 and #CardFound < 5 then task.wait(.3)
+        if #CardFound > 0 and #CardFound < 5 then
             for leg,kaw in pairs(CardFound) do
-                task.wait(.2)
                 print(leg, "Name:", kaw.Title)
             end
         end
         if #CardFound > 0 and #CardFound < 5 then
-            task.wait(.2)
             print("Found :", #CardFound)
-            task.wait(.2)
             print("Folder is sorting !!!")
-            task.wait(.2)
             table.sort(CardFound, function(a, b)
                 return a.Priorities < b.Priorities
             end)
             local select = CardFound[1]
             if select then 
-                task.wait(.2)
                 print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
                 Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
             end
-        elseif #CardFound >= 5 then
-            task.wait(.3)
-            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
         end
     end
 end)
-
