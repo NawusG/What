@@ -185,7 +185,7 @@ task.spawn(function()
             continue
         end
         if Finish == true then
-            task.wait(.3)
+            task.wait(.2)
             GetReward()
         end
         if Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Visible == true then
@@ -193,20 +193,20 @@ task.spawn(function()
             task.wait(2)
             continue
         end
-        task.wait(.3)
+        task.wait(.2)
         Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
         task.wait(.3)
         if Wave > 7 then
             Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
-            task.wait(.3)
-            Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
         end
-        task.wait(.3)
+        task.wait(.2)
+        Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+        task.wait(.2)
         UpAll()
-        task.wait(.3)
+        task.wait(.2)
         if Wave >= 20 then
             Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
-            task.wait(.3)
+            task.wait(.2)
         end
         if game:GetService("Players").LocalPlayer:GetAttribute("Yen") > 10000 then
             Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
@@ -320,17 +320,17 @@ task.spawn(function()
 
 
         
-        if #CardFound > 0 and #CardFound < 5 then task.wait(.3)
-            for leg,kaw in pairs(CardFound) do
-                task.wait()
-                print(leg, "Name:", kaw.Title)
-            end
-        end
-        if #CardFound > 0 and #CardFound < 5 then
-            task.wait()
-            print("Found :", #CardFound)
-            task.wait(.1)
-            print("Folder is sorting !!!")
+        --if #CardFound > 0 and #CardFound < 5 then task.wait(.3)
+            --for leg,kaw in pairs(CardFound) do
+                --task.wait()
+                --print(leg, "Name:", kaw.Title)
+            --end
+        --end
+        --if #CardFound > 0 and #CardFound < 5 then
+            --task.wait()
+            --print("Found :", #CardFound)
+            --task.wait(.1)
+            --print("Folder is sorting !!!")
             task.wait(.1)
             table.sort(CardFound, function(a, b)
                 return a.Priorities < b.Priorities
