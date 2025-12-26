@@ -5,11 +5,45 @@ local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local plrgui = player.PlayerGui
 local Light = game:GetService("Lighting")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 -- Reduce Effect --
-Light:WaitForChild("Bloom").Enabled = false
+
+-- black screen --
+
+
+Light:WaitForChild("Bloom").Enabled = _G.Optimize
+local BlackScreen = plrgui:FindFirstChild("BlackScreen")
+
+if _G.Optimize then
+    if not BlackScreen then
+        local gui = Instance.new("ScreenGui")
+        gui.Name = "BlackScreen"
+        gui.Enabled = true
+        gui.IgnoreGuiInset = true
+        gui.ResetOnSpawn = false
+        gui.Parent = player.PlayerGui
+
+        local frame = Instance.new("Frame")
+        frame.Size = UDim2.fromScale(1, 1)
+        frame.Position = UDim2.fromScale(0, 0)
+        frame.BackgroundColor3 = Color3.new(0, 0, 0)
+        frame.BorderSizePixel = 0
+        frame.Parent = gui
+    else
+        if BlackScreen then
+            BlackScreen.Enabled = _G.Optimize
+        end
+    end
+end
+if BlackScreen then
+    BlackScreen.Enabled = _G.Optimize
+end
+
+
 
 --- Webhook---
 local HttpService = game:GetService("HttpService")
