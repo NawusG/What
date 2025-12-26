@@ -10,7 +10,7 @@ local plrgui = player.PlayerGui
 local Light = game:GetService("Lighting")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
-
+local coreGui = game:GetService("CoreGui")
 
 Light:WaitForChild("Bloom").Enabled = _G.Optimize
 local BlackScreen = plrgui:FindFirstChild("BlackoutOverlay")
