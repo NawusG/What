@@ -1,8 +1,8 @@
 repeat task.wait()
 until game:IsLoaded()
 if game.PlaceId ~= 106402284955512 then
-    return
     print("Not Virtual Marine")
+    return
 end
 
 print("Running Script")
