@@ -1,185 +1,751 @@
-repeat task.wait()
-until game:IsLoaded()
-local Replica = game:GetService("ReplicatedStorage")
-local Package = Replica.Packages
-local Workspace = game:GetService("Workspace")
-local Players = game:GetService("Players")
-
-function Placeunit(unit, cf)
-    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
+local HttpService_upvr = game:GetService("HttpService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local module_3_upvr = require(ReplicatedStorage:FindFirstChild("Packages"):FindFirstChild("knit"))
+local network_upvr = require(ReplicatedStorage.Imported.network)
+local TableUtil_upvr = require(ReplicatedStorage.Shared.Modules.TableUtil)
+local _ = ReplicatedStorage.Shared.Data
+local LocalPlayer_upvr = game:GetService("Players").LocalPlayer
+local var8_upvw
+local var9_upvw
+local any_CreateController_result1_upvr = module_3_upvr.CreateController({
+	Name = "DataController";
+})
+local module_8_upvw = {}
+function any_CreateController_result1_upvr.AddDataChangeConnection(arg1, arg2, arg3) -- Line 36
+	local tbl_3 = {}
+	tbl_3.Connection = arg2
+	tbl_3.ChangedObserver = arg3
+	table.insert(arg1.DataConnections, tbl_3)
 end
-
-function UpAll()
-        for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
-            if #monbyte.Name > 10 then
-                Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
-            end
-        end
-    end
-
-    function replay()
-        Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
-    end
-
-    task.spawn(function()
-    while _G.Auto do task.wait()
-        local Wave = Workspace:GetAttribute("Wave")
-        if Players.LocalPlayer.PlayerGui.GameUI.HUD.Vote.Visible == true then
-            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
-            task.wait(2)
-            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
-            task.wait(2)
-            Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
-            continue
-        end
-        if Players.LocalPlayer.PlayerGui.GameUI.MissionResultFrame.Main.Visible == true then
-            replay()
-            task.wait(2)
-            continue
-        end
-        task.wait(.3)
-        Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
-        task.wait(.3)
-        if Wave > 7 then
-            Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
-            task.wait(.3)
-            Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
-        end
-        task.wait(.3)
-        UpAll()
-        task.wait(.3)
-        if Wave >= 20 then
-            Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
-            task.wait(.3)
-        end
-        if game:GetService("Players").LocalPlayer:GetAttribute("Yen") > 10000 then
-            Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
-            task.wait(.3)
-            Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
-            task.wait(.3)
-            Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
-        end
-
-    end
-end)
-
-
-local Priority = {
-    -- [ Death ] --
-    [".50 Cal"] = 2, -- ดีมาก ถ้าตีโดนตัวเดียว ตีแรง 200 %
-    ["Sure Fire"] = 3, -- นัดแรก 100 % ลดทีละ 20 %
-    ["Red Chamber"] = 99999999999993,
-    ["Rapid Shot"] = 24,
-    ["Hawk-Eyed"] = 25, -- เฉยๆ ลดวง ตีไกล
-    ["Dead-Eye"] = 26, -- ดี
-    ["Accurate"] = 27,
-    ["Fleet Footed"] = 30,
-    ["Sniper Rifle"] = 29, -- ลด Aoe เพิ่ม ะรยะ ดาาเมจ
-    ["Spy Glass"] = 28, -- ดี
-    ["The Harder They Fall"] = 31,
-    -- [ Magician ] --
-    ["Corruption"] = 1, -- ดี radioactive
-    ["Weakened"] = 11, -- มอนที่ติดสถานะจะโดนดาเมจแรงขึ้น 20 %
-    ["Mirrored"] = 14, -- เมื่อเอฟเฟคหมด มีโอกาสรี 10 %
-    ["Slow But Steady"] = 5, -- ดาเมจเอฟเฟค DoT เพิ่ม 100 % // ตีช้า 50 % 
-    ["Plague"] = 4, -- ดี สถานะ แรง
-    ["Avatar"] = 10,  -- ค่อยเพิ่มทีละ 5 % ดาเมจธาตุ
-    ["Bad Blood"] = 6, -- ดีคู่ เพิ่มความแรง DoT 40 %
-    ["Elementalist"] = 7, -- เพิ่มความแรงชนะธาตุ 50 % 
-    ["Stasis"] = 8, -- ถ้ามอนติดสโลว เพิ่มดาเมจให้ทีม
-    ["Toxic"] = 9, -- เพิ่มดาเมจ DoT 5 % 50 % 
-    -- [ Lovers ] --
-    ["Repetition"] = 99999999999991, -- ทุกการฆ่า 500 ตัว รีเซ็ตสกิลทั้งหมด
-    ["Chromed"] = 23, -- ทุกการอัพเกรดเพิ่มระยะ 3 %
-    ["Chippin' In"] = 15, -- ทุกการอัพเกรดเพิ่มดาเมจ 5 %
-    ["Max Reps"] = 16, -- ทุกเวฟเพิ่มดาเมจ 2 % ( 30 % )
-    ["Marathon"] = 17, -- ทุกเวฟลดคูลดาวน์ 0.5 % ( 10 % )
-    ["Binoculars"] = 18, -- ทุกเวฟเพิ่มเพิ่มระยะ 1 % ( 20 % )
-    ["Teamwide Carnage"] = 99999999999992, -- ทุกการฆ่าของยูนิตจะเพิ่มดาเมจ 0.1 % ( 30 % )
-    ["Battery Charged"] = 19, -- บัพแรงขึ้น 20 % 
-    ["Hyper Speed"] = 20, -- ยูนิตจะตีไวขึ้นเมื่อมียูนิตตัวอื่นอยู่ในวงโจมตี 1% ( 10 %)
-    ["Shared Vision"] = 22, -- ยูนิตจะตีไกลขึ้นเมื่อมียูนิตตัวอื่นอยู่ในวงโจมตี 2 % ( 20 % )
-    ["Teamwork"] = 21, -- ยูนิตจะตีแรงขึ้นเมื่อมียูนิตตัวอื่นอยู่ในวงโจมตี 3 % ( 30 % )
-    -- [ Emperor ] --
-    ["Failed Targeting"] = 999,
-    ["Planet Buster"] = 998,
-    ["Fireworks"] = 35, -- ดีสุด
-    ["Null Factor"] = 997, -- ลดดาเมจ เพิ่ม AOE
-    ["Ramping Area"] = 996,
-    ["Slow Reactions"] = 995,
-    ["Widespread"] = 994, -- ลดดาเมจต่อเวฟ 60 % / 30 %
-    ["Global Range"] = 1000,
-    ["Intercontinental"] = 993,
-    ["Rapid Response"] = 999999999999999999999999,
-    ["Solo Bomber"] = 9999,
-    ["The Bigger They Are"] = 1001, --เพิ่มวง 15 % ดลดาเมจ 10
-    -- [ Fortune ] --
-    ["Second Account"] = 10000, -- อะไร
-    ["Uncapped Wealth"] = 10001, -- เพิ่มวางตัวมอน
-    ["Share The Wealth"] = 10002, -- ทุกแสนเยน
-    ["Trust Fund"] = 10003, -- แบ่งเงิน 20 %
-    ["Prosperous"] = 10004, --
-    ["Investment"] = 10005,
-    ["Growth Fund"] = 32, -- ทุกเวฟ เพิ่มการผลิตเงิน 3 % ( 30 % )
-    ["Farmer"] = 33, -- เพิ่มเงิน 20 %
-    ["Increased Funding"] = 34, -- เพิ่มดาเมจ 100 % // อัพแพง 2 เท่า
-    ["Lambo"] = 9999999, -- ตีไว 50 % // อัพแพง 2 เท่า
-    ["Opportunist"] = 10006,
-    ["Telescope"] = 9999999999999 -- ตีไกล 75// อัพแพง 2 เท่า
-}
-
-
--- ["[Death]"] = 1,
--- ["[Magician]"] = 2,
--- ["[Lovers]"] = 3,
--- ["[Emperor]"] = 4,
--- ["[Fortune]"] = 5
-task.spawn(function()
-    while _G.Auto do task.wait(1)
-        local CardFound = {}
-        if Players.LocalPlayer.PlayerGui.GameUI.Paths.Enabled == true then
-            for i,v in pairs(Players.LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
-                if v.Name == "Card" then
-                    local CardNum = v.LayoutOrder
-                    local Top = v:FindFirstChild("TopTitle")
-                    local Rare = v:FindFirstChild("Rarity")
-                    local Title = v:FindFirstChild("Title")
-                    local Des = v:FindFirstChild('Text')
-                    if Top then
-                        local v_text = Top:FindFirstChild("Text")
-                        if v_text then
-                            local Class = v_text.Text
-                            local Name = Title.Text
-                            table.insert(CardFound, {
-                                CardNum = v.LayoutOrder,
-                                Class = Class,
-                                Title = Name,
-                                Rare = Rare.Text,
-                                Des = Des.Text,
-                                Priorities = Priority[Name]
-                            })
-                        end
-                    end
-                end
-            end
-        end
-        
-        if #CardFound > 0 and #CardFound < 5 then
-            for leg,kaw in pairs(CardFound) do
-                print(leg, "Name:", kaw.Title)
-            end
-        end
-        if #CardFound > 0 and #CardFound < 5 then
-            print("Found :", #CardFound)
-            print("Folder is sorting !!!")
-            table.sort(CardFound, function(a, b)
-                return a.Priorities < b.Priorities
-            end)
-            local select = CardFound[1]
-            if select then 
-                print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
-                Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
-            end
-        end
-    end
-end)
+function any_CreateController_result1_upvr.GetCraftingItemAmount(arg1, arg2) -- Line 40
+	return arg1.Items.CraftingItems[arg2] or 0
+end
+function any_CreateController_result1_upvr.RequestData(arg1, ...) -- Line 44
+	--[[ Upvalues[1]:
+		[1]: TableUtil_upvr (readonly)
+	]]
+	local args_list = {...}
+	local var19
+	if args_list[1] == "Units" then
+		if args_list[2] == "Inventory" then
+			return TableUtil_upvr.DeepCopy(arg1.Inventory)
+		end
+		if args_list[2] == "Equipped" then
+			return arg1.EquippedUnits
+		end
+	end
+	for _, v in args_list do
+		if var19[v] then
+			var19 = var19[v]
+		end
+	end
+	return var19
+end
+function any_CreateController_result1_upvr.GetQuestData(arg1) -- Line 66
+	--[[ Upvalues[1]:
+		[1]: module_8_upvw (read and write)
+	]]
+	return module_8_upvw
+end
+function any_CreateController_result1_upvr.UpdateQuestData(arg1, arg2) -- Line 70
+	--[[ Upvalues[1]:
+		[1]: module_8_upvw (read and write)
+	]]
+	module_8_upvw = arg2
+end
+function any_CreateController_result1_upvr.HasUnlockedSetEffect(arg1, arg2) -- Line 74
+	-- KONSTANTERROR: [0] 1. Error Block 36 start (CF ANALYSIS FAILED)
+	local any_GetRelic_result1 = arg1:GetRelic(arg2)
+	local var21
+	if any_GetRelic_result1 and any_GetRelic_result1.Type == "Accessory" then
+		var21 = 1
+	else
+		var21 = 2
+	end
+	-- KONSTANTERROR: [0] 1. Error Block 36 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [13] 11. Error Block 6 start (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [13] 11. Error Block 6 end (CF ANALYSIS FAILED)
+	-- KONSTANTERROR: [16] 13. Error Block 32 start (CF ANALYSIS FAILED)
+	do
+		return false, "0/"..tostring(var21)
+	end
+	-- KONSTANTERROR: [16] 13. Error Block 32 end (CF ANALYSIS FAILED)
+end
+function any_CreateController_result1_upvr.AddUnitStatPoints(arg1, arg2, arg3, arg4) -- Line 117
+	--[[ Upvalues[1]:
+		[1]: var8_upvw (read and write)
+	]]
+	local var22 = arg1.Inventory[arg2]
+	if var22 and var22.StatPoints and var22.StatPoints[arg3] and var22.StatPointsAvailable then
+		var22.StatPointsAvailable -= arg4
+		local StatPoints = var22.StatPoints
+		StatPoints[arg3] += arg4
+		var8_upvw:UpdateInventory()
+	end
+end
+function any_CreateController_result1_upvr.ResetStatPoints(arg1, arg2) -- Line 131
+	--[[ Upvalues[2]:
+		[1]: any_CreateController_result1_upvr (readonly)
+		[2]: var8_upvw (read and write)
+	]]
+	local var26 = arg1.Inventory[arg2]
+	if var26 and var26.StatPoints then
+		for i_2, v_2 in var26.StatPoints do
+			any_CreateController_result1_upvr:AddUnitStatPoints(arg2, i_2, -v_2)
+		end
+		var8_upvw:UpdateInventory()
+	end
+end
+local InventoryStats_upvr = require(ReplicatedStorage.Shared.Data.Stats.InventoryStats)
+function any_CreateController_result1_upvr.IsSlotsFull(arg1) -- Line 144
+	--[[ Upvalues[2]:
+		[1]: InventoryStats_upvr (readonly)
+		[2]: LocalPlayer_upvr (readonly)
+	]]
+	local var34
+	for i_3, v_3 in InventoryStats_upvr.HotbarRequirements do
+		if v_3 <= LocalPlayer_upvr:GetAttribute("Level") then
+			var34 += 1
+		end
+	end
+	for i_4 = 1, var34 do
+		v_3 = arg1.EquippedUnits
+		i_3 = v_3[i_4]
+		local function INLINED() -- Internal function, doesn't exist in bytecode
+			i_3 = v_3[i_4]
+			v_3 = arg1.EquippedUnits
+			return i_3 == ""
+		end
+		if not i_3 or INLINED() then
+			i_3 = false
+			return i_3
+		end
+	end
+	return true
+end
+function any_CreateController_result1_upvr.HasCompleted(arg1, arg2, arg3, arg4) -- Line 164
+	if arg1.Maps and arg3 ~= "Infinite" then
+		if not arg1.Maps[arg2] then
+			return false
+		end
+		if not arg1.Maps[arg2][arg3] then
+			return false
+		end
+		local var39 = arg1.Maps[arg2][arg3]
+		if not arg4 then
+			for _, v_4 in var39 do
+				if v_4 and v_4.Completed == true then
+					return true
+				end
+			end
+			return false
+		end
+		local var40 = var39[arg4]
+		if var40 then
+			if var39[arg4].Completed ~= true then
+				var40 = false
+			else
+				var40 = true
+			end
+			return var40, var39[arg4].FastestClear, var39[arg4].Clears
+		end
+	end
+end
+function any_CreateController_result1_upvr.CheckClears(arg1, arg2, arg3, arg4) -- Line 194
+	if arg1.DataLoaded then
+		if not arg1.Maps[arg2] then
+			return false, 0, 0
+		end
+		if not arg1.Maps[arg2][arg3] then
+			return false, 0, 0
+		end
+		local var41 = arg1.Maps[arg2][arg3]
+		local var42 = var41[arg4]
+		if var42 then
+			if var41[arg4].Completed ~= true then
+				var42 = false
+			else
+				var42 = true
+			end
+			return var42, var41[arg4].FastestClear or 0, var41[arg4].Clears or 0
+		end
+		return false, 0, 0
+	end
+end
+local MapUtil_upvr = require(ReplicatedStorage.Shared.Modules.MapUtil)
+function any_CreateController_result1_upvr.CheckPlayerData(arg1, arg2, arg3, arg4) -- Line 215
+	--[[ Upvalues[1]:
+		[1]: MapUtil_upvr (readonly)
+	]]
+	if arg1.DataLoaded then
+		if arg3 == "Infinite" then
+			return arg1:HasCompleted(arg2, '6', arg4)
+		end
+		if arg3 == '1' then
+			local any_ParseMap_result1 = MapUtil_upvr.ParseMap(arg2)
+			if any_ParseMap_result1.Category == "LegendStage" then
+				return arg1:HasCompleted(any_ParseMap_result1.Name, '6', arg4)
+			end
+			local module_6 = require(MapUtil_upvr.GetMapModule(arg2))
+			if not module_6.Information.MapBefore then
+				return true
+			end
+			local MapBefore = module_6.Information.MapBefore
+			if any_ParseMap_result1.Category == "VirtualRealm" then
+				MapBefore = MapBefore.."VirtualRealm"
+			end
+			return arg1:HasCompleted(MapBefore, tostring(MapUtil_upvr.GetHighestLevel(MapBefore)), arg4)
+		end
+		return arg1:HasCompleted(arg2, tostring(tonumber(arg3) - 1), arg4)
+	end
+end
+function any_CreateController_result1_upvr.UpdateTraits(arg1, arg2, arg3) -- Line 250
+	--[[ Upvalues[2]:
+		[1]: var8_upvw (read and write)
+		[2]: module_3_upvr (readonly)
+	]]
+	if not arg1.Inventory[arg2] then
+	else
+		arg1.Inventory[arg2].Traits = {}
+		arg1.Inventory[arg2].Traits = arg3
+		var8_upvw:UpdateInventory()
+		module_3_upvr.GetController("UiController"):RefreshUnitBar()
+	end
+end
+function any_CreateController_result1_upvr.GetCraftingItem(arg1, arg2) -- Line 263
+	return arg1.Items.CraftingItems[arg2]
+end
+local peek_upvr = require(ReplicatedStorage.Packages.Fusion).peek
+function any_CreateController_result1_upvr.SetRelic(arg1, arg2, arg3, arg4, arg5) -- Line 267
+	--[[ Upvalues[4]:
+		[1]: var8_upvw (read and write)
+		[2]: var9_upvw (read and write)
+		[3]: module_3_upvr (readonly)
+		[4]: peek_upvr (readonly)
+	]]
+	if not arg1.Inventory[arg2] then
+	else
+		if arg4 == nil then
+			if arg1.Inventory[arg2].Relics[arg3] then
+				arg1.Items.Relics[arg1.Inventory[arg2].Relics[arg3]].EquippedUnit = nil
+				-- KONSTANTWARNING: GOTO [42] #29
+			end
+		elseif arg1.Items.Relics[arg4] then
+			arg1.Items.Relics[arg4].EquippedUnit = arg2
+		end
+		arg1.Inventory[arg2].Relics[arg3] = arg4
+		var8_upvw:UpdateInventory()
+		var9_upvw:UpdateInventory(arg1.Items)
+		if not arg5 and peek_upvr(module_3_upvr.GetController("UiController").CurrentlyOpenedFrame) ~= "Items" then
+			module_3_upvr.GetController("UiController"):OpenUi("Items")
+		end
+	end
+end
+function any_CreateController_result1_upvr.GetRelicInSlot(arg1, arg2, arg3) -- Line 300
+	if arg1.Inventory then
+		local var51
+		if arg1.Inventory[arg2] then
+			var51 = arg1.Inventory[arg2]
+			local Relics_2 = var51.Relics
+			var51 = Relics_2
+			if var51 then
+				var51 = Relics_2[arg3]
+			end
+			if not arg1.Items.Relics then return end
+			local var53 = arg1.Items.Relics[var51]
+			if var53 then
+				return var51, var53
+			end
+		end
+	end
+end
+function any_CreateController_result1_upvr.GetRelics(arg1, arg2) -- Line 318
+	local module = {}
+	if arg1.Inventory and arg1.Inventory[arg2] then
+		for i_6, v_5 in arg1.Inventory[arg2].Relics do
+			if arg1.Items.Relics then
+				local var61 = arg1.Items.Relics[v_5]
+				if var61 then
+					module[i_6] = var61
+					module[i_6].GUID = v_5
+				end
+			end
+		end
+	end
+	return module
+end
+local RelicUtil_upvr = require(ReplicatedStorage.Shared.Modules.RelicUtil)
+function any_CreateController_result1_upvr.GetRelicStats(arg1, arg2) -- Line 343
+	--[[ Upvalues[1]:
+		[1]: RelicUtil_upvr (readonly)
+	]]
+	if arg1.Inventory then
+		if arg1.Inventory[arg2] then
+			local module_9 = {}
+			local module_2 = {}
+			for i_7, v_6 in arg1.Inventory[arg2].Relics do
+				if arg1.Items.Relics then
+					local var87 = arg1.Items.Relics[v_6]
+					local var88
+					if var87 then
+						module_9[i_7] = var87.ID
+						var88 = RelicUtil_upvr
+						var88 = var87.Type
+						var88 = nil
+						if var87.MainStat == "DamageOverTime" then
+							var88 = "DoT"
+						else
+							var88 = var87.MainStat
+						end
+						if module_2[var88] then
+							module_2[var88] += var88.GetMainStatValue(var88, var87.MainStat, var87.Level) * 0.01
+						else
+							-- KONSTANTERROR: Expression was reused, decompilation is incorrect
+							module_2[var88] = var88.GetMainStatValue(var88, var87.MainStat, var87.Level) * 0.01
+						end
+						for _, v_7 in var87.SubStats do
+							local Name = v_7.Name
+							if Name == "DamageOverTime" then
+								Name = "DoT"
+							end
+							if module_2[Name] then
+								module_2[Name] += RelicUtil_upvr.GetSubStatValue(v_7.Name, v_7.Value) * 0.01
+							else
+								-- KONSTANTERROR: Expression was reused, decompilation is incorrect
+								module_2[Name] = RelicUtil_upvr.GetSubStatValue(v_7.Name, v_7.Value) * 0.01
+							end
+						end
+					end
+				end
+			end
+			local var90
+			if module_9.Top == module_9.Bottom then
+				var90 = module_9.Top
+			end
+			return module_2, var90, module_9.Accessory
+		end
+	end
+end
+function any_CreateController_result1_upvr.LevelRelic(arg1, arg2) -- Line 409
+	--[[ Upvalues[2]:
+		[1]: var8_upvw (read and write)
+		[2]: var9_upvw (read and write)
+	]]
+	if not arg1.Items.Relics[arg2] then
+	else
+		local var91 = arg1.Items.Relics[arg2]
+		var91.Level += 1
+		var8_upvw:UpdateInventory()
+		var9_upvw:UpdateInventory(arg1.Items)
+	end
+end
+function any_CreateController_result1_upvr.UpdateRelic(arg1, arg2, arg3) -- Line 421
+	--[[ Upvalues[2]:
+		[1]: var8_upvw (read and write)
+		[2]: var9_upvw (read and write)
+	]]
+	if not arg1.Items.Relics[arg2] then
+	else
+		for i_22, v_21 in arg3 do
+			if v_21 == "ToNil" then
+				arg1.Items.Relics[arg2][i_22] = nil
+			else
+				arg1.Items.Relics[arg2][i_22] = v_21
+			end
+		end
+		var8_upvw:UpdateInventory()
+		var9_upvw:UpdateInventory(arg1.Items)
+	end
+end
+function any_CreateController_result1_upvr.GetRelic(arg1, arg2) -- Line 439
+	return arg1.Items.Relics[arg2]
+end
+function any_CreateController_result1_upvr.GetTitle(arg1, arg2) -- Line 444
+	--[[ Upvalues[1]:
+		[1]: LocalPlayer_upvr (readonly)
+	]]
+	if not table.find(arg1.Titles, arg2) then
+		return false, false
+	end
+	if LocalPlayer_upvr:GetAttribute("Title") == arg2 then
+		return true, true
+	end
+	return true, false
+end
+function any_CreateController_result1_upvr.GetUnitDataFromID(arg1, arg2) -- Line 457
+	--[[ Upvalues[1]:
+		[1]: module_3_upvr (readonly)
+	]]
+	local var94 = arg1.Inventory[arg2]
+	if not var94 then return end
+	return module_3_upvr.GetUnitData(var94.UnitId)
+end
+local StatsUtil_upvr = require(ReplicatedStorage.Shared.Modules.StatsUtil)
+function any_CreateController_result1_upvr.GetUnitLevel(arg1, arg2) -- Line 468
+	--[[ Upvalues[1]:
+		[1]: StatsUtil_upvr (readonly)
+	]]
+	local var96 = arg1.Inventory[arg2]
+	if not var96 then return end
+	return StatsUtil_upvr.CalculateUnitLevel(var96.Experience)
+end
+function any_CreateController_result1_upvr.GetUnitData(arg1, arg2) -- Line 477
+	--[[ Upvalues[1]:
+		[1]: TableUtil_upvr (readonly)
+	]]
+	return TableUtil_upvr.DeepCopy(arg1.Inventory[arg2])
+end
+function any_CreateController_result1_upvr.SetData(arg1, arg2, arg3) -- Line 482
+	--[[ Upvalues[1]:
+		[1]: var8_upvw (read and write)
+	]]
+	if not arg1.Inventory[arg2] and arg3 then
+		arg1.Inventory[arg2] = arg3
+	else
+		arg1.Inventory[arg2] = {}
+		for i_23, v_22 in arg3 do
+			arg1.Inventory[arg2][i_23] = v_22
+		end
+		var8_upvw:UpdateInventory()
+	end
+end
+function any_CreateController_result1_upvr.UnequipAll(arg1) -- Line 499
+	--[[ Upvalues[1]:
+		[1]: var8_upvw (read and write)
+	]]
+	for i_9, _ in arg1.EquippedUnits do
+		arg1.EquippedUnits[i_9] = ""
+	end
+	var8_upvw:UpdateInventory()
+end
+function any_CreateController_result1_upvr.SwapUnit(arg1, arg2, arg3) -- Line 507
+	--[[ Upvalues[2]:
+		[1]: var8_upvw (read and write)
+		[2]: module_3_upvr (readonly)
+	]]
+	arg1.DataService:SwapUnit(arg2, arg3):andThen(function(arg1_2, arg2_2) -- Line 508
+		--[[ Upvalues[5]:
+			[1]: arg1 (readonly)
+			[2]: arg2 (readonly)
+			[3]: arg3 (readonly)
+			[4]: var8_upvw (copied, read and write)
+			[5]: module_3_upvr (copied, readonly)
+		]]
+		if arg1_2 then
+			arg1.EquippedUnits[arg2] = arg3
+			var8_upvw:UpdateInventory()
+		else
+			module_3_upvr.GetUiComponent("Message")("Error", arg2_2 or "Couldn't swap unit!")
+		end
+	end)
+end
+function any_CreateController_result1_upvr.ToggleEquip(arg1, arg2, arg3) -- Line 520
+	--[[ Upvalues[2]:
+		[1]: var8_upvw (read and write)
+		[2]: module_3_upvr (readonly)
+	]]
+	arg1.DataService:ToggleEquip(arg2, arg3):andThen(function(arg1_3, arg2_3) -- Line 521
+		--[[ Upvalues[4]:
+			[1]: arg1 (readonly)
+			[2]: arg2 (readonly)
+			[3]: var8_upvw (copied, read and write)
+			[4]: module_3_upvr (copied, readonly)
+		]]
+		if arg1_3 then
+			if arg2_3 then
+				arg1.EquippedUnits[arg2_3] = arg2
+				var8_upvw:UpdateInventory()
+			else
+				local table_find_result1 = table.find(arg1.EquippedUnits, arg2)
+				if table_find_result1 then
+					arg1.EquippedUnits[table_find_result1] = ""
+				end
+				var8_upvw:UpdateInventory()
+			end
+		end
+		module_3_upvr.GetUiComponent("Message")("Error", arg2_3 or "Couldn't equip unit!")
+	end)
+end
+function any_CreateController_result1_upvr._RegisterUnitUpdates(arg1) -- Line 542
+	--[[ Upvalues[3]:
+		[1]: module_3_upvr (readonly)
+		[2]: var8_upvw (read and write)
+		[3]: network_upvr (readonly)
+	]]
+	local any_GetController_result1_upvr_2 = module_3_upvr.GetController("UiController")
+	local function Update_upvr(arg1_4) -- Line 544, Named "Update"
+		--[[ Upvalues[3]:
+			[1]: arg1 (readonly)
+			[2]: var8_upvw (copied, read and write)
+			[3]: any_GetController_result1_upvr_2 (readonly)
+		]]
+		for _, v_9 in arg1.DataConnections do
+			if v_9.ChangedObserver == "Units" then
+				v_9.Connection:Fire(arg1_4)
+			end
+		end
+		var8_upvw:UpdateInventory()
+		any_GetController_result1_upvr_2:RefreshUnitBar()
+	end
+	network_upvr.data.AddUnits.listen(function(arg1_5) -- Line 554
+		--[[ Upvalues[3]:
+			[1]: arg1 (readonly)
+			[2]: var8_upvw (copied, read and write)
+			[3]: any_GetController_result1_upvr_2 (readonly)
+		]]
+		for _, v_10 in arg1_5 do
+			for i_12, v_11 in v_10.Traits do
+				if v_11.Name == "None" then
+					v_10.Traits[i_12] = nil
+				end
+			end
+			arg1.Inventory[v_10.GUID] = v_10
+		end
+		for _, v_12 in arg1.DataConnections do
+			if v_12.ChangedObserver == "Units" then
+				v_12.Connection:Fire(arg1_5)
+			end
+		end
+		var8_upvw:AddUnitCounter(#arg1_5)
+		var8_upvw:UpdateInventory()
+		any_GetController_result1_upvr_2:RefreshUnitBar()
+	end)
+	network_upvr.data.UnitInventory.listen(function(arg1_6) -- Line 577
+		--[[ Upvalues[2]:
+			[1]: arg1 (readonly)
+			[2]: Update_upvr (readonly)
+		]]
+		local tbl_4 = {}
+		for _, v_13 in arg1_6 do
+			for i_15, v_14 in v_13.Traits do
+				if v_14.Name == "None" then
+					v_13.Traits[i_15] = nil
+				end
+			end
+			tbl_4[v_13.GUID] = v_13
+		end
+		arg1.Inventory = tbl_4
+		Update_upvr(arg1.Inventory)
+		workspace:SetAttribute("UnitsLoaded", true)
+		arg1._LoadedUnits = true
+	end)
+	network_upvr.data.UnitRemoved.listen(function(arg1_7) -- Line 602
+		--[[ Upvalues[2]:
+			[1]: arg1 (readonly)
+			[2]: Update_upvr (readonly)
+		]]
+		arg1.Inventory[arg1_7] = nil
+		Update_upvr(arg1.Inventory)
+	end)
+	network_upvr.data.UnitLocked.listen(function(arg1_8) -- Line 609
+		--[[ Upvalues[3]:
+			[1]: arg1 (readonly)
+			[2]: Update_upvr (readonly)
+			[3]: var8_upvw (copied, read and write)
+		]]
+		arg1.Inventory[arg1_8.GUID].Locked = arg1_8.Locked
+		Update_upvr(arg1.Inventory)
+		var8_upvw:SetLocked(arg1_8.GUID, arg1_8.Locked)
+	end)
+	network_upvr.data.UnitStatsRerolled.listen(function(arg1_9) -- Line 615
+		--[[ Upvalues[3]:
+			[1]: arg1 (readonly)
+			[2]: Update_upvr (readonly)
+			[3]: any_GetController_result1_upvr_2 (readonly)
+		]]
+		arg1.Inventory[arg1_9.GUID].StatMultipliers = arg1_9.StatMultipliers
+		Update_upvr(arg1.Inventory)
+		any_GetController_result1_upvr_2:UpdateSelectedUnitStats(arg1_9.StatMultipliers)
+	end)
+	network_upvr.data.UnitExperienceUpdated.listen(function(arg1_10) -- Line 623
+		--[[ Upvalues[2]:
+			[1]: arg1 (readonly)
+			[2]: Update_upvr (readonly)
+		]]
+		arg1.Inventory[arg1_10.GUID].StatPointsAvailable = arg1_10.StatPoints
+		arg1.Inventory[arg1_10.GUID].Experience = arg1_10.Experience
+		Update_upvr(arg1.Inventory)
+	end)
+end
+function any_CreateController_result1_upvr.KnitStart(arg1) -- Line 631
+	--[[ Upvalues[8]:
+		[1]: module_3_upvr (readonly)
+		[2]: var8_upvw (read and write)
+		[3]: var9_upvw (read and write)
+		[4]: any_CreateController_result1_upvr (readonly)
+		[5]: LocalPlayer_upvr (readonly)
+		[6]: HttpService_upvr (readonly)
+		[7]: network_upvr (readonly)
+		[8]: TableUtil_upvr (readonly)
+	]]
+	var8_upvw = module_3_upvr.GetController("InventoryController")
+	var9_upvw = module_3_upvr.GetController("ItemController")
+	arg1.DataService = module_3_upvr.GetService("DataService")
+	arg1.DataConnections = {}
+	arg1.DataService.UpdateLeaderboard:Connect(function(arg1_11, arg2) -- Line 642
+		--[[ Upvalues[1]:
+			[1]: module_3_upvr (copied, readonly)
+		]]
+		local any_GetComponent_result1 = module_3_upvr.GetComponent("LeaderboardComponent")
+		if any_GetComponent_result1:FromInstance(arg1_11) then
+			any_GetComponent_result1:FromInstance(arg1_11):UpdatePlayerFrames(arg2)
+		end
+	end)
+	any_CreateController_result1_upvr.DataLoaded = false
+	LocalPlayer_upvr:WaitForChild("Maps"):GetPropertyChangedSignal("Value"):Connect(function() -- Line 652
+		--[[ Upvalues[3]:
+			[1]: arg1 (readonly)
+			[2]: HttpService_upvr (copied, readonly)
+			[3]: LocalPlayer_upvr (copied, readonly)
+		]]
+		arg1.Maps = HttpService_upvr:JSONDecode(LocalPlayer_upvr:WaitForChild("Maps").Value)
+	end)
+	local var127_upvw = false
+	arg1:_RegisterUnitUpdates()
+	network_upvr.data.ItemUpdated.listen(function(arg1_12) -- Line 677
+		--[[ Upvalues[3]:
+			[1]: arg1 (readonly)
+			[2]: module_3_upvr (copied, readonly)
+			[3]: var9_upvw (copied, read and write)
+		]]
+		local var129 = arg1
+		if arg1_12.Value <= 0 then
+			var129 = nil
+		else
+			var129 = arg1_12.Value
+		end
+		var129.Items.CraftingItems[arg1_12.ID] = var129
+		module_3_upvr.GetController("ItemController"):UpdateInventory(arg1.Items)
+		module_3_upvr.GetController("UiController"):GetFrame("Evolve"):UpdateInventory(arg1.Items)
+		var9_upvw:AddItemCounter(1)
+	end)
+	network_upvr.data.ItemLocked.listen(function(arg1_13) -- Line 686
+		--[[ Upvalues[2]:
+			[1]: arg1 (readonly)
+			[2]: module_3_upvr (copied, readonly)
+		]]
+		if not arg1.Items.Relics[arg1_13.GUID] then
+		else
+			arg1.Items.Relics[arg1_13.GUID].Locked = arg1_13.Locked
+			module_3_upvr.GetController("ItemController"):UpdateInventory(arg1.Items)
+		end
+	end)
+	network_upvr.data.RelicRemoved.listen(function(arg1_14) -- Line 697
+		--[[ Upvalues[2]:
+			[1]: arg1 (readonly)
+			[2]: module_3_upvr (copied, readonly)
+		]]
+		if not arg1.Items.Relics[arg1_14] then
+		else
+			arg1.Items.Relics[arg1_14] = nil
+			module_3_upvr.GetController("ItemController"):UpdateInventory(arg1.Items)
+		end
+	end)
+	network_upvr.data.RelicAdded.listen(function(arg1_15) -- Line 708
+		--[[ Upvalues[3]:
+			[1]: TableUtil_upvr (copied, readonly)
+			[2]: arg1 (readonly)
+			[3]: module_3_upvr (copied, readonly)
+		]]
+		local any_DeepCopy_result1_2 = TableUtil_upvr.DeepCopy(arg1_15)
+		for _, v_15 in arg1_15.SubStats do
+			if v_15.Name == "None" then
+				table.remove(any_DeepCopy_result1_2.SubStats, table.find(any_DeepCopy_result1_2.SubStats, v_15))
+			end
+		end
+		any_DeepCopy_result1_2.GUID = nil
+		if any_DeepCopy_result1_2.EquippedUnit == "nil" then
+			any_DeepCopy_result1_2.EquippedUnit = nil
+		end
+		arg1.Items.Relics[arg1_15.GUID] = any_DeepCopy_result1_2
+		module_3_upvr.GetController("ItemController"):UpdateInventory(arg1.Items)
+	end)
+	network_upvr.data.ItemInventory.listen(function(arg1_16) -- Line 737
+		--[[ Upvalues[4]:
+			[1]: TableUtil_upvr (copied, readonly)
+			[2]: arg1 (readonly)
+			[3]: module_3_upvr (copied, readonly)
+			[4]: var127_upvw (read and write)
+		]]
+		local tbl = {
+			Relics = {};
+			CraftingItems = {};
+		}
+		for _, v_16 in arg1_16.Relics do
+			local any_DeepCopy_result1 = TableUtil_upvr.DeepCopy(v_16)
+			for _, v_17 in v_16.SubStats do
+				if v_17.Name == "None" then
+					table.remove(any_DeepCopy_result1.SubStats, table.find(any_DeepCopy_result1.SubStats, v_17))
+				end
+			end
+			any_DeepCopy_result1.GUID = nil
+			if any_DeepCopy_result1.EquippedUnit == "nil" then
+				any_DeepCopy_result1.EquippedUnit = nil
+			end
+			tbl.Relics[v_16.GUID] = any_DeepCopy_result1
+		end
+		for _, v_18 in arg1_16.CraftingItems do
+			tbl.CraftingItems[v_18.ID] = v_18.Value
+		end
+		arg1.Items = tbl
+		module_3_upvr.GetController("ItemController"):UpdateInventory(tbl)
+		var127_upvw = true
+		workspace:SetAttribute("ItemsLoaded", true)
+	end)
+	local var151_upvw = false
+	arg1.DataService.SendStagePity:Connect(function(arg1_17) -- Line 781
+		--[[ Upvalues[2]:
+			[1]: arg1 (readonly)
+			[2]: var151_upvw (read and write)
+		]]
+		arg1.StagesPity = arg1_17
+		var151_upvw = true
+	end)
+	local var153_upvw = false
+	local any_GetController_result1_upvr = module_3_upvr.GetController("KeybindController")
+	arg1.DataService.SendBinds:Connect(function(arg1_18) -- Line 789
+		--[[ Upvalues[2]:
+			[1]: any_GetController_result1_upvr (readonly)
+			[2]: var153_upvw (read and write)
+		]]
+		local tbl_2 = {}
+		for i_20, v_19 in arg1_18 do
+			tbl_2[i_20] = {}
+			for i_21, v_20 in v_19 do
+				local var165 = false
+				if string.match(v_20, "Locked:") then
+					v_20 = string.gsub(v_20, "Locked:", "")
+					var165 = true
+				end
+				tbl_2[i_20][i_21.."Locked"] = var165
+				local any_GetType_result1 = any_GetController_result1_upvr:GetType(v_20)
+				if any_GetType_result1 then
+					tbl_2[i_20][i_21] = Enum[any_GetType_result1][v_20]
+				end
+			end
+		end
+		any_GetController_result1_upvr:InitializeBinds(tbl_2)
+		var153_upvw = true
+	end)
+	repeat
+		task.wait()
+	until LocalPlayer_upvr:GetAttribute("DataLoaded")
+	arg1.Maps = HttpService_upvr:JSONDecode(LocalPlayer_upvr:WaitForChild("Maps").Value)
+	arg1.DataService.GetInventory:Fire()
+	repeat
+		task.wait()
+	until not var127_upvw or not var153_upvw or not var151_upvw or arg1._LoadedUnits
+	any_CreateController_result1_upvr.DataLoaded = true
+end
+function any_CreateController_result1_upvr.KnitInit(arg1) -- Line 840
+	--[[ Upvalues[2]:
+		[1]: HttpService_upvr (readonly)
+		[2]: LocalPlayer_upvr (readonly)
+	]]
+	arg1.EquippedUnits = HttpService_upvr:JSONDecode(LocalPlayer_upvr:WaitForChild("Equipped", 200).Value)
+	arg1.Inventory = {}
+	arg1.Items = {}
+	arg1.Titles = {}
+	arg1.Battlepass = {}
+end
+return any_CreateController_result1_upvr
