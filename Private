@@ -158,6 +158,8 @@ function Webhook(Result)
     local Time = tostring(PlayTime() or "0:00")
     local LocalName = tostring(Players.LocalPlayer.Name)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
+    local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
+    local Gems = Players.LocalPlayer:GetAttribute("Gems")
     local response = Request(
     {
         Url = url,
