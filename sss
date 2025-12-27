@@ -81,10 +81,36 @@ do
     --     end
     -- })
 
+
+
+    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Auto Place", Default = false })
+
+    Toggle:OnChanged(function()
+
+        if place then
+            print("on")
+            task.spawn(function()
+                while place do
+                    print("working")
+                    task.wait(3)
+                end
+            end)
+        else
+            print("off")
+        end
+    end)
+
+    Options.MyToggle:SetValue(false)
+
     local Toggle1 = Tabs.Main:AddToggle("MyToggle1", {Title = "Toggle1", Default = false })
-    
-    Toggle1:OnChanged(function()
-        print("yay", Option.MyToggle1.Value)
+    _G.AutoPrint = false
+    Toggle1:OnChanged(function(state)
+        _G.AutoPrint = state
+        task.spawn(function()
+            while _G.AutoPrint do
+                print("yay", Options.MyToggle1.Value)
+            end
+        end)
     end)
 
     Options.MyToggle1:SetValue(false)
