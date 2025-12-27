@@ -86,7 +86,13 @@ do
     local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Auto Place", Default = false })
 
     Toggle:OnChanged(function()
-        print("Toggle changed:", Options.MyToggle.Value)
+        local place = Options.MyToggle.Value
+        if place then
+            task.spawn(function()
+                print("working")
+                task.wait(3)
+            end)
+        end
     end)
 
     Options.MyToggle:SetValue(false)
