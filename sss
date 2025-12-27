@@ -103,7 +103,7 @@ do
     Options.MyToggle:SetValue(false)
 
     local Toggle1 = Tabs.Main:AddToggle("MyToggle1", {Title = "Toggle1", Default = false })
-
+    Options.MyToggle1:SetValue(false)
     Toggle1:OnChanged(function()
         if Options.MyToggle1.Value then
             task.spawn(function())
