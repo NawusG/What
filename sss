@@ -81,27 +81,6 @@ do
     --     end
     -- })
 
-
-
-    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Auto Place", Default = false })
-
-    Toggle:OnChanged(function()
-        local place = Options.MyToggle.Value
-        if place then
-            print("on")
-            task.spawn(function()
-                while place do
-                    print("working")
-                    task.wait(3)
-                end
-            end)
-        else
-            print("off")
-        end
-    end)
-
-    Options.MyToggle:SetValue(false)
-
     local Toggle1 = Tabs.Main:AddToggle("MyToggle1", {Title = "Toggle1", Default = false })
     
     Toggle1:OnChanged(function()
