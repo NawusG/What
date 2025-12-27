@@ -103,16 +103,9 @@ do
     Options.MyToggle:SetValue(false)
 
     local Toggle1 = Tabs.Main:AddToggle("MyToggle1", {Title = "Toggle1", Default = false })
-    Options.MyToggle1:SetValue(false)
+    
     Toggle1:OnChanged(function()
-        if Options.MyToggle1.Value then
-            task.spawn(function())
-                while Options.MyToggle1.Value do
-                print("Toggle changed:", Options.MyToggle1.Value)
-                task.wait(.3)
-                end
-            end)
-        end
+        print("yay", Option.MyToggle1.Value)
     end)
 
     Options.MyToggle1:SetValue(false)
