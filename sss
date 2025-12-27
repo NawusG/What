@@ -88,10 +88,13 @@ do
     Toggle:OnChanged(function()
         local place = Options.MyToggle.Value
         if place then
+            print("on")
             task.spawn(function()
                 print("working")
                 task.wait(3)
             end)
+        else
+            print("off")
         end
     end)
 
