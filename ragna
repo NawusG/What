@@ -252,7 +252,7 @@ task.spawn(function()
         local Wave = Workspace:GetAttribute("Wave")
         if Wave <= 8 then
             Placeunit(2, CFrame.new(214.24610900878906, 5.284136772155762, -107.47723388671875))
-            task.wait(.5)
+            task.wait(.2)
             UpAll()
         end
         if Wave >= 9 and Wave <= 12 then
