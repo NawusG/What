@@ -269,6 +269,15 @@ task.spawn(function()
             task.wait(.5)
             Placeunit(5, CFrame.new(231.94744873046875, 0.2517051696777344, -111.57904815673828))
         end
+        if Wave == 15 then
+            task.wait(10)
+            Placeunit(4, CFrame.new(215.13497924804688, 0.2517061233520508, -134.60659790039062))
+            task.wait(.4)
+            Placeunit(4, CFrame.new(230.78427124023438, 0.25170421600341797, -121.34314727783203))
+            task.wait(.4)
+            Placeunit(4, CFrame.new(230.15965270996094, 0.25170421600341797, -93.12144470214844))
+            task.wait(.4)
+        end
     end
 end)
 
