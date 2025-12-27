@@ -103,11 +103,12 @@ do
     Options.MyToggle:SetValue(false)
 
     local Toggle1 = Tabs.Main:AddToggle("MyToggle1", {Title = "Toggle1", Default = false })
-    _G.AutoPrint = false
+    state = false
     Toggle1:OnChanged(function(state)
         _G.AutoPrint = state
         task.spawn(function()
             while _G.AutoPrint do
+                task.wait(.3)
                 print("yay", Options.MyToggle1.Value)
             end
         end)
