@@ -91,6 +91,12 @@ do
 
     Options.MyToggle:SetValue(false)
 
+    Toggle:OnChanged(function()
+        print("Toggle changed:", Options.MyToggle.Value)
+    end)
+
+    Options.MyToggle:SetValue(false)
+
 
     
     local Slider = Tabs.Main:AddSlider("Slider", {
