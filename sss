@@ -90,8 +90,10 @@ do
         if place then
             print("on")
             task.spawn(function()
-                print("working")
-                task.wait(3)
+                while place do
+                    print("working")
+                    task.wait(3)
+                end
             end)
         else
             print("off")
