@@ -136,7 +136,7 @@ end
 --- Auto Miku ---
 
 function AutoMiku()
-    for _,MyUnit in pairs(workspace.Ignore.Units:GetChildren()) do
+    for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
         if string.len(MyUnit.Name) < 10 then 
             continue 
         end
