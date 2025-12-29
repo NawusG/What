@@ -145,7 +145,8 @@ function AutoMiku()
                     return
                 end
                 if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
-                local mikuID = tostring(MyUnit)
+                    local mikuID = tostring(MyUnit)
+                    print(mikuID)
                     knit.Services.TowerService.RE.UseAbility:FireServer(mikuID, 3)
                 end
             end
