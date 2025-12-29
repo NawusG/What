@@ -537,7 +537,7 @@ task.spawn(function()
                     if cards.Name == "Card" then
                         local This = cards.LayoutOrder
                         local RarityPath = cards.Rarity
-                        for _,cardName in pairs(cards:GetChildren())
+                        for _,cardName in pairs(cards:GetChildren()) do
                             if cardName.Name ~= "TopTitle" then
                                 continue
                             end
@@ -548,7 +548,7 @@ task.spawn(function()
                                 local Type = RarityPath.Text
                                 if PathName == "[Magician]" and Type == "[Path]" then
                                     task.wait(.2)
-                                    print("Selected Path : "..PathName, PathNum)
+                                    print("Selected Path : "..PathName, PathNum, Type)
                                     knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
                                     task.wait(5)
                                 end
