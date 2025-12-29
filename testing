@@ -456,10 +456,11 @@ task.spawn(function()
                     knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
                 end
             elseif #CardFound >= 5 then
-                for _,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
-                    if v.Name == "Card" then
+                task.wait(.2)
+                for _,v in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do task.wait()
+                    if v.Name == "Card" then task.wait()
                     This = v.LayoutOrder
-                        for _,card in pairs(v:GetChildren()) do
+                        for _,card in pairs(v:GetChildren()) do task.wait()
                             if card.Name ~= "TopTitle" then
                                 continue
                             end
