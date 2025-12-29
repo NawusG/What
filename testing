@@ -457,10 +457,10 @@ task.spawn(function()
                 end
             elseif #CardFound >= 5 then
                 task.wait(.2)
-                for _,v in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do task.wait()
-                    if v.Name == "Card" then task.wait()
+                for _,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                    if v.Name == "Card" then
                     This = v.LayoutOrder
-                        for _,card in pairs(v:GetChildren()) do task.wait()
+                        for _,card in pairs(v:GetChildren()) do
                             if card.Name ~= "TopTitle" then
                                 continue
                             end
@@ -468,8 +468,9 @@ task.spawn(function()
                             if CH then
                                 local PathName = CH.Text
                                 local PathNum = This
-                                if PathNum == 4 and PathName == "[Magician]" then
-                                    knit.Services.BlessingService.RE.GetNewPath:FireServer(This)
+                                if PathName == "[Magician]" then
+                                    print("Selected Path : ",PathName, PathNum)
+                                    knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
                                 end
                             end
                         end
