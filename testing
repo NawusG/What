@@ -23,6 +23,7 @@ local MapName = Workspace:GetAttribute("MapName")
 local AutoNinjaVirtual = false
 local AutoMarineVirtual = false
 local AutoBleachVirtual = false
+
 local AutoCard = false
 
 local AutoRagna = false
