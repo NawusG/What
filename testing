@@ -517,6 +517,7 @@ task.spawn(function()
                 task.wait(.2)
                 print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
                 knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
+                task.wait(.3)
             end
         elseif #CardFound >= 5 then
             task.wait(.1)
