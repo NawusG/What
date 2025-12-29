@@ -51,7 +51,7 @@ elseif Category == "Virtual" and MapName == "Hollowed Moon" then
     AutoBleachVirtual = true
     AutoCard = true
     AutoReplay = true
-elseif Category == "Virtual" and MapName == "Frozen Stronghold" then
+elseif Category == "Featured" and MapName == "Frozen Stronghold" then
     print("Ragna")
     AutoRagna = true
     AutoReplay = true
