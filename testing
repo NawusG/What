@@ -524,7 +524,9 @@ task.spawn(function()
             end
         elseif #CardFound >= 5 then
             for i,check in pairs(CardFound) do
-               print(i, check.Rare, check.Title)
+               if check.Rare == "[Path]" and check.Title == "Magic's Manifest" then
+                    knit.Services.BlessingService.RE.GetNewPath:FireServer(check.CardNum)
+               end
             end
         end
     end
