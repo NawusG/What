@@ -480,68 +480,78 @@ local Priority = {
 
 
 task.spawn(function()
-    while AutoCard and _G.Auto do 
-        task.wait(.1)
-        local CardFound = {}
-        table.clear(CardFound)
-        if plrgui.GameUI.Paths.Enabled == true then task.wait()
+    while AutoCard and _G.Auto do
+        if plrgui.GameUI.Paths.Enabled == true then
+            task.wait(.1)
+            local CardFound = {}
+            local count = 0
             for _,v in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                 if v.Name == "Card" then
-                    local CardCount = v.LayoutOrder
-                    local Top = v:FindFirstChild("TopTitle")
-                    local Rare = v:FindFirstChild("Rarity")
-                    local Title = v:FindFirstChild("Title")
-                    local Des = v:FindFirstChild('Text')
-                    if Top then
-                        local v_text = Top:FindFirstChild("Text")
-                        if v_text then
-                            local Class = v_text.Text
-                            local Name = Title.Text
-                            table.insert(CardFound, {
-                                CardNum = CardCount,
-                                Class = Class,
-                                Title = Name,
-                                Rare = Rare.Text,
-                                Des = Des.Text,
-                                Priorities = Priority[Name]
-                            })
+                    count = count + 1
+                end
+            end
+            if count < 5 then
+                task.wait(.2)
+                for _,card in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                    if card.Name == "Card" then
+                        local CardCount = card.LayoutOrder
+                        local Top = card:FindFirstChild("TopTitle")
+                        local Rare = card:FindFirstChild("Rarity")
+                        local Title = card:FindFirstChild("Title")
+                        local Des = card:FindFirstChild('Text')
+                        if Top then
+                            local v_text = Top:FindFirstChild("Text")
+                            if v_text then
+                                local Class = v_text.Text
+                                local Name = Title.Text
+                                table.insert(CardFound, {
+                                    CardNum = CardCount,
+                                    Class = Class,
+                                    Title = Name,
+                                    Rare = Rare.Text,
+                                    Des = Des.Text,
+                                    Priorities = Priority[Name]
+                                })
+                            end
                         end
                     end
                 end
             end
-        end
-
-        if #CardFound > 0 and #CardFound < 5 then
-            task.wait(.2)
-            table.sort(CardFound, function(a, b)
-                return a.Priorities < b.Priorities
-            end)
-            local select = CardFound[1]
-            if select then 
+            if #CardFound > 0 and #CardFound < 5 then
                 task.wait(.2)
-                print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
-                knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
-                task.wait(.3)
+                table.sort(CardFound, function(a, b)
+                    return a.Priorities < b.Priorities
+                end)
+                local select = CardFound[1]
+                if select then 
+                    task.wait(.2)
+                    print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
+                    knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
+                    repeat task.wait()
+                    until plrgui.GameUI.Paths.Enabled == false
+                end
             end
-        end
-        if #plrgui.GameUI.Paths.PathSelection.Cards:GetChildren() >= 5 and plrgui.GameUI.Paths.Enabled == true then
-            task.wait(.2)
-            for _,cards in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
-                if cards.Name == "Card" then
-                local This = cards.LayoutOrder
-                    for _,card in pairs(cards:GetChildren()) do
-                        if card.Name ~= "TopTitle" then
-                            continue
-                        end
-                        local CH = card:FindFirstChild("Text")
-                        if CH then
-                            local PathName = CH.Text
-                            local PathNum = This
-                            if PathName == "[Magician]" then
-                                task.wait(.2)
-                                print("Selected Path : "..PathName, PathNum)
-                                knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
-                                task.wait(5)
+            if count >= 5 then
+                task.wait(.2)
+                for _,cards in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                    if cards.Name == "Card" then
+                        local This = cards.LayoutOrder
+                        for _,card in pairs(cards:GetChildren()) do
+                            if card.Name ~= "TopTitle" then
+                                continue
+                            end
+                            local CH = card:FindFirstChild("Text")
+                            if CH then
+                                local PathName = CH.Text
+                                local PathNum = This
+                                if PathName == "[Magician]" then
+                                    task.wait(.2)
+                                    print("Selected Path : "..PathName, PathNum)
+                                    knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
+                                    task.wait(.3)
+                                    repeat task.wait()
+                                    until plrgui.GameUI.Paths.Enabled == false
+                                end
                             end
                         end
                     end
