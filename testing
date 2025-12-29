@@ -401,12 +401,10 @@ local Priority = {
     ["Telescope"] = 9999999999999 -- ตีไกล 75// อัพแพง 2 เท่า
 }
 
-local Replica = game:GetService("ReplicatedStorage")
-local Package = Replica.Packages
 
 task.spawn(function()
     while true do 
-        if AutoCard then
+        if _G.Auto then
             task.wait(.1)
             local CardFound = {}
             if plrgui.GameUI.Paths.Enabled == true then task.wait()
