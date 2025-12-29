@@ -488,7 +488,7 @@ task.spawn(function()
                 if card.Name == "Card" then
                     local CardCount = card.LayoutOrder
                     local Top = card:FindFirstChild("TopTitle")
-                    local Rare = card:WaitForChild("Rarity")
+                    local Rare = card:FindFirstChild("Rarity")
                     local Title = card:FindFirstChild("Title")
                     local Des = card:FindFirstChild('Text')
                     if Top then
@@ -510,24 +510,23 @@ task.spawn(function()
             end
         end
 
-        if #CardFound > 0 and #CardFound < 5 then
-            task.wait(.2)
-            table.sort(CardFound, function(a, b)
-                return a.Priorities < b.Priorities
-            end)
-            local select = CardFound[1]
-            if select then 
-                print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
-                knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
+            if #CardFound > 0 and #CardFound < 5 then
                 task.wait(.2)
-            end
-        end
-        if #CardFound >= 5 then
-            for _,check in pairs(CardFound) do
-                if check.Rarity == "[Path]" then
-                    print(check.Rarity)
+                table.sort(CardFound, function(a, b)
+                    return a.Priorities < b.Priorities
+                end)
+                local select = CardFound[1]
+                if select then 
+                    print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
+                    knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
+                    task.wait(.2)
                 end
             end
-        end
+            if #CardFound >= 5 then
+                for _,check in pairs(CardFound) do
+                    print(check)
+                    end
+                end
+            end
     end
 end)
