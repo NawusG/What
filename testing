@@ -492,7 +492,7 @@ task.spawn(function()
             end
             if count < 5 then
                 task.wait(.2)
-                for _,card in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                for _,card in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do task.wait(.2)
                     if card.Name == "Card" then
                         local CardCount = card.LayoutOrder
                         local Top = card:FindFirstChild("TopTitle")
@@ -527,16 +527,15 @@ task.spawn(function()
                     task.wait(.2)
                     print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
                     knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
-                    repeat task.wait()
-                    until plrgui.GameUI.Paths.Enabled == false
+                    task.wait(.4)
                 end
             end
             if count >= 5 then
                 task.wait(.2)
-                for _,cards in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                for _,cards in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do task.wait(.2)
                     if cards.Name == "Card" then
                         local This = cards.LayoutOrder
-                        for _,card in pairs(cards:GetChildren()) do
+                        for _,card in pairs(cards:GetChildren()) do task.wait(.2)
                             if card.Name ~= "TopTitle" then
                                 continue
                             end
@@ -548,9 +547,7 @@ task.spawn(function()
                                     task.wait(.2)
                                     print("Selected Path : "..PathName, PathNum)
                                     knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
-                                    task.wait(.3)
-                                    repeat task.wait()
-                                    until plrgui.GameUI.Paths.Enabled == false
+                                    task.wait(5)
                                 end
                             end
                         end
