@@ -483,6 +483,7 @@ task.spawn(function()
     while AutoCard and _G.Auto do
         task.wait(1)
         local CardFound = {}
+        table.clear(CardFound)
         if plrgui.GameUI.Paths.Enabled == true then
             for _,card in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                 if card.Name == "Card" then
@@ -510,23 +511,19 @@ task.spawn(function()
             end
         end
 
-            if #CardFound > 0 and #CardFound < 5 then
+        if #CardFound > 0 and #CardFound < 5 then
+            task.wait(.2)
+            table.sort(CardFound, function(a, b)
+                return a.Priorities < b.Priorities
+            end)
+            local select = CardFound[1]
+            if select then 
+                print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
+                knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
                 task.wait(.2)
-                table.sort(CardFound, function(a, b)
-                    return a.Priorities < b.Priorities
-                end)
-                local select = CardFound[1]
-                if select then 
-                    print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
-                    knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
-                    task.wait(.2)
-                end
             end
-            if #CardFound >= 5 then
-                for _,check in pairs(CardFound) do
-                    print(check)
-                    end
-                end
-            end
+        elseif #CardFound >= 5 then
+            print("more then 5 cards")
+        end
     end
 end)
