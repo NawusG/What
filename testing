@@ -523,7 +523,9 @@ task.spawn(function()
                 task.wait(.2)
             end
         elseif #CardFound >= 5 then
-            print("more then 5 cards")
+            for i,check in pairs(CardFound) do
+               print(i, check.Rare, check.Title)
+            end
         end
     end
 end)
