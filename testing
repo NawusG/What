@@ -133,7 +133,24 @@ function DamageNum()
     end
 end
 
+--- Auto Miku ---
 
+function AutoMiku()
+    for _,MyUnit in pairs(workspace.Ignore.Units:GetChildren()) do
+        if string.len(MyUnit.Name) < 10 then 
+            continue 
+        end
+            for _,NameUnit in pairs(MyUnit:GetChildren()) do
+                if not (NameUnit:IsA("Model") and NameUnit.Name == "miku") then
+                    return
+                end
+                if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
+                local mikuID = tostring(MyUnit)
+                    knit.Services.TowerService.RE.UseAbility:FireServer(mikuID, 3)
+                end
+            end
+    end
+end
 
 
 function Placeunit(unit, cf)
@@ -290,6 +307,7 @@ if AutoMarineVirtual and _G.Auto then
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             UpAll()
+            AutoMiku()
             if Wave <= 3 then
                 Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
                 task.wait(.3)
