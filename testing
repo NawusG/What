@@ -292,21 +292,25 @@ if AutoMarineVirtual and _G.Auto then
             if Wave <= 3 then
                 Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
                 task.wait(.3)
+                UpAll()
             end
             if (Wave >= 2 and Wave <= 3) and Yen >= 2600 then
                 task.wait(.3)
                 Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
+                UpAll()
             end
             if Wave >= 7 and Wave <= 10 then
                 Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
                 task.wait(.3)
                 Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
                 task.wait(.3)
+                UpAll()
             end
             task.wait(.3)
             if Wave >= 20 and Wave <= 22 then
                 Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
                 task.wait(.3)
+                UpAll()
             end
             if Wave >= 15 and Wave <= 20 then
                 Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
@@ -314,8 +318,9 @@ if AutoMarineVirtual and _G.Auto then
                 Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
                 task.wait(.3)
                 Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
+                task.wait(.2)
+                UpAll()
             end
-            UpAll()
         end
     end)
 end
