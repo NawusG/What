@@ -515,7 +515,7 @@ task.spawn(function()
                                 task.wait(.2)
                                 print("Selected Path : "..PathName, PathNum)
                                 knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
-                                task.wait(.5)
+                                task.wait(.3)
                             end
                         end
                     end
