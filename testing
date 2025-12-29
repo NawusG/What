@@ -511,9 +511,6 @@ task.spawn(function()
             end
         end
 
-
-        
-
         if #CardFound > 0 and #CardFound < 5 then
             task.wait(.2)
             table.sort(CardFound, function(a, b)
@@ -526,8 +523,9 @@ task.spawn(function()
                 knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
                 task.wait(.3)
             end
-        elseif #CardFound >= 5 then
-            task.wait(.1)
+        end
+        if #plrgui.GameUI.Paths.PathSelection.Cards:GetChildren() >= 5 and plrgui.GameUI.Paths.Enabled == true then
+            task.wait(.2)
             for _,cards in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                 if cards.Name == "Card" then
                 local This = cards.LayoutOrder
@@ -543,7 +541,7 @@ task.spawn(function()
                                 task.wait(.2)
                                 print("Selected Path : "..PathName, PathNum)
                                 knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
-                                task.wait(1)
+                                task.wait(5)
                             end
                         end
                     end
