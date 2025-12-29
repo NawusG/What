@@ -512,8 +512,10 @@ task.spawn(function()
                             local PathName = CH.Text
                             local PathNum = This
                             if PathNum == 4 then
+                                task.wait(.2)
                                 print("Selected Path : "..PathName, PathNum)
                                 knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
+                                task.wait(.1)
                             end
                         end
                     end
