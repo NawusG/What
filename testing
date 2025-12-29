@@ -511,7 +511,7 @@ task.spawn(function()
                         if CH then
                             local PathName = CH.Text
                             local PathNum = This
-                            if PathName == "[Magician]" then
+                            if PathNum == 4 then
                                 print("Selected Path : "..PathName, PathNum)
                                 knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
                             end
