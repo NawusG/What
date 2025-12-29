@@ -503,7 +503,7 @@ task.spawn(function()
                                 Rare = Rare.Text,
                                 Des = Des.Text,
                                 Priorities = Priority[Name]
-                                })
+                            })
                         end
                     end
                 end
@@ -527,6 +527,9 @@ task.spawn(function()
                 if cards.Name == "Card" then
                     local This = cards.LayoutOrder
                     local RarityPath = cards:FindFirstChild("Rarity")
+                    if not RarityPath then
+                        continue
+                    end
                     for _,cardName in pairs(cards:GetChildren()) do
                         if cardName.Name ~= "TopTitle" then
                             continue
