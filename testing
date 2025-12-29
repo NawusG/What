@@ -486,7 +486,7 @@ task.spawn(function()
             task.wait(.1)
             for _,cards in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                 if cards.Name == "Card" then
-                This = cards.LayoutOrder
+                local This = cards.LayoutOrder
                     for _,card in pairs(cards:GetChildren()) do
                         if card.Name ~= "TopTitle" then
                             continue
