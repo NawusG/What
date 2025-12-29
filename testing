@@ -410,7 +410,7 @@ task.spawn(function()
             task.wait(.1)
             local CardFound = {}
             if plrgui.GameUI.Paths.Enabled == true then task.wait()
-                for i,v in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                for _,v in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                     if v.Name == "Card" then
                         local CardCount = v.LayoutOrder
                         local Top = v:FindFirstChild("TopTitle")
@@ -456,8 +456,24 @@ task.spawn(function()
                     knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
                 end
             elseif #CardFound >= 5 then
-                task.wait(.2)
-                knit.Services.BlessingService.RE.GetNewPath:FireServer(4)
+                for _,v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                    if v.Name == "Card" then
+                    This = v.LayoutOrder
+                        for _,card in pairs(v:GetChildren()) do
+                            if card.Name ~= "TopTitle" then
+                                continue
+                            end
+                            local CH = card:FindFirstChild("Text")
+                            if CH then
+                                local PathName = CH.Text
+                                local PathNum = This
+                                if This == 4 and PathName == "[Magician]" then
+                                    knit.Services.BlessingService.RE.GetNewPath:FireServer(This)
+                                end
+                            end
+                        end
+                    end
+                end
             end
         end
     end
