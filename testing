@@ -483,6 +483,7 @@ task.spawn(function()
     while AutoCard and _G.Auto do 
         task.wait(.1)
         local CardFound = {}
+        table.clear(CardFound)
         if plrgui.GameUI.Paths.Enabled == true then task.wait()
             for _,v in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                 if v.Name == "Card" then
