@@ -523,31 +523,9 @@ task.spawn(function()
             end
         end
         if #CardFound >= 5 then
-            for _,cards in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
-                if cards.Name == "Card" then
-                    local This = cards.LayoutOrder
-                    local RarityPath = cards:FindFirstChild("Rarity")
-                    if not RarityPath then
-                        break
-                    end
-                    for _,cardName in pairs(cards:GetChildren()) do
-                        if cardName.Name ~= "TopTitle" then
-                            continue
-                        end
-                        local CH = cardName:FindFirstChild("Text")
-                        if CH then
-                            local PathName = CH.Text
-                            local PathNum = This
-                            local Type = RarityPath.Text
-                            if PathName == "[Magician]" and Type == "[Path]" then
-                                task.wait(.2)
-                                print("Selected Path : "..PathName, PathNum, Type)
-                                knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
-                                task.wait(.1)
-                                break
-                            end
-                        end
-                    end
+            for _,check in pairs(CardFound) do
+                if check.Rarity == "[Path]" then
+                    print(check.Rarity)
                 end
             end
         end
