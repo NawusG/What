@@ -293,11 +293,11 @@ if AutoMarineVirtual and _G.Auto then
                 Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
                 task.wait(.3)
             end
-            if Wave > 3 and Wave < 6 then
+            if Wave > 3 and Wave <= 6 then
                 task.wait(.3)
                 Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
             end
-            if Wave > 7 and Wave < 10 then
+            if Wave >= 7 and Wave <= 10 then
                 Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
                 task.wait(.3)
                 Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
@@ -337,6 +337,7 @@ end
 
 
 ----------------------- Ragna Stronghold  -----------------------
+
 if AutoRagna and _G.Auto then
     task.spawn(function()
         while AutoRagna and _G.Auto do task.wait()
@@ -376,12 +377,12 @@ end
 task.spawn(function()
     while AutoReplay and _G.Auto do task.wait()
         if plrgui.GameUI.HUD.Vote.Visible == true then
-            knit.Services.WaveService.RF.Vote:InvokeServer(true)
             task.wait(.3)
+            knit.Services.WaveService.RF.Vote:InvokeServer(true)
         end
         if plrgui.GameUI.MissionResultFrame.Main.Visible == true then
+            task.wait(.3)
             replay()
-            task.wait(2)
         end
     end
 end)
