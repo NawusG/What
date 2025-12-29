@@ -477,13 +477,13 @@ local Priority = {
     ["Opportunist"] = 10006,
     ["Telescope"] = 9999999999999 -- ตีไกล 75// อัพแพง 2 เท่า
 }
-
+print(AutoCard)
+print(_G.Auto)
 
 task.spawn(function()
     while AutoCard and _G.Auto do
         task.wait(1)
         local CardFound = {}
-        table.clear(CardFound)
         if plrgui.GameUI.Paths.Enabled == true then
             for _,card in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                 if card.Name == "Card" then
