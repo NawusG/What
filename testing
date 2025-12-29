@@ -49,6 +49,8 @@ elseif Category == "Virtual" and MapName == "Frozen Stronghold" then
     print("Ragna")
     AutoRagna = true
     AutoReplay = true
+else
+    return
 end
 print("Running Script")
 
@@ -98,6 +100,9 @@ local Request = (syn and syn.request) or request or (http and http.request)
 local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
 local Gems = Players.LocalPlayer:GetAttribute("Gems")
 
+
+--- Calculate Play Time ---
+
 function PlayTime()
     for i,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         if v.Name == "Stat" then
@@ -112,10 +117,8 @@ function PlayTime()
     end
 end
 
+--- Calculate DamageNum ---
 
-
-
-local Players = game:GetService("Players")
 function DamageNum()
     for i,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         if v.Name == "Stat" then
@@ -129,7 +132,6 @@ function DamageNum()
         end
     end
 end
-
 
 
 
@@ -268,48 +270,76 @@ task.spawn(function()
     end
 end)
 
+----------------------- Ninja Virtual  -----------------------
 
+if AutoNinjaVirtual and _G.Auto then
+    task.spawn(function()
+        while AutoNinjaVirtual do task.wait()
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            print("Nnija aaa")
+        end
+    end)
+end
 
+----------------------- -Marine Virtual ----------------------
 
-------------------------------------------------- -Marine Virtual -----------------------
 if AutoMarineVirtual and _G.Auto then
     task.spawn(function()
-        while AutoMarineVirtual do task.wait()
+        while AutoMarineVirtual and _G.Auto do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
-            local Finish = Workspace:GetAttribute("MatchFinished")
-            task.wait(.3)
-            Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
-            task.wait(.3)
-            Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
-            task.wait(.3)
-            if Wave > 7 then
-                Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
-            task.wait(.3)
+            local Yen = player:GetAttribute("Yen")
+            if Wave <= 3 then
+                Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
+                task.wait(.3)
             end
-            Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+            if Wave > 3 and Wave < 6 then
+                task.wait(.3)
+                Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
+            end
+            if Wave > 7 and Wave < 10 then
+                Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
+                task.wait(.3)
+                Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+                task.wait(.3)
+            end
             task.wait(.3)
-            UpAll()
-            task.wait(.3)
-            if Wave >= 20 then
+            if Wave >= 20 and Wave <= 22 then
                 Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
                 task.wait(.3)
             end
-            if game:GetService("Players").LocalPlayer:GetAttribute("Yen") > 8000 then
+            if Yen > 8000 and Wave > 15 then
                 Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
                 task.wait(.3)
                 Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
                 task.wait(.3)
                 Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
             end
+            UpAll()
         end
     end)
 end
 
+----------------------- Bleach Virtual  -----------------------
 
----ragna
+if AutoBleachVirtual then
+    task.spawn(function()
+        while AutoBleachVirtual and _G.Auto do task.wait()
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            print("BleachVirtual")
+        end
+    end) 
+end
+
+
+
+
+
+----------------------- Ragna Stronghold  -----------------------
 if AutoRagna and _G.Auto then
     task.spawn(function()
-        while _G.Auto do task.wait()
+        while AutoRagna and _G.Auto do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             if Wave < 3 then
@@ -342,7 +372,7 @@ if AutoRagna and _G.Auto then
     end)
 end
 
-
+--Auto replay
 task.spawn(function()
     while AutoReplay and _G.Auto do task.wait()
         if plrgui.GameUI.HUD.Vote.Visible == true then
@@ -355,20 +385,6 @@ task.spawn(function()
         end
     end
 end)
--- task.spawn(function()
---     while _G.Auto do task.wait()
---         if plrgui.GameUI.HUD.Vote.Visible == true then
---             knit.Services.WaveService.RF.Vote:InvokeServer(true)
---             task.wait(.3)
---             
---             task.wait(.2)
---         end
---         if plrgui.GameUI.MissionResultFrame.Main.Visible == true then
---             replay()
---             task.wait(2)
---         end
---     end
--- end)
 
 ---------------------------------------  Auto Card  -------------------------------------------------
 
