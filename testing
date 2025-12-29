@@ -481,21 +481,13 @@ local Priority = {
 
 task.spawn(function()
     while AutoCard and _G.Auto do
-        if plrgui.GameUI.Paths.Enabled == true then
+
             task.wait(1)
             local CardFound = {}
-            local countCard = 0
-            for _,v in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
-                if v.Name == "Card" then
-                    countCard = countCard + 1
-                    print(countCard)
-                end
-            end
-            if countCard < 5 then
+            if plrgui.GameUI.Paths.Enabled == true then
                 task.wait(.2)
                 for _,card in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                     if card.Name == "Card" then
-                        task.wait(.2)
                         local CardCount = card.LayoutOrder
                         local Top = card:FindFirstChild("TopTitle")
                         local Rare = card:FindFirstChild("Rarity")
@@ -532,7 +524,7 @@ task.spawn(function()
                     task.wait(.4)
                 end
             end
-            if countCard >= 5 then
+            if #CardFound >= 5 then
                 task.wait(.2)
                 for _,cards in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
                     if cards.Name == "Card" then
