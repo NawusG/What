@@ -528,7 +528,7 @@ task.spawn(function()
                     local This = cards.LayoutOrder
                     local RarityPath = cards:FindFirstChild("Rarity")
                     if not RarityPath then
-                        continue
+                        break
                     end
                     for _,cardName in pairs(cards:GetChildren()) do
                         if cardName.Name ~= "TopTitle" then
