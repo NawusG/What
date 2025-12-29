@@ -23,17 +23,31 @@ local MapName = Workspace:GetAttribute("MapName")
 local AutoNinjaVirtual = false
 local AutoMarineVirtual = false
 local AutoBleachVirtual = false
+local AutoCard = false
 
 local AutoRagna = false
 
-if Category == "Virtual" and MapName == "" then
+local AutoReplay = false
+
+if Category == "Virtual" and MapName == "Ninja Forest" then
+    print("Ninja")
     AutoNinjaVirtual = true
-elseif Category == "Virtual" and MapName == "" then
+    AutoCard = true
+    AutoReplay = true
+elseif Category == "Virtual" and MapName == "Marine Base" then
+    print("Marine")
     AutoMarineVirtual = true
-elseif Category == "Virtual" and MapName == "" then
+    AutoCard = true
+    AutoReplay = true
+elseif Category == "Virtual" and MapName == "Hollowed Moon" then
+    print("Bleach")
     AutoBleachVirtual = true
+    AutoCard = true
+    AutoReplay = true
 elseif Category == "Virtual" and MapName == "Frozen Stronghold" then
+    print("Ragna")
     AutoRagna = true
+    AutoReplay = true
 end
 print("Running Script")
 
@@ -257,11 +271,13 @@ end)
 
 
 ------------------------------------------------- -Marine Virtual -----------------------
-if AutoMarineVirtual then
+if AutoMarineVirtual and _G.Auto then
     task.spawn(function()
         while AutoMarineVirtual do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
             local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait(.3)
+            Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
             task.wait(.3)
             Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
             task.wait(.3)
@@ -290,14 +306,15 @@ end
 
 
 ---ragna
-if AutoRagna then
+if AutoRagna and _G.Auto then
     task.spawn(function()
         while _G.Auto do task.wait()
-                local Wave = Workspace:GetAttribute("Wave")
+            local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             if Wave < 3 then
-            UpAll()
-            task.wait(.2)
+                Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
+                UpAll()
+                task.wait(.2)
             end
             if Wave >= 3 and Wave <= 8 and Yen > 3200 then
                 Placeunit(2, CFrame.new(214.24610900878906, 5.284136772155762, -107.47723388671875))
@@ -326,12 +343,10 @@ end
 
 
 task.spawn(function()
-    while _G.Auto do task.wait()
+    while AutoReplay and _G.Auto do task.wait()
         if plrgui.GameUI.HUD.Vote.Visible == true then
             knit.Services.WaveService.RF.Vote:InvokeServer(true)
             task.wait(.3)
-            Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
-            task.wait(.2)
         end
         if plrgui.GameUI.MissionResultFrame.Main.Visible == true then
             replay()
@@ -344,7 +359,7 @@ end)
 --         if plrgui.GameUI.HUD.Vote.Visible == true then
 --             knit.Services.WaveService.RF.Vote:InvokeServer(true)
 --             task.wait(.3)
---             Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
+--             
 --             task.wait(.2)
 --         end
 --         if plrgui.GameUI.MissionResultFrame.Main.Visible == true then
@@ -422,73 +437,66 @@ local Priority = {
 
 
 task.spawn(function()
-    while true do 
-        if _G.Auto then
-            task.wait(.1)
-            local CardFound = {}
-            if plrgui.GameUI.Paths.Enabled == true then task.wait()
-                for _,v in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
-                    if v.Name == "Card" then
-                        local CardCount = v.LayoutOrder
-                        local Top = v:FindFirstChild("TopTitle")
-                        local Rare = v:FindFirstChild("Rarity")
-                        local Title = v:FindFirstChild("Title")
-                        local Des = v:FindFirstChild('Text')
-                        if Top then
-                            local v_text = Top:FindFirstChild("Text")
-                            if v_text then
-                                local Class = v_text.Text
-                                local Name = Title.Text
-                                table.insert(CardFound, {
-                                    CardNum = CardCount,
-                                    Class = Class,
-                                    Title = Name,
-                                    Rare = Rare.Text,
-                                    Des = Des.Text,
-                                    Priorities = Priority[Name]
-                                })
-                            end
+    while AutoCard and _G.Auto do 
+        task.wait(.1)
+        local CardFound = {}
+        if plrgui.GameUI.Paths.Enabled == true then task.wait()
+            for _,v in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                if v.Name == "Card" then
+                    local CardCount = v.LayoutOrder
+                    local Top = v:FindFirstChild("TopTitle")
+                    local Rare = v:FindFirstChild("Rarity")
+                    local Title = v:FindFirstChild("Title")
+                    local Des = v:FindFirstChild('Text')
+                    if Top then
+                        local v_text = Top:FindFirstChild("Text")
+                        if v_text then
+                            local Class = v_text.Text
+                            local Name = Title.Text
+                            table.insert(CardFound, {
+                                CardNum = CardCount,
+                                Class = Class,
+                                Title = Name,
+                                Rare = Rare.Text,
+                                Des = Des.Text,
+                                Priorities = Priority[Name]
+                            })
                         end
                     end
                 end
             end
+        end
 
 
         
-        -- if #CardFound > 0 and #CardFound < 5 then task.wait(.3)
-        --     for leg,kaw in pairs(CardFound) do
-        --         task.wait()
-        --         print(leg, "Name:", kaw.Title)
-        --     end
-        -- end
-            if #CardFound > 0 and #CardFound < 5 then
+
+        if #CardFound > 0 and #CardFound < 5 then
+            task.wait(.2)
+            table.sort(CardFound, function(a, b)
+                return a.Priorities < b.Priorities
+            end)
+            local select = CardFound[1]
+            if select then 
                 task.wait(.2)
-                table.sort(CardFound, function(a, b)
-                    return a.Priorities < b.Priorities
-                end)
-                local select = CardFound[1]
-                if select then 
-                    task.wait(.2)
-                    print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
-                    knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
-                end
-            elseif #CardFound >= 5 then
-                task.wait(.1)
-                for _,cards in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
-                    if cards.Name == "Card" then
-                    This = cards.LayoutOrder
-                        for _,card in pairs(v:GetChildren()) do
-                            if card.Name ~= "TopTitle" then
-                                continue
-                            end
-                            local CH = card:FindFirstChild("Text")
-                            if CH then
-                                local PathName = CH.Text
-                                local PathNum = This
-                                if PathName == "[Magician]" then
-                                    print("Selected Path : "..PathName, PathNum)
-                                    knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
-                                end
+                print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
+                knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
+            end
+        elseif #CardFound >= 5 then
+            task.wait(.1)
+            for _,cards in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                if cards.Name == "Card" then
+                This = cards.LayoutOrder
+                    for _,card in pairs(v:GetChildren()) do
+                        if card.Name ~= "TopTitle" then
+                            continue
+                        end
+                        local CH = card:FindFirstChild("Text")
+                        if CH then
+                            local PathName = CH.Text
+                            local PathNum = This
+                            if PathName == "[Magician]" then
+                                print("Selected Path : "..PathName, PathNum)
+                                knit.Services.BlessingService.RE.GetNewPath:FireServer(PathNum)
                             end
                         end
                     end
