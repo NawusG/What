@@ -57,8 +57,6 @@ end
 
 
 
-
-
 --- Webhook---
 local url = _G.webhook
 local HttpService = game:GetService("HttpService")
