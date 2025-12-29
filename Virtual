@@ -477,7 +477,8 @@ local Priority = {
     ["Opportunist"] = 10006,
     ["Telescope"] = 9999999999999 -- ตีไกล 75// อัพแพง 2 เท่า
 }
-
+print(AutoCard)
+print(_G.Auto)
 
 task.spawn(function()
     while AutoCard and _G.Auto do
@@ -488,7 +489,7 @@ task.spawn(function()
                 if card.Name == "Card" then
                     local CardCount = card.LayoutOrder
                     local Top = card:FindFirstChild("TopTitle")
-                    local Rare = card:WaitForChild("Rarity")
+                    local Rare = card:FindFirstChild("Rarity")
                     local Title = card:FindFirstChild("Title")
                     local Des = card:FindFirstChild('Text')
                     if Top then
@@ -521,12 +522,11 @@ task.spawn(function()
                 knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
                 task.wait(.2)
             end
-        end
-        if #CardFound >= 5 then
-            for _,check in pairs(CardFound) do
-                if check.Rarity == "[Path]" then
-                    print(check.Rarity)
-                end
+        elseif #CardFound >= 5 then
+            for i,check in pairs(CardFound) do
+               if check.Rare == "[Path]" and check.Title == "Magic's Manifest" then
+                    knit.Services.BlessingService.RE.GetNewPath:FireServer(check.CardNum)
+               end
             end
         end
     end
