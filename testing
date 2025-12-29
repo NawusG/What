@@ -17,6 +17,11 @@ local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
 local LocalName = tostring(player.Name)
 
+if game.PlaceId == 13341080084766 then -- main world
+    return
+end
+
+
 local Category = Workspace:GetAttribute("Category")
 local MapName = Workspace:GetAttribute("MapName")
 
