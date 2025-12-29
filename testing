@@ -481,36 +481,35 @@ local Priority = {
 
 task.spawn(function()
     while AutoCard and _G.Auto do
-
-            task.wait(1)
-            local CardFound = {}
-            if plrgui.GameUI.Paths.Enabled == true then
-                task.wait(.2)
-                for _,card in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
-                    if card.Name == "Card" then
-                        local CardCount = card.LayoutOrder
-                        local Top = card:FindFirstChild("TopTitle")
-                        local Rare = card:FindFirstChild("Rarity")
-                        local Title = card:FindFirstChild("Title")
-                        local Des = card:FindFirstChild('Text')
-                        if Top then
-                            local v_text = Top:FindFirstChild("Text")
-                            if v_text then
-                                local Class = v_text.Text
-                                local Name = Title.Text
-                                table.insert(CardFound, {
-                                    CardNum = CardCount,
-                                    Class = Class,
-                                    Title = Name,
-                                    Rare = Rare.Text,
-                                    Des = Des.Text,
-                                    Priorities = Priority[Name]
+        task.wait(1)
+        local CardFound = {}
+        if plrgui.GameUI.Paths.Enabled == true then
+            task.wait(.2)
+            for _,card in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
+                if card.Name == "Card" then
+                    local CardCount = card.LayoutOrder
+                    local Top = card:FindFirstChild("TopTitle")
+                    local Rare = card:FindFirstChild("Rarity")
+                    local Title = card:FindFirstChild("Title")
+                    local Des = card:FindFirstChild('Text')
+                    if Top then
+                        local v_text = Top:FindFirstChild("Text")
+                        if v_text then
+                            local Class = v_text.Text
+                            local Name = Title.Text
+                            table.insert(CardFound, {
+                                CardNum = CardCount,
+                                Class = Class,
+                                Title = Name,
+                                Rare = Rare.Text,
+                                Des = Des.Text,
+                                Priorities = Priority[Name]
                                 })
-                            end
                         end
                     end
                 end
             end
+
             if #CardFound > 0 and #CardFound < 5 then
                 task.wait(.2)
                 table.sort(CardFound, function(a, b)
