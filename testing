@@ -308,7 +308,7 @@ if AutoMarineVirtual and _G.Auto then
                 Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
                 task.wait(.3)
             end
-            if Yen > 8000 and Wave > 15 then
+            if Wave >= 15 and Wave <= 20 then
                 Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
                 task.wait(.3)
                 Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
