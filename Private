@@ -51,7 +51,7 @@ elseif Category == "Virtual" and MapName == "Hollowed Moon" then
     AutoBleachVirtual = true
     AutoCard = true
     AutoReplay = true
-elseif Category == "Virtual" and MapName == "Frozen Stronghold" then
+elseif Category == "Featured" and MapName == "Frozen Stronghold" then
     print("Ragna")
     AutoRagna = true
     AutoReplay = true
@@ -148,6 +148,7 @@ function AutoMiku()
         end
             for _,NameUnit in pairs(MyUnit:GetChildren()) do
                 if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
+                    task.wait(.3)
                     knit.Services.TowerService.RE.UseAbility:FireServer(MyUnit.Name, 3)
                 end
             end
@@ -232,7 +233,7 @@ function Webhook(Result)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
     local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
     local Gems = Players.LocalPlayer:GetAttribute("Gems")
-    local Reroll = player:GetAttribute("Rerolls")
+    local Rerolls = player:GetAttribute("Rerolls")
     local response = Request(
     {
         Url = url,
@@ -253,10 +254,11 @@ function Webhook(Result)
                     {
                         name = "Player Infomation | 🟢",
                         value =
-                            "🐼 | Player : " .. LocalName ..
+                            "👑 | Player : " .. LocalName ..
                             "\n📈 | Level : " .. Level ..
                             "\n♦️ | Virtual Tokens : " .. tostring(VirtualTokens) ..
-                            "\n💎 | Total Gems : " .. tostring(Gems),
+                            "\n💎 | Total Gems : " .. tostring(Gems)
+                            "\n✨ | Total Rerolls : " .. tostring(Rerolls),
                         inline = false
                     },
                     {
@@ -493,8 +495,8 @@ local Priority = {
     ["Opportunist"] = 10006,
     ["Telescope"] = 9999999999999 -- ตีไกล 75// อัพแพง 2 เท่า
 }
-print(AutoCard)
-print(_G.Auto)
+
+
 
 task.spawn(function()
     while AutoCard and _G.Auto do
