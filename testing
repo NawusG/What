@@ -329,6 +329,7 @@ if AutoMarineVirtual and _G.Auto then
         while AutoMarineVirtual and _G.Auto do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
             UpAll()
             task.wait(.1)
             AutoMiku()
@@ -357,6 +358,10 @@ if AutoMarineVirtual and _G.Auto then
                 Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
                 task.wait(.2)
                 Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
+            end
+            if Finish == true then
+                repeat task.wait()
+                until Finish == false
             end
         end
     end)
