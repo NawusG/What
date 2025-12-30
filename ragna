@@ -421,6 +421,7 @@ if AutoRagna and _G.Auto then
             task.wait(.2)
             if Wave < 3 then
                 Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
+                UpAll()
                 task.wait(.2)
             end
             if Wave >= 3 and Yen > 3200 then
@@ -430,7 +431,7 @@ if AutoRagna and _G.Auto then
             if Wave == 14 then
                 task.wait()
                 AutoSJW1()
-                task.wait(13)
+                task.wait(15)
                 AutoSJW2()
             end
             UpAll()
