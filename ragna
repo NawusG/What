@@ -157,7 +157,7 @@ end
 
 --- Auto SJW ---
 
-function AutoSJW1()
+function AutoSJW_1()
     for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
         if string.len(MyUnit.Name) < 10 then 
             continue 
@@ -172,15 +172,15 @@ function AutoSJW1()
     end
 end
 
-function AutoSJW2()
-    for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
-        if string.len(MyUnit.Name) < 10 then 
+function AutoSJW_2()
+    for _,MyUnit1 in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if string.len(MyUnit1.Name) < 10 then 
             continue 
         end
-        for _,NameUnit in pairs(MyUnit:GetChildren()) do
-            if NameUnit:IsA("Model") and NameUnit.Name == "SJWEVO" then
+        for _,NameUnit1 in pairs(MyUnit:GetChildren()) do
+            if NameUni1t:IsA("Model") and NameUnit1.Name == "SJWEVO" then
                 task.wait(.2)
-                local Fk1 = tostring(NameUnit.Parent)
+                local Fk1 = tostring(NameUnit1.Parent)
                 knit.Services.TowerService.RE.UseAbility:FireServer(Fk1, 2)
             end
         end
@@ -428,11 +428,11 @@ if AutoRagna and _G.Auto then
                 Placeunit(6, CFrame.new(211.8043975830078, 0.25170421600341797, -123.27436065673828))
                 task.wait(.2)
             end
-            if Wave == 14 then
+            if Wave >= 14 then
                 task.wait()
-                AutoSJW1()
-                task.wait(8)
-                AutoSJW2()
+                AutoSJW_1()
+                task.wait()
+                AutoSJW_2()
             end
             UpAll()
             -- if Wave >= 3 and Wave <= 8 and Yen > 3200 then
