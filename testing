@@ -498,7 +498,7 @@ print(_G.Auto)
 
 task.spawn(function()
     while AutoCard and _G.Auto do
-        task.wait(1)
+        task.wait(.5)
         local CardFound = {}
         if plrgui.GameUI.Paths.Enabled == true then
             for _,card in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
@@ -528,7 +528,7 @@ task.spawn(function()
         end
 
         if #CardFound > 0 and #CardFound < 5 then
-            task.wait(.2)
+            task.wait()
             table.sort(CardFound, function(a, b)
                 return a.Priorities < b.Priorities
             end)
@@ -536,7 +536,7 @@ task.spawn(function()
             if select then 
                 print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
                 knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
-                task.wait(.2)
+                continue
             end
         elseif #CardFound >= 5 then
             for _,check in pairs(CardFound) do
