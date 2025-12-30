@@ -309,6 +309,7 @@ if AutoMarineVirtual and _G.Auto then
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             UpAll()
+            task.wait(.1)
             AutoMiku()
             if Wave <= 3 then
                 Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
