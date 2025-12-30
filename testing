@@ -431,7 +431,7 @@ if AutoRagna and _G.Auto then
             if Wave == 14 then
                 task.wait()
                 AutoSJW1()
-                task.wait(8)
+                task.wait(11)
                 AutoSJW2()
             end
             UpAll()
