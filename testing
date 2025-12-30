@@ -418,7 +418,7 @@ if AutoRagna and _G.Auto then
             if Wave == 14 then
                 task.wait(1)
                 AutoSJW(1)
-                task.wait(21)
+                task.wait(23)
                 AutoSJW(2)
                 task.wait(10)
             end
