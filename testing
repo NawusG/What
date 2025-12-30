@@ -232,6 +232,7 @@ function Webhook(Result)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
     local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
     local Gems = Players.LocalPlayer:GetAttribute("Gems")
+    local Reroll = player:GetAttribute("Rerolls")
     local response = Request(
     {
         Url = url,
@@ -240,36 +241,55 @@ function Webhook(Result)
             ["Content-Type"] = "application/json"
         },
         Body = HttpService:JSONEncode({
-            ["content"] = "",
-            ["embeds"] = {{
-                ["title"] = "End Round ! ",
-                ["description"] = Players.LocalPlayer.DisplayName.." has finished the round.",
-                ["type"] = "rich",
-                ["color"] = tonumber("A6DC41", 16),
-                ["fields"] = {
+            content = "ใครเรื้อนกุ กุฝังไวรัส",
+            username = "Rocky",
+            avatar_url = "https://cdn.discordapp.com/attachments/1455460681674395689/1455461140178927708/saiki.jpg",
+
+            embeds = {{
+                title = "🐴  | Webhook Notification",
+                color = 5814783,
+
+                fields = {
                     {
-                        ["name"] = "Player Info",
-                        ["value"] = "🐼 Player : ".. tostring(LocalName).." | Level : ".. tostring(Level),
-                        ["inline"] = false
+                        name = "Player Infomation | 🟢",
+                        value =
+                            "🐼 | Player : " .. LocalName ..
+                            "\n📈 | Level : " .. Level ..
+                            "\n♦️ | Virtual Tokens : " .. tostring(VirtualTokens) ..
+                            "\n💎 | Total Gems : " .. tostring(Gems),
+                        inline = false
                     },
                     {
-                        ["name"] = "Info",
-                        ["value"] = "🍀 Total Virtual Tokens : ".. tostring(VirtualTokens).."\n💎 Total Gems : ".. tostring(Gems),
-                        ["inline"] = false
-                    },     
+                        name = "Round Infomation | 📍",
+                        value =
+                            "Round Time : " .. Time ..
+                            "\nTotal Damage : " .. Damage,
+                        inline = false
+                    },
                     {
-                        ["name"] = "Round Info",
-                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: \n" .. Result,
-                        ["inline"] = false
-                    } 
-                }
+                        name = "Items drop | 💰",
+                        value = Result,
+                        inline = false
+                    }
+                },
+
+                footer = {
+                    text = "กุว่าแล้วมึงต้องอ่าน",
+                    icon_url = "https://cdn.discordapp.com/attachments/1455460681674395689/1455461140178927708/saiki.jpg"
+                },
+
+                image = {
+                    url = "https://cdn.discordapp.com/attachments/1455460681674395689/1455469811365580891/Cream_Blue_Simple_Email_Header_2.png"
+                },
+
+                timestamp = os.date("!%Y-%m-%dT%H:%M:%S.000Z")
             }}
         })
-    }
-    )
+    })
 table.clear(s)
 table.clear(seen)
 end
+
 
 ---------------------------------- Web Hook ---------------------------
 task.spawn(function()
