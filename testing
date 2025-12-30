@@ -180,8 +180,8 @@ function AutoSJW2()
         for _,NameUnit in pairs(MyUnit:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "SJWEVO" then
                 task.wait(.2)
-                local Fk = tostring(NameUnit.Parent)
-                knit.Services.TowerService.RE.UseAbility:FireServer(Fk, 2)
+                local Fk1 = tostring(NameUnit.Parent)
+                knit.Services.TowerService.RE.UseAbility:FireServer(Fk1, 2)
             end
         end
     end
@@ -430,7 +430,7 @@ if AutoRagna and _G.Auto then
             if Wave == 14 then
                 task.wait()
                 AutoSJW1()
-                task.wait(13)
+                task.wait(8)
                 AutoSJW2()
             end
             UpAll()
