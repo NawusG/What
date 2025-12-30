@@ -234,7 +234,7 @@ end
 local function FormatRewards(list)
     local text = ""
     for _, v in ipairs(list) do
-        text = text .. "Item: " .. v.item .. " | Count: " .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
+        text = text .. "💼 | Item: " .. v.item .. " | Count: " .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
     end
     return text
 end
@@ -418,7 +418,7 @@ if AutoRagna and _G.Auto then
             if Wave >= 14 then
                 task.wait()
                 AutoSJW(1)
-                task.wait()
+                task.wait(8)
                 AutoSJW(2)
             end
             UpAll()
