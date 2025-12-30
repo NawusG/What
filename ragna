@@ -415,10 +415,10 @@ if AutoRagna and _G.Auto then
                 Placeunit(6, CFrame.new(211.8043975830078, 0.25170421600341797, -123.27436065673828))
                 task.wait(.2)
             end
-            if Wave >= 14 then
+            if Wave == 14 then
                 task.wait()
                 AutoSJW(1)
-                task.wait(10)
+                task.wait(21)
                 AutoSJW(2)
             end
             UpAll()
