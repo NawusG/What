@@ -234,7 +234,7 @@ end
 local function FormatRewards(list)
     local text = ""
     for _, v in ipairs(list) do
-        text = text .. "Item: " .. v.item .. " | Count: " .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
+        text = text .. "💼 | Item: " .. v.item .. " | Count: " .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
     end
     return text
 end
@@ -266,7 +266,7 @@ function Webhook(Result)
             avatar_url = "https://cdn.discordapp.com/attachments/1455460681674395689/1455461140178927708/saiki.jpg",
 
             embeds = {{
-                title = "🐴  | Webhook Notification",
+                title = "🐴  | Webhook Notification Premium",
                 color = 5814783,
 
                 fields = {
@@ -418,7 +418,7 @@ if AutoRagna and _G.Auto then
             if Wave >= 14 then
                 task.wait()
                 AutoSJW(1)
-                task.wait(11)
+                task.wait(10)
                 AutoSJW(2)
             end
             UpAll()
