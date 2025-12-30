@@ -166,6 +166,7 @@ function AutoSJW_1()
             if NameUnit:IsA("Model") and NameUnit.Name == "SJWEVO" then
                 task.wait(.2)
                 local Fk = tostring(NameUnit.Parent)
+                print(Fk)
                 knit.Services.TowerService.RE.UseAbility:FireServer(Fk, 1)
             end
         end
@@ -177,15 +178,17 @@ function AutoSJW_2()
         if string.len(MyUnit1.Name) < 10 then 
             continue 
         end
-        for _,NameUnit1 in pairs(MyUnit:GetChildren()) do
-            if NameUni1t:IsA("Model") and NameUnit1.Name == "SJWEVO" then
+        for _,NameUnit1 in pairs(MyUnit1:GetChildren()) do
+            if NameUnit1:IsA("Model") and NameUnit1.Name == "SJWEVO" then
                 task.wait(.2)
                 local Fk1 = tostring(NameUnit1.Parent)
+                print(Fk1)
                 knit.Services.TowerService.RE.UseAbility:FireServer(Fk1, 2)
             end
         end
     end
 end
+
 
 --- Simple Function ---
 
