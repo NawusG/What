@@ -231,9 +231,9 @@ function Webhook(Result)
     local Time = tostring(PlayTime() or "0:00")
     local LocalName = tostring(Players.LocalPlayer.Name)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
-    local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
-    local Gems = Players.LocalPlayer:GetAttribute("Gems")
-    local Rerolls = Players.LocalPlayer:GetAttribute("Rerolls")
+    local VirtualTokens = tostring(Players.LocalPlayer:GetAttribute("VirtualTokens"))
+    local Gems = tostring(Players.LocalPlayer:GetAttribute("Gems"))
+    local Rerolls = tostring(Players.LocalPlayer:GetAttribute("Rerolls"))
     local response = Request(
     {
         Url = url,
@@ -256,9 +256,9 @@ function Webhook(Result)
                         value =
                             "👑 | Player : " .. LocalName ..
                             "\n📈 | Level : " .. Level ..
-                            "\n♦️ | Virtual Tokens : " .. tostring(VirtualTokens) ..
-                            "\n💎 | Total Gems : " .. tostring(Gems)..
-                            "\n✨ | Total Rerolls : " .. tostring(Rerolls),
+                            "\n♦️ | Virtual Tokens : " .. VirtualTokens ..
+                            "\n💎 | Total Gems : " .. Gems ..
+                            "\n✨ | Total Rerolls : " .. Rerolls,
                         inline = false
                     },
                     {
