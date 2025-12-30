@@ -51,7 +51,7 @@ elseif Category == "Virtual" and MapName == "Hollowed Moon" then
     AutoBleachVirtual = true
     AutoCard = true
     AutoReplay = true
-elseif Category == "Virtual" and MapName == "Frozen Stronghold" then
+elseif Category == "Featured" and MapName == "Frozen Stronghold" then
     print("Ragna")
     AutoRagna = true
     AutoReplay = true
@@ -155,6 +155,39 @@ function AutoMiku()
     end
 end
 
+--- Auto SJW ---
+
+function AutoSJW1()
+    for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if string.len(MyUnit.Name) < 10 then 
+            continue 
+        end
+        for _,NameUnit in pairs(MyUnit:GetChildren()) do
+            if NameUnit:IsA("Model") and NameUnit.Name == "SJWEVO" then
+                task.wait(.2)
+                local Fk = tostring(NameUnit.Parent)
+                knit.Services.TowerService.RE.UseAbility:FireServer(Fk, 1)
+            end
+        end
+    end
+end
+
+function AutoSJW2()
+    for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if string.len(MyUnit.Name) < 10 then 
+            continue 
+        end
+        for _,NameUnit in pairs(MyUnit:GetChildren()) do
+            if NameUnit:IsA("Model") and NameUnit.Name == "SJWEVO" then
+                task.wait(.2)
+                local Fk = tostring(NameUnit.Parent)
+                knit.Services.TowerService.RE.UseAbility:FireServer(Fk, 2)
+            end
+        end
+    end
+end
+
+--- Simple Function ---
 
 function Placeunit(unit, cf)
     knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
@@ -172,7 +205,6 @@ function replay()
     knit.Services.WaveService.RE.VoteReplay:FireServer()
 end
 replay()
-
 
 
 -------- Check item------------
@@ -231,9 +263,9 @@ function Webhook(Result)
     local Time = tostring(PlayTime() or "0:00")
     local LocalName = tostring(Players.LocalPlayer.Name)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
-    local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
-    local Gems = Players.LocalPlayer:GetAttribute("Gems")
-    local Rerolls = player:GetAttribute("Rerolls")
+    local VirtualTokens = tostring(Players.LocalPlayer:GetAttribute("VirtualTokens"))
+    local Gems = tostring(Players.LocalPlayer:GetAttribute("Gems"))
+    local Rerolls = tostring(Players.LocalPlayer:GetAttribute("Rerolls"))
     local response = Request(
     {
         Url = url,
@@ -256,9 +288,9 @@ function Webhook(Result)
                         value =
                             "👑 | Player : " .. LocalName ..
                             "\n📈 | Level : " .. Level ..
-                            "\n♦️ | Virtual Tokens : " .. tostring(VirtualTokens) ..
-                            "\n💎 | Total Gems : " .. tostring(Gems)
-                            "\n✨ | Total Rerolls : " .. tostring(Rerolls),
+                            "\n♦️ | Virtual Tokens : " .. VirtualTokens ..
+                            "\n💎 | Total Gems : " .. Gems ..
+                            "\n✨ | Total Rerolls : " .. Rerolls,
                         inline = false
                     },
                     {
@@ -386,32 +418,43 @@ if AutoRagna and _G.Auto then
         while AutoRagna and _G.Auto do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
+            task.wait(.2)
             if Wave < 3 then
                 Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
-                UpAll()
                 task.wait(.2)
             end
-            if Wave >= 3 and Wave <= 8 and Yen > 3200 then
-                Placeunit(2, CFrame.new(214.24610900878906, 5.284136772155762, -107.47723388671875))
+            if Wave >= 3 and Yen > 3200 then
+                Placeunit(6, CFrame.new(211.8043975830078, 0.25170421600341797, -123.27436065673828))
                 task.wait(.2)
-                UpAll()
             end
-            if Wave >= 9 then
-                Placeunit(1, CFrame.new(211.8043975830078, 0.25170421600341797, -123.27436065673828))
-                task.wait(.5)
-                UpAll()
-                task.wait(.5)
-                Placeunit(5, CFrame.new(231.94744873046875, 0.2517051696777344, -111.57904815673828))
+            if Wave == 14 then
+                task.wait()
+                AutoSJW1()
+                task.wait(20)
+                AuutoSJW2()
             end
-            if Wave == 15 then
-                task.wait(10)
-                Placeunit(4, CFrame.new(215.13497924804688, 0.2517061233520508, -134.60659790039062))
-                task.wait(.4)
-                Placeunit(4, CFrame.new(230.78427124023438, 0.25170421600341797, -121.34314727783203))
-                task.wait(.4)
-                Placeunit(4, CFrame.new(230.15965270996094, 0.25170421600341797, -93.12144470214844))
-                task.wait(.4)
-            end
+            UpAll()
+            -- if Wave >= 3 and Wave <= 8 and Yen > 3200 then
+            --     Placeunit(2, CFrame.new(214.24610900878906, 5.284136772155762, -107.47723388671875))
+            --     task.wait(.2)
+            --     UpAll()
+            -- end
+            -- if Wave >= 9 then
+            --     Placeunit(1, CFrame.new(211.8043975830078, 0.25170421600341797, -123.27436065673828))
+            --     task.wait(.5)
+            --     UpAll()
+            --     task.wait(.5)
+            --     Placeunit(5, CFrame.new(231.94744873046875, 0.2517051696777344, -111.57904815673828))
+            -- end
+            -- if Wave == 15 then
+            --     task.wait(10)
+            --     Placeunit(4, CFrame.new(215.13497924804688, 0.2517061233520508, -134.60659790039062))
+            --     task.wait(.4)
+            --     Placeunit(4, CFrame.new(230.78427124023438, 0.25170421600341797, -121.34314727783203))
+            --     task.wait(.4)
+            --     Placeunit(4, CFrame.new(230.15965270996094, 0.25170421600341797, -93.12144470214844))
+            --     task.wait(.4)
+            -- end
         end
     end)
 end
@@ -495,6 +538,8 @@ local Priority = {
     ["Opportunist"] = 10006,
     ["Telescope"] = 9999999999999 -- ตีไกล 75// อัพแพง 2 เท่า
 }
+
+
 
 task.spawn(function()
     while AutoCard and _G.Auto do
