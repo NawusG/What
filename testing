@@ -430,8 +430,8 @@ if AutoRagna and _G.Auto then
             if Wave == 14 then
                 task.wait()
                 AutoSJW1()
-                task.wait(20)
-                AuutoSJW2()
+                task.wait(13)
+                AutoSJW2()
             end
             UpAll()
             -- if Wave >= 3 and Wave <= 8 and Yen > 3200 then
