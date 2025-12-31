@@ -135,6 +135,9 @@ function Kill()
     return game:GetService("Players").LocalPlayer.PlayerGui.GameUI.HUD.StageInfos.Infos.Takedowns.Value.Text
 end
 
+function SaveTakedown()
+    return tostring(Kill())
+end
 
 
 
@@ -298,8 +301,7 @@ function Webhook(Result)
                     {
                         name = "Round Infomation | 📍",
                         value =
-                            "⏱️ | Round Time : " .. Time ..
-                            "\n⚔️ |Enemies Takedown : " .. Takedown ..
+                            "⏱️ | Round Time : " .. Time .."\n⚔️ |Enemies Takedown : " .. Takedown ..
                             "\n🩸 | Total Damage : " .. Damage,
                         inline = false
                     },
@@ -330,8 +332,6 @@ end
 
 ---------------------------------- Webhook Procress ---------------------------
 
-local Takedown = nil
-
 task.spawn(function()
     while _G.Auto do task.wait()
         local Wave = Workspace:GetAttribute("Wave")
@@ -339,14 +339,15 @@ task.spawn(function()
         if Finish == true then
             GetReward()
             task.wait(.2)
-            Takedown = Kill()
+            Kill()
+            task.wait()
+            SaveKill = SaveTakedown()
         end
         if Wave == 1 and #s >= 1 then
             local asdd = FormatRewards(s)
             task.wait(.3)
             Webhook(asdd)
             task.wait(180)
-            Takedown = nil
         end
     end
 end)
