@@ -426,10 +426,10 @@ if AutoMarineVirtual and _G.Auto then
                 AutoMiku()
                 if Wave <= 3 then
                     Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
-                    task.wait(.3)
+                    task.wait(.2)
                 end
-                if (Wave >= 2 and Wave <= 3) and Yen >= 2600 then
-                    task.wait(.3)
+                if Wave >= 2 and Wave <= 3 then
+                    task.wait(.2)
                     Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
                 end
                 if Wave >= 7 and Wave <= 10 then
@@ -437,9 +437,8 @@ if AutoMarineVirtual and _G.Auto then
                     task.wait(.2)
                     Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
                 end
-                task.wait(.3)
                 if Wave >= 20 and Wave <= 22 then
-                    task.wait(.4)
+                    task.wait(.2)
                     Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
                 end
                 if Wave >= 15 and Wave <= 20 then
@@ -615,7 +614,7 @@ local Priority = {
 
 task.spawn(function()
     while AutoCard and _G.Auto do
-        task.wait(.5)
+        task.wait(.2)
         local CardFound = {}
         if plrgui.GameUI.Paths.Enabled == true then
             for _,card in pairs(plrgui.GameUI.Paths.PathSelection.Cards:GetChildren()) do
