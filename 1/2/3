@@ -12,7 +12,7 @@ function Webhook(status)
         Body = HttpService:JSONEncode({
             ["content"] = "",
             ["embeds"] = {{
-                ["title"] = "Bypass Checker ! ",
+                ["title"] = "Bypass Checker ! | Premium 👑 ",
                 ["description"] = "",
                 ["type"] = "rich",
                 ["color"] = tonumber("A6DC41", 16),
