@@ -18,7 +18,7 @@ local coreGui = game:GetService("CoreGui")
 local LocalName = tostring(player.Name) 
 
 
-if game.PlaceId == 13341080084766 then -- main world
+if game.PlaceId == 133410800847665 then -- main world
     print("Main world")
     return
 end
