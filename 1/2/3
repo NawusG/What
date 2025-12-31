@@ -5,8 +5,8 @@ local Whitelist = {
     581551598
     }
 
-if not table.find(Whitelist, game.Players.LocalPlayer.UserId) then
-    game.Players.LocalPlayer:Kick("You have no whitelist")
+if not table.find(Whitelist, game:GetService("Players").LocalPlayer.UserId) then
+    game:GetService("Players").LocalPlayer:Kick("You have no whitelist")
 else
     print("You have Whitelist")
 end
