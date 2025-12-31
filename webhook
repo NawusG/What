@@ -17,10 +17,25 @@ local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
 local LocalName = tostring(player.Name) 
 
+-- Whitelist
+
+local Whitelist = {
+    5533885990,
+    581551598
+    }
+
+if not table.find(Whitelist, player.UserId) then
+    player:Kick("You have no whitelist")
+else
+    print("You have Whitelist")
+end
+
+
 if game.PlaceId == 13341080084766 then -- main world
     print("Main world")
     return
 end
+
 
 -- // Stage Toggle \\ --
 local Category = Workspace:GetAttribute("Category")
@@ -301,7 +316,8 @@ function Webhook(Result)
                     {
                         name = "Round Infomation | 📍",
                         value =
-                            "⏱️ | Round Time : " .. Time .."\n⚔️ |Enemies Takedown : " .. SaveKill ..
+                            "⏱️ | Round Time : " .. Time ..
+                            "\n⚔️ |Enemies Takedown : " .. SaveKill ..
                             "\n🩸 | Total Damage : " .. Damage,
                         inline = false
                     },
@@ -333,7 +349,8 @@ end
 ---------------------------------- Webhook Procress ---------------------------
 
 local Saved = false
-local SaveKill = nil
+local WebhookSend = false
+
 task.spawn(function()
     while _G.Auto do task.wait()
         local Wave = Workspace:GetAttribute("Wave")
@@ -341,6 +358,7 @@ task.spawn(function()
         if Finish == true then
             GetReward()
             task.wait(.2)
+            WebhookSend = false
             if not Saved then
                 task.wait()
                 SaveKill = SaveTakedown()
@@ -350,11 +368,11 @@ task.spawn(function()
         if Wave == 1 and #s >= 1 then
             local asdd = FormatRewards(s)
             task.wait(.3)
-            Webhook(asdd)
-            Saved = false
-            SaveKill = nil
-            task.wait(180)
-            
+            if not WebhookSend then
+                Webhook(asdd)
+                WebhookSend = true
+                Saved = false
+            end
         end
     end
 end)
@@ -476,7 +494,7 @@ if AutoRagna and _G.Auto then
             if Wave == 14 then
                 task.wait(2)
                 AutoSJW(1)
-                task.wait(23)
+                task.wait(22)
                 AutoSJW(2)
                 task.wait(10)
             end
