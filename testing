@@ -301,7 +301,8 @@ function Webhook(Result)
                     {
                         name = "Round Infomation | 📍",
                         value =
-                            "⏱️ | Round Time : " .. Time .."\n⚔️ |Enemies Takedown : " .. SaveKill ..
+                            "⏱️ | Round Time : " .. Time ..
+                            "\n⚔️ |Enemies Takedown : " .. SaveKill ..
                             "\n🩸 | Total Damage : " .. Damage,
                         inline = false
                     },
@@ -353,7 +354,7 @@ task.spawn(function()
             Webhook(asdd)
             Saved = false
             SaveKill = nil
-            task.wait(180)
+            task.wait(60)
             
         end
     end
