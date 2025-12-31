@@ -17,18 +17,7 @@ local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
 local LocalName = tostring(player.Name) 
 
--- Whitelist
-
-local Whitelist = {
-    "5533885990",
-    "5581551598"
-    }
-
-if not table.find(Whitelist, player.UserId) then
-    player:Kick("You have no whitelist")
-else
-    print("You have Whitelist")
-end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NawusG/What/refs/heads/Ongtauwnhub/1/2/3"))()
 
 
 if game.PlaceId == 13341080084766 then -- main world
