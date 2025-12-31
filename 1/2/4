@@ -29,7 +29,8 @@ function Webhook(status)
     }
     )
 end
-
-if _G.Auto then
+_G.Normal = _G.Normal
+if _G.Auto and not _G.Normal then
     Webhook("Normal Script")
+    _G.Normal = true
 end
