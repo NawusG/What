@@ -356,8 +356,8 @@ task.spawn(function()
             if not WebhookSend then
                 Webhook(asdd)
                 WebhookSend = true
+                Saved = false
             end
-            Saved = false
         end
     end
 end)
