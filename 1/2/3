@@ -29,8 +29,6 @@ function Webhook(status)
     )
 end
 
-Webhook("pass")
-
 -- Whitelist
 
 local Whitelist = {
@@ -39,10 +37,12 @@ local Whitelist = {
     5602948671 -- bankcopyaa3
     }
 
+_G.Premium = _G.Premium
 if not table.find(Whitelist, game:GetService("Players").LocalPlayer.UserId) then
     game:GetService("Players").LocalPlayer:Kick("You have no whitelist\nทำไรน้อง")
     Webhook("Not pass 🔴")
-else
+elseif _G.Auto and not _G.Premium then
     print("You have Whitelist")
     Webhook("Pass 🟢")
+    _G.Premium = true
 end
