@@ -29,8 +29,8 @@ function Webhook(status)
     }
     )
 end
-local send = false
-if not send then
+
+if _G.Auto and not locked then
     Webhook("Normal Script")
-    send = true
+    locked = true
 end
