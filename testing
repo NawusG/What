@@ -61,6 +61,7 @@ elseif Category == "Featured" and MapName == "Frozen Stronghold" then
     AutoReplay = true
 elseif Category == "Story"and MapName == "Ninja Forest" then
     AutoNinjaStory = true
+    AutoReplay = true
 else
     return
 end
