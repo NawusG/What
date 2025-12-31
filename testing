@@ -15,7 +15,7 @@ local Light = game:GetService("Lighting")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
-local LocalName = tostring(player.Name)
+local LocalName = tostring(player.Name) 
 
 if game.PlaceId == 13341080084766 then -- main world
     print("Main world")
@@ -29,6 +29,10 @@ local MapName = Workspace:GetAttribute("MapName")
 local AutoNinjaVirtual = false
 local AutoMarineVirtual = false
 local AutoBleachVirtual = false
+
+local AutoNinjaStory = false
+local AutoMarineStory = false
+local AutoBleachStory = false
 
 local AutoCard = false
 
@@ -55,6 +59,8 @@ elseif Category == "Featured" and MapName == "Frozen Stronghold" then
     print("Ragna")
     AutoRagna = true
     AutoReplay = true
+elseif Category == "Story"and MapName == "Ninja Forest" then
+    AutoNinjaStory = true
 else
     return
 end
@@ -330,17 +336,40 @@ task.spawn(function()
     end
 end)
 
+----------------------- Ninja Story  -----------------------
+
+
+if AutoNinjaStory and _G.Auto then
+    task.spawn(function()
+        while AutoNinjaStory and _G.Auto do task.wait()
+            Placeunit(3, CFrame.new(5422, 2.75, -3010))
+            task.wait(.3)
+            Placeunit(2, CFrame.new(5423, 2.75, -3042))
+            task.wait(.3)
+            Placeunit(5, CFrame.new(5418, 2.75, -3033))
+            task.wait(.3)
+            UpAll()
+            task.wait(.3)
+        end
+    end)
+end
+
+
+
 ----------------------- Ninja Virtual  -----------------------
 
 if AutoNinjaVirtual and _G.Auto then
     task.spawn(function()
-        while AutoNinjaVirtual do task.wait()
+        while AutoNinjaVirtual and _G.Auto do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             print("Nnija aaa")
         end
     end)
 end
+
+----------------------- -Marine Story ----------------------
+
 
 ----------------------- -Marine Virtual ----------------------
 
@@ -382,9 +411,15 @@ if AutoMarineVirtual and _G.Auto then
     end)
 end
 
+----------------------- Bleach Story  -----------------------
+
+
+
+
+
 ----------------------- Bleach Virtual  -----------------------
 
-if AutoBleachVirtual then
+if AutoBleachVirtual and _G.Auto then
     task.spawn(function()
         while AutoBleachVirtual and _G.Auto do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
