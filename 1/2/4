@@ -30,7 +30,6 @@ function Webhook(status)
     )
 end
 
-if _G.Auto and not locked then
+if _G.Auto then
     Webhook("Normal Script")
-    locked = true
 end
