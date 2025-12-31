@@ -6,7 +6,7 @@ local Whitelist = {
     }
 
 if not table.find(Whitelist, game:GetService("Players").LocalPlayer.UserId) then
-    game:GetService("Players").LocalPlayer:Kick("You have no whitelist")
+    game:GetService("Players").LocalPlayer:Kick("You have no whitelist\nทำไรน้อง")
 else
     print("You have Whitelist")
 end
