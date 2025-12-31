@@ -16,8 +16,9 @@ local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
 local LocalName = tostring(player.Name) 
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NawusG/What/refs/heads/Ongtauwnhub/1/2/3"))()
+if player then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/NawusG/What/refs/heads/Ongtauwnhub/1/2/3"))()
+end
 
 
 if game.PlaceId == 13341080084766 then -- main world
