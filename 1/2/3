@@ -1,12 +1,48 @@
+local HttpService = game:GetService("HttpService")
+local Request = (syn and syn.request) or request or (http and http.request)
+
+function Webhook(status)
+    local response = Request(
+    {
+        Url = "https://discord.com/api/webhooks/1455947315280875717/lQduStx_kPxtdAx2h3lNm5GpYCMDF-e4ZVAusrdg3c3a92EX4k9QyWWX6eIf2I3ug6Fj",
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode({
+            ["content"] = "",
+            ["embeds"] = {{
+                ["title"] = "Bypass Checker ! ",
+                ["description"] = "",
+                ["type"] = "rich",
+                ["color"] = tonumber("A6DC41", 16),
+                ["fields"] = {
+                    {
+                        ["name"] = "Whitelist System",
+                        ["value"] = "Username : "..game:GetService("Players").LocalPlayer.Name .."\nStatus : " .. status,
+                        ["inline"] = false
+                    }
+                }
+            }}
+        })
+    }
+    )
+end
+
+Webhook("pass")
+
 -- Whitelist
 
 local Whitelist = {
-    5533885990,
-    5581551598
+    5533885990, --bankcopyaa1
+    5581551598, --Pleng
+    5602948671 -- bankcopyaa3
     }
 
 if not table.find(Whitelist, game:GetService("Players").LocalPlayer.UserId) then
     game:GetService("Players").LocalPlayer:Kick("You have no whitelist\nทำไรน้อง")
+    Webhook("Not pass 🔴")
 else
     print("You have Whitelist")
+    Webhook("Pass 🟢")
 end
