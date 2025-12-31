@@ -21,7 +21,16 @@ if game.PlaceId == 13341080084766 then -- main world
     print("Main world")
     return
 end
+local Whitelist = {
+    Bankcopyaa1,
+    GZPRO979,
+    }
 
+if not table.find(Whitelist, LocalName) then
+    player:Kick("You have no whitelist")
+else
+    print("You have Whitelist")
+end
 -- // Stage Toggle \\ --
 local Category = Workspace:GetAttribute("Category")
 local MapName = Workspace:GetAttribute("MapName")
