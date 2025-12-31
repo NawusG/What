@@ -62,6 +62,7 @@ elseif Category == "Featured" and MapName == "Frozen Stronghold" then
 elseif Category == "Story"and MapName == "Ninja Forest" then
     AutoNinjaStory = true
     AutoReplay = true
+    print("Ninja Story")
 else
     return
 end
