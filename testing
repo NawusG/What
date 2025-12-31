@@ -133,6 +133,8 @@ function PlayTime()
 end
 
 
+--- Calculate Takedowns ---
+
 function Kill()
     return game:GetService("Players").LocalPlayer.PlayerGui.GameUI.HUD.StageInfos.Infos.Takedowns.Value.Text
 end
@@ -140,8 +142,6 @@ end
 function SaveTakedown()
     return tostring(Kill()) or 0
 end
-
-
 
 
 --- Calculate DamageNum ---
@@ -169,7 +169,7 @@ function AutoMiku()
         end
             for _,NameUnit in pairs(MyUnit:GetChildren()) do
                 if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
-                    task.wait(.3)
+                    task.wait(.2)
                     knit.Services.TowerService.RE.UseAbility:FireServer(MyUnit.Name, 3)
                 end
             end
@@ -426,10 +426,8 @@ if AutoMarineVirtual and _G.Auto then
                 AutoMiku()
                 if Wave <= 3 then
                     Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
-                    task.wait(.2)
                 end
                 if Wave >= 2 and Wave <= 3 then
-                    task.wait(.2)
                     Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
                 end
                 if Wave >= 7 and Wave <= 10 then
@@ -442,12 +440,8 @@ if AutoMarineVirtual and _G.Auto then
                     Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
                 end
                 if Wave >= 15 and Wave <= 20 then
-                    task.wait(.2)
                     Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
                     task.wait(.2)
-                    Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
-                    task.wait(.2)
-                    Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
                 end
             end
         end
