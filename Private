@@ -302,7 +302,7 @@ function Webhook(Result)
                     {
                         name = "Player Infomation | 🟢",
                         value =
-                            "👑 | Player : " .. LocalName ..
+                            "👑 | Username : " .. LocalName ..
                             "\n📈 | Level : " .. Level ..
                             "\n♦️ | Virtual Tokens : " .. VirtualTokens ..
                             "\n💎 | Total Gems : " .. Gems ..
