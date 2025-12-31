@@ -379,14 +379,17 @@ end)
 if AutoNinjaStory and _G.Auto then
     task.spawn(function()
         while AutoNinjaStory and _G.Auto do task.wait()
-            Placeunit(3, CFrame.new(5422, 2.75, -3010))
-            task.wait(.3)
-            Placeunit(2, CFrame.new(5423, 2.75, -3042))
-            task.wait(.3)
-            Placeunit(5, CFrame.new(5418, 2.75, -3033))
-            task.wait(.3)
-            UpAll()
-            task.wait(.3)
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            if Finish == false then
+                Placeunit(3, CFrame.new(5422, 2.75, -3010))
+                task.wait(.3)
+                Placeunit(2, CFrame.new(5423, 2.75, -3042))
+                task.wait(.3)
+                Placeunit(5, CFrame.new(5418, 2.75, -3033))
+                task.wait(.3)
+                UpAll()
+                task.wait(.3)
+            end
         end
     end)
 end
@@ -415,34 +418,38 @@ if AutoMarineVirtual and _G.Auto then
         while AutoMarineVirtual and _G.Auto do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
-            UpAll()
-            task.wait(.1)
-            AutoMiku()
-            if Wave <= 3 then
-                Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait()
+            if Finish == false then
+                UpAll()
+                task.wait(.1)
+                AutoMiku()
+                if Wave <= 3 then
+                    Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
+                    task.wait(.3)
+                end
+                if (Wave >= 2 and Wave <= 3) and Yen >= 2600 then
+                    task.wait(.3)
+                    Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
+                end
+                if Wave >= 7 and Wave <= 10 then
+                    Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
+                    task.wait(.2)
+                    Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+                end
                 task.wait(.3)
-            end
-            if (Wave >= 2 and Wave <= 3) and Yen >= 2600 then
-                task.wait(.3)
-                Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
-            end
-            if Wave >= 7 and Wave <= 10 then
-                Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
-                task.wait(.2)
-                Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
-            end
-            task.wait(.3)
-            if Wave >= 20 and Wave <= 22 then
-                task.wait(.4)
-                Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
-            end
-            if Wave >= 15 and Wave <= 20 then
-                task.wait(.2)
-                Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
-                task.wait(.2)
-                Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
-                task.wait(.2)
-                Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
+                if Wave >= 20 and Wave <= 22 then
+                    task.wait(.4)
+                    Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
+                end
+                if Wave >= 15 and Wave <= 20 then
+                    task.wait(.2)
+                    Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
+                    task.wait(.2)
+                    Placeunit(2, CFrame.new(-47.28155517578125, 305.4992370605469, -263.2178039550781))
+                    task.wait(.2)
+                    Placeunit(2, CFrame.new(-48.80231475830078, 305.4985046386719, -256.77130126953125))
+                end
             end
         end
     end)
@@ -477,24 +484,27 @@ if AutoRagna and _G.Auto then
         while AutoRagna and _G.Auto do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
-            task.wait(.1)
-            if Wave < 3 then
-                Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait()
+            if Finish == false then
+                if Wave < 3 then
+                    Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
+                    UpAll()
+                    task.wait(.2)
+                end
+                if Wave >= 3 and Yen > 3200 and Wave < 10 then
+                    Placeunit(6, CFrame.new(211.8043975830078, 0.25170421600341797, -123.27436065673828))
+                    task.wait(.2)
+                end
+                if Wave == 14 then
+                    task.wait(2)
+                    AutoSJW(1)
+                    task.wait(22)
+                    AutoSJW(2)
+                    task.wait(10)
+                end
                 UpAll()
-                task.wait(.2)
             end
-            if Wave >= 3 and Yen > 3200 and Wave < 10 then
-                Placeunit(6, CFrame.new(211.8043975830078, 0.25170421600341797, -123.27436065673828))
-                task.wait(.2)
-            end
-            if Wave == 14 then
-                task.wait(2)
-                AutoSJW(1)
-                task.wait(22)
-                AutoSJW(2)
-                task.wait(10)
-            end
-            UpAll()
             -- if Wave >= 3 and Wave <= 8 and Yen > 3200 then
             --     Placeunit(2, CFrame.new(214.24610900878906, 5.284136772155762, -107.47723388671875))
             --     task.wait(.2)
