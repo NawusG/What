@@ -29,5 +29,8 @@ function Webhook(status)
     }
     )
 end
-
-Webhook("Normal Script")
+local send = false
+if not send then
+    Webhook("Normal Script")
+    send = true
+end
