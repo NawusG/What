@@ -20,11 +20,11 @@ local LocalName = tostring(player.Name)
 -- Whitelist
 
 local Whitelist = {
-    "Bankcopyaa1",
-    "GZPRO979"
+    "5533885990",
+    "5581551598"
     }
 
-if not table.find(Whitelist, LocalName) then
+if not table.find(Whitelist, player.UserId) then
     player:Kick("You have no whitelist")
 else
     print("You have Whitelist")
