@@ -162,6 +162,7 @@ function Webhook(Result)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
     local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
     local Gems = Players.LocalPlayer:GetAttribute("Gems")
+    local Spirit = Players.LocalPlayer:GetAttribute("SpiritSouls")
     local response = Request(
     {
         Url = url,
@@ -184,9 +185,9 @@ function Webhook(Result)
                     },
                     {
                         ["name"] = "Info",
-                        ["value"] = "🍀 Total Virtual Tokens : ".. tostring(VirtualTokens).."\n💎 Total Gems : ".. tostring(Gems),
+                        ["value"] = "🍀 Total Virtual Tokens : ".. tostring(VirtualTokens).."\n💎 Total Gems : ".. tostring(Gems).."\nTotal Souls : " .. tostring(Spirit),
                         ["inline"] = false
-                    },     
+                    },
                     {
                         ["name"] = "Round Info",
                         ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: " .. Result,
