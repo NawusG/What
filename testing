@@ -553,7 +553,7 @@ if AutoIchigo and _G.Auto then
                 if Wave == 10 then
                     Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
                 end
-                if Wave >= 22 and Wave <= 24 then
+                if Wave >= 23 and Wave <= 25 then
                     Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
                 end
             end
