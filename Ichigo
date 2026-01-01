@@ -236,7 +236,7 @@ task.spawn(function()
             task.wait(.4)
             UpAll()
             task.wait(.1)
-            if Wave < 3 and Wave > 0 then
+            if Wave < 3 and Wave >= 1 then
                 task.wait(.2)
                 Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
             end
@@ -260,9 +260,7 @@ task.spawn(function()
         local Finish = Workspace:GetAttribute("MatchFinished")
         if plrgui.GameUI.HUD.Vote.Visible == true then
             Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
-            task.wait(.3)
-            Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
-            task.wait(.2)
+            task.wait(.5)
         end
         if Finish == true then
             GetReward()
