@@ -585,7 +585,9 @@ if AutoIchigo and _G.Auto then
         end
     end)
 end
-    
+
+-- // Auto Skill on Ichigo Raid --
+
 if AutoIchigo and _G.Auto and ActName == "Boss Rush" then
     task.spawn(function()
         while AutoIchigo and _G.Auto do
@@ -593,14 +595,12 @@ if AutoIchigo and _G.Auto and ActName == "Boss Rush" then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
-                if Wave == 14 then
-                    task.wait(2)
-                    AutoSJW(1)
-                    task.wait(22)
-                    AutoSJW(2)
-                    task.wait(10)
-                end
+            if Finish == false and Wave == 29 then
+                task.wait(2)
+                AutoSJW(1)
+                task.wait(22)
+                AutoSJW(2)
+                task.wait(10)
             end
         end
     end)
