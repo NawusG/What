@@ -28,6 +28,7 @@ end
 -- // Stage Toggle \\ --
 local Category = Workspace:GetAttribute("Category")
 local MapName = Workspace:GetAttribute("MapName")
+_G.State = ""
 
 local AutoNinjaVirtual = false
 local AutoMarineVirtual = false
@@ -50,27 +51,34 @@ if Category == "Virtual" and MapName == "Ninja Forest" then
     AutoNinjaVirtual = true
     AutoCard = true
     AutoReplay = true
+    _G.State = "Ninja Virtual"
 elseif Category == "Virtual" and MapName == "Marine Base" then
     print("Marine")
     AutoMarineVirtual = true
     AutoCard = true
     AutoReplay = true
+    _G.State = "Marine Virtual"
 elseif Category == "Virtual" and MapName == "Hollowed Moon" then
     print("Bleach")
     AutoBleachVirtual = true
     AutoCard = true
     AutoReplay = true
+    _G.State = "Bleach Virtual"
 elseif Category == "Featured" and MapName == "Frozen Stronghold" then
     print("Ragna")
     AutoRagna = true
     AutoReplay = true
+    _G.State = "Ragna Stronghold"
 elseif Category == "Story"and MapName == "Ninja Forest" then
     AutoNinjaStory = true
     AutoReplay = true
     print("Ninja Story")
+    _G.State = "Ninja Story"
 elseif Category == "Raid" and MapName == "Top of Hueco Castle" then
     AutoIchigo = true
     AutoReplay = true
+    print("Ichigo Raid")
+    _G.State = "Ichigo Raid"
 else
     return
 end
@@ -314,7 +322,7 @@ function Webhook(Result)
                             "\n📈 | Level : " .. Level ..
                             "\n♦️ | Virtual Tokens : " .. VirtualTokens ..
                             "\n💎 | Total Gems : " .. Gems ..
-                            "\n💎 | Total Spirit Souls : " .. Spirit ..
+                            "\n👹 | Total Spirit Souls : " .. Spirit ..
                             "\n✨ | Total Rerolls : " .. Rerolls,
                         inline = false
                     },
@@ -334,7 +342,7 @@ function Webhook(Result)
                 },
 
                 footer = {
-                    text = "กุว่าแล้วมึงต้องอ่าน",
+                    text =  _G.State .." | By OngTauwn Premium",
                     icon_url = "https://cdn.discordapp.com/attachments/1455460681674395689/1455461140178927708/saiki.jpg"
                 },
 
@@ -487,7 +495,7 @@ if AutoRagna and _G.Auto then
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
-            task.wait()
+            task.wait(.1)
             if Finish == false then
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
@@ -497,13 +505,6 @@ if AutoRagna and _G.Auto then
                 if Wave >= 3 and Yen > 3200 and Wave < 10 then
                     Placeunit(6, CFrame.new(211.8043975830078, 0.25170421600341797, -123.27436065673828))
                     task.wait(.2)
-                end
-                if Wave == 14 then
-                    task.wait(2)
-                    AutoSJW(1)
-                    task.wait(22)
-                    AutoSJW(2)
-                    task.wait(10)
                 end
                 UpAll()
             end
@@ -528,6 +529,26 @@ if AutoRagna and _G.Auto then
             --     Placeunit(4, CFrame.new(230.15965270996094, 0.25170421600341797, -93.12144470214844))
             --     task.wait(.4)
             -- end
+        end
+    end)
+end
+
+if AutoRagna and _G.Auto then
+    task.spawn(function()
+        while AutoRagna and _G.Auto do task.wait()
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait()
+            if Finish == false then
+                if Wave == 14 then
+                    task.wait(2)
+                    AutoSJW(1)
+                    task.wait(22)
+                    AutoSJW(2)
+                    task.wait(10)
+                end
+            end
         end
     end)
 end
