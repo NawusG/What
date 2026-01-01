@@ -289,6 +289,7 @@ function Webhook(Result)
     local VirtualTokens = tostring(Players.LocalPlayer:GetAttribute("VirtualTokens"))
     local Gems = tostring(Players.LocalPlayer:GetAttribute("Gems"))
     local Rerolls = tostring(Players.LocalPlayer:GetAttribute("Rerolls"))
+    local Spirit = tostring(Players.LocalPlayer:GetAttribute("SpiritSouls"))
     local response = Request(
     {
         Url = url,
@@ -313,6 +314,7 @@ function Webhook(Result)
                             "\n📈 | Level : " .. Level ..
                             "\n♦️ | Virtual Tokens : " .. VirtualTokens ..
                             "\n💎 | Total Gems : " .. Gems ..
+                            "\n💎 | Total Spirit Souls : " .. Spirit ..
                             "\n✨ | Total Rerolls : " .. Rerolls,
                         inline = false
                     },
