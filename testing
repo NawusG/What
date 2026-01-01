@@ -15,7 +15,7 @@ local Light = game:GetService("Lighting")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
-local LocalName = tostring(player.Name) 
+local LocalName = tostring(player.Name)
 
 
 if game.PlaceId == 133410800847665 then -- main world
@@ -35,6 +35,8 @@ local AutoBleachVirtual = false
 local AutoNinjaStory = false
 local AutoMarineStory = false
 local AutoBleachStory = false
+
+local AutoIchigo = false
 
 local AutoCard = false
 
@@ -65,6 +67,9 @@ elseif Category == "Story"and MapName == "Ninja Forest" then
     AutoNinjaStory = true
     AutoReplay = true
     print("Ninja Story")
+elseif Category == "Raid" and MapName == "Top of Hueco Castle" then
+    AutoIchigo = true
+    AutoReplay = true
 else
     return
 end
@@ -522,6 +527,37 @@ if AutoRagna and _G.Auto then
         end
     end)
 end
+
+--- Auto Ichigo
+--- 
+if AutoIchigo and _G.Auto then
+    task.spawn(function()
+        while AutoIchigo and _G.Auto do
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait(.1)
+            AutoMiku()
+            if Finish == false then
+                UpAll()
+                task.wait(.1)
+                if Wave < 3 then
+                    Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
+                end
+                if Wave >= 3 and Wave <= 5 and Yen >= 3200 then
+                    Placeunit(6, CFrame.new(1917.8038330078125, 282.87493896484375, -614.7609252929688))
+                    task.wait(.2)
+                    Placeunit(1, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
+                end
+                if Wave == 10 then
+                    Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
+                end
+            end
+        end
+    end)
+end
+    
+
 
 --Auto replay
 
