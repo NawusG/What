@@ -28,7 +28,7 @@ end
 -- // Stage Toggle \\ --
 local Category = Workspace:GetAttribute("Category")
 local MapName = Workspace:GetAttribute("MapName")
-_G.State = ""
+_G.State = _G.State
 
 local AutoNinjaVirtual = false
 local AutoMarineVirtual = false
