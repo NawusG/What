@@ -1,6 +1,6 @@
 repeat task.wait()
 until game:IsLoaded()
-
+_G.aa = "Ragna"
 print("Running Script")
 local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
