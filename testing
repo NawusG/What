@@ -28,6 +28,7 @@ end
 -- // Stage Toggle \\ --
 local Category = Workspace:GetAttribute("Category")
 local MapName = Workspace:GetAttribute("MapName")
+local ActName = Workspace:GetAttribute("ActName")
 _G.State = _G.State
 
 local AutoNinjaVirtual = false
@@ -570,9 +571,9 @@ if AutoIchigo and _G.Auto then
                     Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
                 end
                 if Wave >= 3 and Wave <= 5 and Yen >= 3200 then
-                    Placeunit(6, CFrame.new(1917.8038330078125, 282.87493896484375, -614.7609252929688))
-                    task.wait(.2)
                     Placeunit(1, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
+                    task.wait(.2)
+                    Placeunit(6, CFrame.new(1947.8038330078125, 282.87493896484375, -635.7609252929688))
                 end
                 if Wave == 10 then
                     Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
@@ -585,7 +586,25 @@ if AutoIchigo and _G.Auto then
     end)
 end
     
-
+if AutoIchigo and _G.Auto and ActName == "Boss Rush" then
+    task.spawn(function()
+        while AutoIchigo and _G.Auto do
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait()
+            if Finish == false then
+                if Wave == 14 then
+                    task.wait(2)
+                    AutoSJW(1)
+                    task.wait(22)
+                    AutoSJW(2)
+                    task.wait(10)
+                end
+            end
+        end
+    end)
+end
 
 --Auto replay
 
