@@ -35,7 +35,8 @@ local Whitelist = {
     5533885990, --bankcopyaa1
     5581551598, --Pleng
     5602948671, -- bankcopyaa3
-    5602991844
+    5602991844, -- bankcopyaa6
+    1314707740 -- James
     }
 
 _G.Premium = _G.Premium
