@@ -28,6 +28,7 @@ end
 -- // Stage Toggle \\ --
 local Category = Workspace:GetAttribute("Category")
 local MapName = Workspace:GetAttribute("MapName")
+local Act = Workspace:GetAttribute("Act")
 _G.State = _G.State
 
 local AutoNinjaVirtual = false
@@ -398,6 +399,7 @@ if AutoNinjaStory and _G.Auto then
         while AutoNinjaStory and _G.Auto do task.wait()
             local Finish = Workspace:GetAttribute("MatchFinished")
             if Finish == false then
+                AutoMiku()
                 Placeunit(3, CFrame.new(5422, 2.75, -3010))
                 task.wait(.3)
                 Placeunit(2, CFrame.new(5423, 2.75, -3042))
@@ -555,9 +557,9 @@ end
 
 --- Auto Ichigo
 
-if AutoIchigo and _G.Auto then
+if AutoIchigo and _G.Auto and Act == "5" then
     task.spawn(function()
-        while AutoIchigo and _G.Auto do
+        while AutoIchigo and _G.Auto and Act == "5" do
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
@@ -584,8 +586,57 @@ if AutoIchigo and _G.Auto then
         end
     end)
 end
-    
 
+
+if AutoIchigo and _G.Auto and Act == "Boss Rush" then
+    task.spawn(function()
+        while AutoIchigo and _G.Auto and Act == "Boss Rush" do
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait()
+            if Finish == false then
+                AutoMiku()
+                UpAll()
+                task.wait(.1)
+                if Wave < 3 then
+                    Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
+                end
+                if Wave >= 2 and Wave <= 5 and Yen >= 1600 then
+                    Placeunit(6, CFrame.new(1953.900146484375, 282.87493896484375, -647.5687255859375))
+                    task.wait(.2)
+                    Placeunit(1, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
+                end
+                if Wave == 10 then
+                    Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
+                end
+                if Wave >= 23 and Wave <= 25 then
+                    Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
+                end
+            end
+        end
+    end)
+end
+
+-- // Auto Skill on Ichigo Raid --
+
+
+if AutoIchigo and _G.Auto and Act == "Boss Rush" then
+    task.spawn(function()
+        while AutoIchigo and _G.Auto do
+            local Wave = Workspace:GetAttribute("Wave")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait()
+            if Finish == false and Wave == 29 then
+                task.wait(10)
+                AutoSJW(1)
+                task.wait(20)
+                AutoSJW(2)
+                task.wait(10)
+            end
+        end
+    end)
+end
 
 --Auto replay
 
