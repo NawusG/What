@@ -28,7 +28,7 @@ end
 -- // Stage Toggle \\ --
 local Category = Workspace:GetAttribute("Category")
 local MapName = Workspace:GetAttribute("MapName")
-local ActName = Workspace:GetAttribute("Act")
+local Act = Workspace:GetAttribute("Act")
 _G.State = _G.State
 
 local AutoNinjaVirtual = false
@@ -587,6 +587,7 @@ if AutoIchigo and _G.Auto then
 end
 
 -- // Auto Skill on Ichigo Raid --
+
 
 if AutoIchigo and _G.Auto and Act == "Boss Rush" then
     task.spawn(function()
