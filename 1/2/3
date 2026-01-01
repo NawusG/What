@@ -40,7 +40,7 @@ local Whitelist = {
 _G.Premium = _G.Premium
 if not table.find(Whitelist, game:GetService("Players").LocalPlayer.UserId) then
     game:GetService("Players").LocalPlayer:Kick("You have no whitelist\nเอาสคริปต์มาจากไหนจ้ะ\nแจ้งเรียบร้อย")
-    WebhookLogger("Not pass 🔴")
+    WebhookLogger("🔴 Not pass 🔴")
 elseif _G.Auto and not _G.Premium then
     print("You have Whitelist")
     WebhookLogger("Pass 🟢")
