@@ -661,9 +661,9 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
             if Finish == false then
+                task.wait(.1)
                 AutoMiku()
                 UpAll()
-                task.wait(.1)
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
                 end
