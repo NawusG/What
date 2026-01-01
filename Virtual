@@ -4,7 +4,7 @@ if game.PlaceId ~= 106402284955512 then
     return
     print("Not Virtual Marine")
 end
-
+_G.aa = "Virtual"
 print("Running Script")
 local Replica = game:GetService("ReplicatedStorage")
 local Package = Replica.Packages
