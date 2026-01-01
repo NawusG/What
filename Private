@@ -314,7 +314,7 @@ function Webhook(Result)
                             "\n📈 | Level : " .. Level ..
                             "\n♦️ | Virtual Tokens : " .. VirtualTokens ..
                             "\n💎 | Total Gems : " .. Gems ..
-                            "\n💎 | Total Spirit Souls : " .. Spirit ..
+                            "\n👹 | Total Spirit Souls : " .. Spirit ..
                             "\n✨ | Total Rerolls : " .. Rerolls,
                         inline = false
                     },
