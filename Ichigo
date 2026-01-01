@@ -232,9 +232,9 @@ task.spawn(function()
         task.wait(.4)
         UpAll()
         task.wait(.1)
-        if Wave < 3 then
+        if Wave < 3 and Wave > 0 then
             task.wait(.2)
-            Placeunit(3, CFrame.new(1924.1173095703125, 283.87493896484375, -575.6756591796875))
+            Placeunit(3, CFrame.new(1924.6072998046875, 282.87493896484375, -576.7017822265625))
         end
         if Wave >= 3 and Wave <= 5 and Yen >= 3200 then
             Placeunit(6, CFrame.new(1917.8038330078125, 282.87493896484375, -614.7609252929688))
