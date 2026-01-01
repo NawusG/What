@@ -20,7 +20,7 @@ function WebhookLogger1(status)
                 ["fields"] = {
                     {
                         ["name"] = "Whitelist System",
-                        ["value"] = "Username : "..game:GetService("Players").LocalPlayer.Name .."\nStatus : " .. status .."\nWorking In ", _G.aa,
+                        ["value"] = "Username : "..game:GetService("Players").LocalPlayer.Name .."\nStatus : " .. status .."\nWorking In ".. _G.aa,
                         ["inline"] = false
                     }
                 }
