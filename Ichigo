@@ -231,7 +231,7 @@ task.spawn(function()
         local Yen = Players.LocalPlayer:GetAttribute("Yen")
         local Replica = game:GetService("ReplicatedStorage")
         local Package = Replica.Packages
-        task.wait(.1)
+        task.wait(.5)
         if Finish == false then
             task.wait(.4)
             UpAll()
