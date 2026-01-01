@@ -232,29 +232,22 @@ task.spawn(function()
         local Replica = game:GetService("ReplicatedStorage")
         local Package = Replica.Packages
         task.wait(.5)
-
-        task.wait(.4)
-        UpAll()
-        task.wait(.1)
-        if Wave < 3 then
-            task.wait(.2)
-            Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
-        end
-        if Wave >= 3 and Wave <= 5 then
-            Placeunit(1, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
-            task.wait(.2)
-            Placeunit(2, CFrame.new(1909.22998046875, 286.02630615234375, -609.1149291992188))
-            task.wait(.2)
-            Placeunit(2, CFrame.new(1904.0665283203125, 286.02630615234375, -610.4948120117188))
-            task.wait(.2)
-            Placeunit(2, CFrame.new(1904.434326171875, 286.02642822265625, -612.3597412109375))
-            task.wait(.2)
-        end
-        if Wave == 10 then
-            Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
-        end
-        if Wave >= 23 and Wave <= 25 then
-            Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
+        if Finish == false then
+            task.wait(.1)
+            if Wave < 3 then
+                Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
+            end
+            if Wave >= 3 and Wave <= 5 and Yen >= 3200 then
+                Placeunit(6, CFrame.new(1917.8038330078125, 282.87493896484375, -614.7609252929688))
+                task.wait(.2)
+                Placeunit(1, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
+            end
+            if Wave == 10 then
+                Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
+            end
+            if Wave >= 23 and Wave <= 25 then
+                Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
+            end
         end
     end
 end)
