@@ -235,7 +235,7 @@ task.spawn(function()
             task.wait(.1)
             if Wave < 3 and Wave > 0 then
                 task.wait(.2)
-                Placeunit(3, CFrame.new(1924.6072998046875, 283.87493896484375, -576.7017822265625))
+                Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
             end
             if Wave >= 3 and Wave <= 5 then
                 Placeunit(6, CFrame.new(1917.8038330078125, 282.87493896484375, -614.7609252929688))
