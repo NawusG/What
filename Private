@@ -210,6 +210,23 @@ function AutoSJW(Ability)
     end
 end
 
+-- Auto Nelle mode --
+
+function nelleAttack()
+    for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if string.len(MyUnit.Name) < 10 then 
+            continue 
+        end
+        for _,NameUnit in pairs(MyUnit:GetChildren()) do
+            if NameUnit:IsA("Model") and NameUnit.Name == "Adult" then
+                local ThisNelle = NameUnit.Parent.Name
+                if Workspace.Ignore.Units[ThisNelle].Adult.NellSword.blade.Transparency == 1 then
+                    knit.Services.TowerService.RE.UseAbility:FireServer(ThisNelle, 1)
+                end
+            end
+        end
+    end
+end
 
 --- Simple Function ---
 
@@ -399,10 +416,12 @@ if AutoNinjaStory and _G.Auto then
         while AutoNinjaStory and _G.Auto do task.wait()
             local Finish = Workspace:GetAttribute("MatchFinished")
             if Finish == false then
+                task.wait(2)
+                nelleAttack()
                 AutoMiku()
                 Placeunit(3, CFrame.new(5422, 2.75, -3010))
                 task.wait(.3)
-                Placeunit(2, CFrame.new(5423, 2.75, -3042))
+                Placeunit(4, CFrame.new(5423, 2.75, -3042))
                 task.wait(.3)
                 Placeunit(5, CFrame.new(5418, 2.75, -3033))
                 task.wait(.3)
