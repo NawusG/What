@@ -561,6 +561,7 @@ if AutoIchigo and _G.Auto then
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait()
             if Finish == false then
                 AutoMiku()
                 UpAll()
