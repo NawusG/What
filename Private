@@ -15,6 +15,7 @@ local Light = game:GetService("Lighting")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 local coreGui = game:GetService("CoreGui")
+
 local LocalName = tostring(player.Name)
 
 
@@ -530,16 +531,15 @@ if AutoRagna and _G.Auto then
 end
 
 --- Auto Ichigo
---- 
+
 if AutoIchigo and _G.Auto then
     task.spawn(function()
         while AutoIchigo and _G.Auto do
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
-            task.wait(.1)
-            AutoMiku()
             if Finish == false then
+                AutoMiku()
                 UpAll()
                 task.wait(.1)
                 if Wave < 3 then
