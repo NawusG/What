@@ -473,12 +473,12 @@ if AutoMarineStory and _G.Auto then
                     Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
                 end
                 if Wave >= 2 and Wave <= 3 then
-                    Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
+                    Placeunit(1, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
                 end
                 if Wave >= 7 and Wave <= 10 then
                     Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
                     task.wait(.2)
-                    Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+                    Placeunit(6, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
                 end
                 -- if Wave >= 20 and Wave <= 22 then
                 --     task.wait(.2)
