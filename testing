@@ -595,7 +595,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
             local Wave = Workspace:GetAttribute("Wave")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false and Wave == 29 then
+            if Finish == false and Wave == 30 then
                 task.wait(10)
                 AutoSJW(1)
                 task.wait(13)
