@@ -416,7 +416,7 @@ if AutoNinjaStory and _G.Auto then
         while AutoNinjaStory and _G.Auto do task.wait()
             local Finish = Workspace:GetAttribute("MatchFinished")
             if Finish == false then
-                task.wait(.3)
+                task.wait(2)
                 nelleAttack()
                 AutoMiku()
                 Placeunit(3, CFrame.new(5422, 2.75, -3010))
