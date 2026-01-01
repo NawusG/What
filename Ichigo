@@ -229,6 +229,8 @@ task.spawn(function()
         local Wave = Workspace:GetAttribute("Wave")
         local Finish = Workspace:GetAttribute("MatchFinished")
         local Yen = Players.LocalPlayer:GetAttribute("Yen")
+        local Replica = game:GetService("ReplicatedStorage")
+        local Package = Replica.Packages
         if Finish == false then
             task.wait(.4)
             UpAll()
