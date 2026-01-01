@@ -622,9 +622,9 @@ end
 
 --- Auto Ichigo
 
-if AutoIchigo and _G.Auto and Act == "5" then
+if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
     task.spawn(function()
-        while AutoIchigo and _G.Auto and Act == "5" do
+        while AutoIchigo and _G.Auto and Act ~= "Boss Rush" do
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
@@ -712,7 +712,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
             if Finish == false and Wave == 29 then
                 task.wait(10)
                 AutoSJW(1)
-                task.wait(20)
+                task.wait(34)
                 AutoSJW(2)
                 task.wait(10)
             end
