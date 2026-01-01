@@ -75,6 +75,16 @@ elseif Category == "Story"and MapName == "Ninja Forest" then
     AutoReplay = true
     print("Ninja Story")
     _G.State = "Ninja Story"
+elseif Category == "Story" and MapName == "Marine Base" then
+    AutoMarineStory = true
+    AutoReplay = true
+    print("Marine Story")
+    _G.State = "Marine Story"
+elseif Category == "Story" and MapName == "Hollowed Moon" then
+    AutoBleachStory = true
+    AutoReplay = true
+    print("Bleach Story")
+    _G.State = "Bleach Story"
 elseif Category == "Raid" and MapName == "Top of Hueco Castle" then
     AutoIchigo = true
     AutoReplay = true
@@ -447,6 +457,42 @@ if AutoNinjaVirtual and _G.Auto then
 end
 
 ----------------------- -Marine Story ----------------------
+
+if AutoMarineStory and _G.Auto then
+    task.spawn(function()
+        while AutoMarineStory and _G.Auto do task.wait()
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait()
+            if Finish == false then
+                UpAll()
+                task.wait(.1)
+                AutoMiku()
+                if Wave <= 3 then
+                    Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
+                end
+                if Wave >= 2 and Wave <= 3 then
+                    Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
+                end
+                if Wave >= 7 and Wave <= 10 then
+                    Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
+                    task.wait(.2)
+                    Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+                end
+                -- if Wave >= 20 and Wave <= 22 then
+                --     task.wait(.2)
+                --     Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
+                -- end
+                -- if Wave >= 15 and Wave <= 20 then
+                --     Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
+                --     task.wait(.2)
+                -- end
+            end
+        end
+    end)
+end
+
 
 
 ----------------------- -Marine Virtual ----------------------
