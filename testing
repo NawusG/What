@@ -712,7 +712,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
             if Finish == false and Wave == 29 then
                 task.wait(10)
                 AutoSJW(1)
-                task.wait(34)
+                task.wait(41)
                 AutoSJW(2)
                 task.wait(10)
             end
