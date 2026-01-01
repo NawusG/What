@@ -234,6 +234,7 @@ task.spawn(function()
         task.wait(.5)
         if Finish == false then
             task.wait(.1)
+            UpAll()
             if Wave < 3 then
                 Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
             end
