@@ -364,7 +364,7 @@ function Webhook(Result)
                             "👑 | Username : " .. LocalName .." 📈 | Level : " .. Level ..
                             "\n💎 | Total Gems : " .. Gems .." ♦️ | Virtual Tokens : " .. VirtualTokens ..
                             "\n👹 | Total Spirit Souls : " .. Spirit ..
-                            "\n✨ | Total Rerolls : " .. Rerolls.." | Stack Rerolls for daily : "..StackReroll,
+                            "\n✨ | Total Rerolls : " .. Rerolls.." | Stack Rerolls for daily : ".. _G.StackReroll,
                         inline = false
                     },
                     {
