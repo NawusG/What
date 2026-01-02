@@ -348,7 +348,7 @@ function Webhook(Result)
 
                 fields = {
                     {
-                        name = "Player Infomation | 🟢",
+                        name = "Player Infomation | 🟢 | Round : "..Round,
                         value =
                             "👑 | Username : " .. LocalName ..
                             "\n📈 | Level : " .. Level ..
