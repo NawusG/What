@@ -314,7 +314,7 @@ local StackReroll = 0
 
 function CountReroll()
     for _,Reroll in pairs(s) do
-        if Reroll.Name == "Rerolls" then
+        if Reroll.Name == "Trait Rerolls" then
             local RerollText = Reroll.Count
             local RerollNum = tonumber(RerollText:gsub("%D", ""))
             StackReroll = StackReroll + RerollNum
@@ -619,7 +619,6 @@ if AutoRagna and _G.Auto then
     task.spawn(function()
         while AutoRagna and _G.Auto do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
-            local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
             if Finish == false then
