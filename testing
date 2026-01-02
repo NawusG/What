@@ -343,7 +343,7 @@ function Webhook(Result)
             avatar_url = "https://cdn.discordapp.com/attachments/1455460681674395689/1455461140178927708/saiki.jpg",
 
             embeds = {{
-                title = "🐴  | Webhook Notification | Premium",
+                title = "🐴  | Webhook Notification | Premium | Round "..Round,
                 color = 5814783,
 
                 fields = {
