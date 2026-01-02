@@ -411,7 +411,9 @@ task.spawn(function()
         local Wave = Workspace:GetAttribute("Wave")
         local Finish = Workspace:GetAttribute("MatchFinished")
         if Finish == true then
-            GetReward()
+            repeat task.wait(.1)
+                GetReward()
+            until #plrgui:FindFirstChild("Rewards"):GetChildren() <= 0
             if not lockedReroll then
                 CountReroll()
                 lockedReroll = true
