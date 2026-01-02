@@ -310,7 +310,13 @@ task.spawn(function()
     end
 end)
 
+local StackReroll = 0
 
+for _,Reroll in pairs(s) do
+    if Reroll.Name == "Rerolls" then
+        StackReroll = StackReroll + Reroll.Count
+    end
+end
 
 
 -- // Main Webhook Config
@@ -350,12 +356,10 @@ function Webhook(Result)
                     {
                         name = "Player Infomation | 🟢",
                         value =
-                            "👑 | Username : " .. LocalName ..
-                            "\n📈 | Level : " .. Level ..
-                            "\n♦️ | Virtual Tokens : " .. VirtualTokens ..
-                            "\n💎 | Total Gems : " .. Gems ..
+                            "👑 | Username : " .. LocalName .." 📈 | Level : " .. Level ..
+                            "\n💎 | Total Gems : " .. Gems .." ♦️ | Virtual Tokens : " .. VirtualTokens ..
                             "\n👹 | Total Spirit Souls : " .. Spirit ..
-                            "\n✨ | Total Rerolls : " .. Rerolls,
+                            "\n✨ | Total Rerolls : " .. Rerolls.." | Stack Reroll for Ragna :"..StackReroll,
                         inline = false
                     },
                     {
@@ -707,6 +711,22 @@ end
 
 -- // Auto Skill on Ichigo Raid --
 
+if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
+    task.spawn(function()
+        while AutoIchigo and _G.Auto do
+            local Wave = Workspace:GetAttribute("Wave")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait()
+            if Finish == false and Wave == 15 then
+                task.wait(1)
+                AutoSJW(1)
+                task.wait(41)
+                AutoSJW(2)
+                task.wait(10)
+            end
+        end
+    end)
+end
 
 if AutoIchigo and _G.Auto and Act == "Boss Rush" then
     task.spawn(function()
