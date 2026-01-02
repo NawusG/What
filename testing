@@ -26,6 +26,7 @@ end
 
 
 -- // Stage Toggle \\ --
+
 local Category = Workspace:GetAttribute("Category")
 local MapName = Workspace:GetAttribute("MapName")
 local Act = Workspace:GetAttribute("Act")
@@ -314,6 +315,8 @@ end)
 
 -- // Main Webhook Config
 
+local Round = 0
+
 function Webhook(Result)
     if typeof(url) ~= "string" or url == "" then
         return
@@ -326,6 +329,7 @@ function Webhook(Result)
     local Gems = tostring(Players.LocalPlayer:GetAttribute("Gems"))
     local Rerolls = tostring(Players.LocalPlayer:GetAttribute("Rerolls"))
     local Spirit = tostring(Players.LocalPlayer:GetAttribute("SpiritSouls"))
+    local Act = Workspace:GetAttribute("Act")
     local response = Request(
     {
         Url = url,
@@ -370,7 +374,7 @@ function Webhook(Result)
                 },
 
                 footer = {
-                    text =  _G.State .." | By OngTauwn Premium",
+                    text =  _G.State .." | "..Act, Round.." | By OngTauwn Premium",
                     icon_url = "https://cdn.discordapp.com/attachments/1455460681674395689/1455461140178927708/saiki.jpg"
                 },
 
@@ -399,6 +403,7 @@ task.spawn(function()
         if Finish == true then
             GetReward()
             task.wait(.2)
+            Round = Round + 1
             WebhookSend = false
             if not Saved then
                 task.wait()
