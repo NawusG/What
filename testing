@@ -312,11 +312,16 @@ end)
 
 local StackReroll = 0
 
-for _,Reroll in pairs(s) do
-    if Reroll.Name == "Rerolls" then
-        StackReroll = StackReroll + Reroll.Count
+function CountReroll()
+    for _,Reroll in pairs(s) do
+        if Reroll.Name == "Rerolls" then
+            local RerollText = Reroll.Count
+            local RerollNum = tonumber(RerollText:gsub("%D", ""))
+            StackReroll = StackReroll + RerollNum
+        end
     end
 end
+
 
 
 -- // Main Webhook Config
@@ -331,10 +336,10 @@ function Webhook(Result)
     local Time = tostring(PlayTime() or "0:00")
     local LocalName = tostring(Players.LocalPlayer.Name)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
-    local VirtualTokens = tostring(Players.LocalPlayer:GetAttribute("VirtualTokens"))
-    local Gems = tostring(Players.LocalPlayer:GetAttribute("Gems"))
-    local Rerolls = tostring(Players.LocalPlayer:GetAttribute("Rerolls"))
-    local Spirit = tostring(Players.LocalPlayer:GetAttribute("SpiritSouls"))
+    local VirtualTokens = tostring(math.floor(Players.LocalPlayer:GetAttribute("VirtualTokens")))
+    local Gems = tostring(math.floor(Players.LocalPlayer:GetAttribute("Gems")))
+    local Rerolls = tostring(math.floor(Players.LocalPlayer:GetAttribute("Rerolls")))
+    local Spirit = tostring(math.floor(Players.LocalPlayer:GetAttribute("SpiritSouls")))
     local Act = Workspace:GetAttribute("Act")
     local response = Request(
     {
@@ -406,6 +411,7 @@ task.spawn(function()
         local Finish = Workspace:GetAttribute("MatchFinished")
         if Finish == true then
             GetReward()
+            CountReroll()
             task.wait(.2)
             WebhookSend = false
             if not Saved then
