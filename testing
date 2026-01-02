@@ -411,14 +411,9 @@ task.spawn(function()
     while _G.Auto do task.wait()
         local Wave = Workspace:GetAttribute("Wave")
         local Finish = Workspace:GetAttribute("MatchFinished")
+        task.wait()
         if Finish == true then
-            repeat task.wait(.1)
-                GetReward()
-            until #plrgui:FindFirstChild("Rewards"):GetChildren() <= 0
-            if not lockedReroll then
-                CountReroll()
-                lockedReroll = true
-            end
+            GetReward()
             task.wait(.2)
             WebhookSend = false
             if not Saved then
@@ -435,7 +430,6 @@ task.spawn(function()
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
-                lockedReroll = false
             end
         end
     end
