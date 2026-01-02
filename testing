@@ -310,19 +310,19 @@ task.spawn(function()
     end
 end)
 
-_G.StackReroll = 0
+-- _G.StackReroll = 0
 
-function CountReroll()
-    for _,Reroll in pairs(s) do
-        if Reroll.item == "Trait Rerolls" then
-            local RerollText = Reroll.Count
-            local RerollNum = tonumber(RerollText:gsub("%D", ""))
-            _G.StackReroll = _G.StackReroll + RerollNum
-        end
-    end
-end
+-- function CountReroll()
+--     for _,Reroll in pairs(s) do
+--         if Reroll.item == "Trait Rerolls" then
+--             local RerollText = Reroll.Count
+--             local RerollNum = tonumber(RerollText:gsub("%D", ""))
+--             _G.StackReroll = _G.StackReroll + RerollNum
+--         end
+--     end
+-- end
 
-
+local startReroll = player:GetAttribute("Rerolls")
 
 -- // Main Webhook Config
 
@@ -340,6 +340,7 @@ function Webhook(Result)
     local Gems = tostring(math.floor(Players.LocalPlayer:GetAttribute("Gems")))
     local Rerolls = tostring(math.floor(Players.LocalPlayer:GetAttribute("Rerolls")))
     local Spirit = tostring(math.floor(Players.LocalPlayer:GetAttribute("SpiritSouls")))
+    local stackReroll = Players.LocalPlayer:GetAttribute("Rerolls") - startReroll
     local Act = Workspace:GetAttribute("Act")
     local response = Request(
     {
@@ -364,7 +365,7 @@ function Webhook(Result)
                             "👑 | Username : " .. LocalName .." 📈 | Level : " .. Level ..
                             "\n💎 | Total Gems : " .. Gems .." ♦️ | Virtual Tokens : " .. VirtualTokens ..
                             "\n👹 | Total Spirit Souls : " .. Spirit ..
-                            "\n✨ | Total Rerolls : " .. Rerolls.." | Stack Rerolls for daily : ".. _G.StackReroll,
+                            "\n✨ | Total Rerolls : " .. Rerolls.." | Stack Rerolls for daily : ".. stackReroll,
                         inline = false
                     },
                     {
