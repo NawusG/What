@@ -310,14 +310,14 @@ task.spawn(function()
     end
 end)
 
-local StackReroll = 0
+_G.StackReroll = 0
 
 function CountReroll()
     for _,Reroll in pairs(s) do
         if Reroll.item == "Trait Rerolls" then
             local RerollText = Reroll.Count
             local RerollNum = tonumber(RerollText:gsub("%D", ""))
-            StackReroll = StackReroll + RerollNum
+            _G.StackReroll = _G.StackReroll + RerollNum
         end
     end
 end
