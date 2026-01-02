@@ -348,7 +348,7 @@ function Webhook(Result)
 
                 fields = {
                     {
-                        name = "Player Infomation | 🟢 | Round : "..Round,
+                        name = "Player Infomation | 🟢",
                         value =
                             "👑 | Username : " .. LocalName ..
                             "\n📈 | Level : " .. Level ..
@@ -374,7 +374,7 @@ function Webhook(Result)
                 },
 
                 footer = {
-                    text =  _G.State .." | "..Act, Round.." | By OngTauwn Premium",
+                    text =  _G.State .." | "..Act.." | By OngTauwn Premium",
                     icon_url = "https://cdn.discordapp.com/attachments/1455460681674395689/1455461140178927708/saiki.jpg"
                 },
 
