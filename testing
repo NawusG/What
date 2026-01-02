@@ -403,9 +403,9 @@ task.spawn(function()
         if Finish == true then
             GetReward()
             task.wait(.2)
-            Round = Round + 1
             WebhookSend = false
             if not Saved then
+                Round = Round + 1
                 task.wait()
                 SaveKill = SaveTakedown()
                 Saved = true
