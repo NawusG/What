@@ -404,6 +404,7 @@ end
 
 local Saved = false
 local WebhookSend = false
+local lockedReroll = false
 
 task.spawn(function()
     while _G.Auto do task.wait()
@@ -411,7 +412,10 @@ task.spawn(function()
         local Finish = Workspace:GetAttribute("MatchFinished")
         if Finish == true then
             GetReward()
-            CountReroll()
+            if not lockedReroll then
+                CountReroll()
+                lockedReroll = true
+            end
             task.wait(.2)
             WebhookSend = false
             if not Saved then
@@ -428,6 +432,7 @@ task.spawn(function()
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
+                lockedReroll = false
             end
         end
     end
