@@ -3,18 +3,18 @@ until game:IsLoaded()
 -- // Local
 print("Running Script")
 local Replica = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+local Light = game:GetService("Lighting")
+local coreGui = game:GetService("CoreGui")
 local Package = Replica.Packages
 local Index = Package._Index
 local Sleit = Index:FindFirstChild("sleitnick_knit@1.7.0")
 local knit = Sleit.knit
-local Workspace = game:GetService("Workspace")
-local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local plrgui = player.PlayerGui
-local Light = game:GetService("Lighting")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
-local coreGui = game:GetService("CoreGui")
 
 local LocalName = tostring(player.Name)
 
@@ -97,6 +97,7 @@ end
 print("Running Script")
 
 -- // Optimize
+
 Light:FindFirstChild("Bloom").Enabled = not _G.Optimize
 local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
 
@@ -251,6 +252,17 @@ end
 function UpAll()
     for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
         if #monbyte.Name > 10 then
+            Upgrade:InvokeServer(monbyte.Name)
+        end
+    end
+end
+
+function NejiBug()
+    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if #monbyte.Name > 10 then
+            if monbyte:FindFirstChild("Nejo") then
+                continue
+            end
             Upgrade:InvokeServer(monbyte.Name)
         end
     end
@@ -414,8 +426,13 @@ end
 
 -- // Setting Place Lock \\ --
 
-local LockedNeji = false
-local LockedMiku = false
+local Locked1Slot = false
+local Locked2Slot = false
+local Locked3Slot = false
+local Locked4Slot = false
+local Locked5Slot = false
+local Locked6Slot = false
+
 
 
 ---------------------------------- Webhook Procress ---------------------------
@@ -664,7 +681,7 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
             task.wait()
             if Finish == false then
                 AutoMiku()
-                UpAll()
+                NejiBug()
                 task.wait(.1)
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
@@ -674,9 +691,13 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
                     task.wait(.2)
                     Placeunit(1, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
                 end
-                if Wave == 10 and not LockedMiku then
+                if not Locked4Slot and Wave >= 4 and Wave <= 5 then
+                    Placeunit(4, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
+                    Locked4Slot = true
+                end
+                if Wave == 10 and not Locked5Slot then
                     Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
-                    LockedMiku = true
+                    Locked5Slot = true
                 end
             end
         end
@@ -706,7 +727,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
                 if Wave == 10 then
                     Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
                 end
-                if Wave >= 23 and Wave <= 25 and not LockedNeji then
+                if Wave >= 23 and Wave <= 25 and not Locked4Slot then
                     Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
                 end
                 -- AutoMiku()
