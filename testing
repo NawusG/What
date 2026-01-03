@@ -676,7 +676,7 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
                     Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
                 end
                 if not LockedNeji and Wave >= 16 then
-                    Placeunit(2, CFrame.new(1930.7288818359375, 282.87493896484375, -612.3458251953125))
+                    Placeunit(4, CFrame.new(1930.7288818359375, 282.87493896484375, -612.3458251953125))
                     LockedNeji = true
                 end
             end
