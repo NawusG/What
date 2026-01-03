@@ -48,11 +48,11 @@ local AutoRagna = false
 
 local AutoReplay = false
 
-if Category == "Virtual" and MapName == "Ninja Forest" then
-    print("Ninja")
-    AutoNinjaVirtual = true
-    AutoCard = true
-    AutoReplay = true
+if Category == "Virtual" and MapName == "Ninja Forest" then 
+    print("Ninja") 
+    AutoNinjaVirtual = true 
+    AutoCard = true 
+    AutoReplay = true 
     _G.State = "Ninja Virtual"
 elseif Category == "Virtual" and MapName == "Marine Base" then
     print("Marine")
