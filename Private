@@ -260,7 +260,7 @@ end
 function NejiBug()
     for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
         if #monbyte.Name > 10 then
-            if monbyte:FindFirstChild("Nejo") then
+            if monbyte:FindFirstChild("Neji") then
                 continue
             end
             Upgrade:InvokeServer(monbyte.Name)
@@ -463,8 +463,12 @@ task.spawn(function()
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
-                LockedNeji = false
-                LockedMiku = false
+                Locked1Slot = true
+                Locked2Slot = true
+                Locked3Slot = true
+                Locked4Slot = true
+                Locked5Slot = true
+                Locked6Slot = true
             end
         end
     end
