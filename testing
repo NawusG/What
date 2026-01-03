@@ -698,7 +698,7 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
                 end
                 if Wave >= 3 and Wave <= 5 and Yen >= 3200 then
                     task.wait(.1)
-                    Placeunit(6, CFrame.new(1917.8038330078125, 282.87493896484375, -614.7609252929688))
+                    Placeunit(6, CFrame.new(1948.8038330078125, 282.87493896484375, -634.7609252929688))
                     task.wait(.3)
                     Placeunit(1, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
                 end
@@ -774,10 +774,10 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
             local Wave = Workspace:GetAttribute("Wave")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false and Wave == 14 then
+            if Finish == false and Wave == 15 then
                 task.wait(1)
                 AutoSJW(1)
-                task.wait(30)
+                task.wait(15)
                 AutoSJW(2)
                 task.wait(10)
             end
@@ -940,3 +940,4 @@ task.spawn(function()
         end
     end
 end)
+print("Script loaded")
