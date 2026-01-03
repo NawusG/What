@@ -697,8 +697,9 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
                     Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
                 end
                 if Wave >= 3 and Wave <= 5 and Yen >= 3200 then
+                    task.wait(.1)
                     Placeunit(6, CFrame.new(1917.8038330078125, 282.87493896484375, -614.7609252929688))
-                    task.wait(.2)
+                    task.wait(.3)
                     Placeunit(1, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
                 end
                 if Wave >= 4 and Wave <= 5 and not Locked4Slot then
