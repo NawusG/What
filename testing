@@ -222,8 +222,8 @@ function AutoSJW(Ability)
                 return true
             end
         end
-        return false
     end
+    return false
 end
 
 -- Auto Nelle mode --
