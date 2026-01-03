@@ -202,8 +202,8 @@ function AutoMiku()
                 return true
             end
         end
-        return false
     end
+    return false
 end
 
 --- Auto SJW ---
