@@ -241,14 +241,17 @@ end
 
 --- Simple Function ---
 
+local Place = knit.Services.TowerService.RF.PlaceUnit
+local Upgrade = knit.Services.TowerService.RF.UpgradeUnit
+
 function Placeunit(unit, cf)
-    knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
+    Place:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
 end
 
 function UpAll()
     for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
         if #monbyte.Name > 10 then
-            knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
+            Upgrade:InvokeServer(monbyte.Name)
         end
     end
 end
@@ -258,6 +261,26 @@ function replay()
 end
 replay()
 
+-- helpful tool --
+
+local Knit = require(game:GetService("ReplicatedStorage").Packages.knit)
+local DataController = Knit.GetController("DataController")
+
+local Equipped = {}
+for _,string in pairs(DataController.EquippedUnits) do
+    table.insert(Equipped, string)
+end
+
+
+for i,v in pairs(DataController.Inventory) do
+    if table.find(Equipped, i) then
+        for t,k in pairs(v) do
+            if t == "UnitId" then
+                print(k)
+            end
+        end
+    end
+end
 
 -------- Check item------------
 
@@ -310,22 +333,11 @@ task.spawn(function()
     end
 end)
 
--- _G.StackReroll = 0
 
--- function CountReroll()
---     for _,Reroll in pairs(s) do
---         if Reroll.item == "Trait Rerolls" then
---             local RerollText = Reroll.Count
---             local RerollNum = tonumber(RerollText:gsub("%D", ""))
---             _G.StackReroll = _G.StackReroll + RerollNum
---         end
---     end
--- end
-
-local startReroll = player:GetAttribute("Rerolls")
 
 -- // Main Webhook Config
 
+local startReroll = player:GetAttribute("Rerolls")
 local Round = 0
 
 function Webhook(Result)
@@ -400,12 +412,15 @@ table.clear(s)
 table.clear(seen)
 end
 
+-- // Setting Place Lock \\ --
+
+local LockedNeji = false
+
 
 ---------------------------------- Webhook Procress ---------------------------
 
 local Saved = false
 local WebhookSend = false
-local lockedReroll = false
 
 task.spawn(function()
     while _G.Auto do task.wait()
@@ -430,6 +445,7 @@ task.spawn(function()
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
+                LockedNeji = false
             end
         end
     end
@@ -458,7 +474,6 @@ if AutoNinjaStory and _G.Auto then
         end
     end)
 end
-
 
 
 ----------------------- Ninja Virtual  -----------------------
@@ -660,8 +675,9 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
                 if Wave == 10 then
                     Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
                 end
-                if Wave >= 23 and Wave <= 25 then
-                    Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
+                if not LockedNeji and Wave >= 16 then
+                    Placeunit(2, CFrame.new(1930.7288818359375, 282.87493896484375, -612.3458251953125))
+                    LockedNeji = true
                 end
             end
         end
