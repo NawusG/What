@@ -719,7 +719,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
             if Finish == false then
                 task.wait(.1)
                 AutoMiku()
-                UpAll()
+                NejiBug()
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
                 end
@@ -733,6 +733,9 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
                 end
                 if Wave >= 23 and Wave <= 25 and not Locked4Slot then
                     Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
+                end
+                if Wave > 23 then
+                    UpAll()
                 end
                 -- AutoMiku()
                 -- UpAll()
