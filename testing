@@ -195,12 +195,14 @@ function AutoMiku()
         if string.len(MyUnit.Name) < 10 then 
             continue 
         end
-            for _,NameUnit in pairs(MyUnit:GetChildren()) do
-                if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
-                    task.wait(.2)
-                    knit.Services.TowerService.RE.UseAbility:FireServer(MyUnit.Name, 3)
-                end
+        for _,NameUnit in pairs(MyUnit:GetChildren()) do
+            if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
+                task.wait(.2)
+                knit.Services.TowerService.RE.UseAbility:FireServer(MyUnit.Name, 3)
+                return true
             end
+        end
+        return false
     end
 end
 
@@ -217,8 +219,10 @@ function AutoSJW(Ability)
                 local Fk = NameUnit.Parent.Name
                 print(Fk)
                 knit.Services.TowerService.RE.UseAbility:FireServer(Fk, Ability)
+                return true
             end
         end
+        return false
     end
 end
 
@@ -234,10 +238,12 @@ function nelleAttack()
                 local ThisNelle = NameUnit.Parent.Name
                 if Workspace.Ignore.Units[ThisNelle].Adult.NellSword.blade.Transparency == 1 then
                     knit.Services.TowerService.RE.UseAbility:FireServer(ThisNelle, 1)
+                    return true
                 end
             end
         end
     end
+    return false
 end
 
 --- Simple Function ---
