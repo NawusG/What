@@ -3,18 +3,18 @@ until game:IsLoaded()
 -- // Local
 print("Running Script")
 local Replica = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+local Light = game:GetService("Lighting")
+local coreGui = game:GetService("CoreGui")
 local Package = Replica.Packages
 local Index = Package._Index
 local Sleit = Index:FindFirstChild("sleitnick_knit@1.7.0")
 local knit = Sleit.knit
-local Workspace = game:GetService("Workspace")
-local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local plrgui = player.PlayerGui
-local Light = game:GetService("Lighting")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
-local coreGui = game:GetService("CoreGui")
 
 local LocalName = tostring(player.Name)
 
@@ -97,6 +97,7 @@ end
 print("Running Script")
 
 -- // Optimize
+
 Light:FindFirstChild("Bloom").Enabled = not _G.Optimize
 local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
 
@@ -241,14 +242,28 @@ end
 
 --- Simple Function ---
 
+local Place = knit.Services.TowerService.RF.PlaceUnit
+local Upgrade = knit.Services.TowerService.RF.UpgradeUnit
+
 function Placeunit(unit, cf)
-    knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
+    Place:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
 end
 
 function UpAll()
     for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
         if #monbyte.Name > 10 then
-            knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
+            Upgrade:InvokeServer(monbyte.Name)
+        end
+    end
+end
+
+function NejiBug()
+    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if #monbyte.Name > 10 then
+            if monbyte:FindFirstChild("Nejo") then
+                continue
+            end
+            Upgrade:InvokeServer(monbyte.Name)
         end
     end
 end
@@ -258,6 +273,26 @@ function replay()
 end
 replay()
 
+-- helpful tool --
+
+local Knit = require(game:GetService("ReplicatedStorage").Packages.knit)
+local DataController = Knit.GetController("DataController")
+
+local Equipped = {}
+for _,string in pairs(DataController.EquippedUnits) do
+    table.insert(Equipped, string)
+end
+
+
+for i,v in pairs(DataController.Inventory) do
+    if table.find(Equipped, i) then
+        for t,k in pairs(v) do
+            if t == "UnitId" then
+                print(k)
+            end
+        end
+    end
+end
 
 -------- Check item------------
 
@@ -310,22 +345,11 @@ task.spawn(function()
     end
 end)
 
--- _G.StackReroll = 0
 
--- function CountReroll()
---     for _,Reroll in pairs(s) do
---         if Reroll.item == "Trait Rerolls" then
---             local RerollText = Reroll.Count
---             local RerollNum = tonumber(RerollText:gsub("%D", ""))
---             _G.StackReroll = _G.StackReroll + RerollNum
---         end
---     end
--- end
-
-local startReroll = player:GetAttribute("Rerolls")
 
 -- // Main Webhook Config
 
+local startReroll = player:GetAttribute("Rerolls")
 local Round = 0
 
 function Webhook(Result)
@@ -400,12 +424,21 @@ table.clear(s)
 table.clear(seen)
 end
 
+-- // Setting Place Lock \\ --
+
+local Locked1Slot = false
+local Locked2Slot = false
+local Locked3Slot = false
+local Locked4Slot = false
+local Locked5Slot = false
+local Locked6Slot = false
+
+
 
 ---------------------------------- Webhook Procress ---------------------------
 
 local Saved = false
 local WebhookSend = false
-local lockedReroll = false
 
 task.spawn(function()
     while _G.Auto do task.wait()
@@ -430,6 +463,8 @@ task.spawn(function()
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
+                LockedNeji = false
+                LockedMiku = false
             end
         end
     end
@@ -458,7 +493,6 @@ if AutoNinjaStory and _G.Auto then
         end
     end)
 end
-
 
 
 ----------------------- Ninja Virtual  -----------------------
@@ -647,7 +681,7 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
             task.wait()
             if Finish == false then
                 AutoMiku()
-                UpAll()
+                NejiBug()
                 task.wait(.1)
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
@@ -657,11 +691,13 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
                     task.wait(.2)
                     Placeunit(1, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
                 end
-                if Wave == 10 then
-                    Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
+                if Wave >= 4 and Wave <= 5 and not Locked4Slot then
+                    Placeunit(4, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
+                    Locked4Slot = true
                 end
-                if Wave >= 23 and Wave <= 25 then
-                    Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
+                if Wave == 10 and not Locked5Slot then
+                    Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
+                    Locked5Slot = true
                 end
             end
         end
@@ -691,7 +727,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
                 if Wave == 10 then
                     Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
                 end
-                if Wave >= 23 and Wave <= 25 then
+                if Wave >= 23 and Wave <= 25 and not Locked4Slot then
                     Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
                 end
                 -- AutoMiku()
