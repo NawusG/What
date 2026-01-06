@@ -779,9 +779,9 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
                 AutoSJW(1)
                 task.wait(11)
                 AutoSJW(2)
-                task.wait(1)
+                task.wait(1.5)
                 AutoSJW(2)
-                task.wait(1)
+                task.wait(1.5)
                 AutoSJW(2)
                 task.wait(10)
             end
