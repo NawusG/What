@@ -263,16 +263,16 @@ function UpAll()
     end
 end
 
-function NejiBug()
-    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
-        if #monbyte.Name > 10 then
-            if monbyte:FindFirstChild("Neji") then
-                continue
-            end
-            Upgrade:InvokeServer(monbyte.Name)
-        end
-    end
-end
+-- function NejiBug()
+--     for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+--         if #monbyte.Name > 10 then
+--             if monbyte:FindFirstChild("Neji") then
+--                 continue
+--             end
+--             Upgrade:InvokeServer(monbyte.Name)
+--         end
+--     end
+-- end
 
 function replay()
     knit.Services.WaveService.RE.VoteReplay:FireServer()
@@ -691,7 +691,7 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
             task.wait()
             if Finish == false then
                 AutoMiku()
-                NejiBug()
+                UpAll()
                 task.wait(.1)
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
@@ -702,14 +702,14 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
                     task.wait(.3)
                     Placeunit(1, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
                 end
-                if Wave >= 4 and Wave <= 5 and not Locked4Slot then
-                    Placeunit(4, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
-                    Locked4Slot = true
-                end
+                -- if Wave >= 4 and Wave <= 5 and not Locked4Slot then
+                --     Placeunit(4, CFrame.new(1921.900146484375, 282.87493896484375, -608.5687255859375))
+                --     task.wait(.2)
+                --     Placeunit(4, CFrame.new(1948.8038330078125, 282.87493896484375, -634.7609252929688))
+                --     Locked4Slot = true
+                -- end
                 if Wave == 10 and not Locked5Slot then
                     Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
-                    task.wait(.2)
-                    Placeunit(5, CFrame.new(1948.8038330078125, 282.87493896484375, -634.7609252929688))
                     Locked5Slot = true
                 end
             end
@@ -728,7 +728,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
             if Finish == false then
                 task.wait(.1)
                 AutoMiku()
-                NejiBug()
+                UpAll()
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(1927.1173095703125, 282.87493896484375, -572.6756591796875))
                 end
@@ -740,12 +740,10 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
                 if Wave == 10 then
                     Placeunit(5, CFrame.new(1928.7288818359375, 282.87493896484375, -619.3458251953125))
                 end
-                if Wave >= 23 and Wave <= 25 and not Locked4Slot then
-                    Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
-                end
-                if Wave > 23 then
-                    UpAll()
-                end
+                -- if Wave >= 23 and Wave <= 25 and not Locked4Slot then
+                --     Placeunit(4, CFrame.new(1925, 282.87493896484375, -606.5))
+                -- end
+
                 -- AutoMiku()
                 -- UpAll()
                 -- task.wait(.1)
@@ -779,7 +777,11 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
             if Finish == false and Wave == 14 then
                 task.wait(10)
                 AutoSJW(1)
-                task.wait(12)
+                task.wait(11)
+                AutoSJW(2)
+                task.wait(1)
+                AutoSJW(2)
+                task.wait(1)
                 AutoSJW(2)
                 task.wait(10)
             end
@@ -797,6 +799,12 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
                 task.wait(1)
                 AutoSJW(1)
                 task.wait(30)
+                AutoSJW(2)
+                task.wait(1)
+                AutoSJW(2)
+                task.wait(1)
+                AutoSJW(2)
+                task.wait(1)
                 AutoSJW(2)
                 task.wait(10)
             end
