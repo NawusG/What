@@ -49,22 +49,15 @@ function RongPart()
     PartLoy3.CFrame = RootPart.CFrame * CFrame.new(0, -3, 0)
 end
 
-
 local Location = Workspace.Location
 local QuestLocation = Location.QuestLocaion
 
 function TweenTo(EndPoint, Speed)
-    if not Character then 
-        return 
-    end
+    if not Character then return end
     local Humanoid = Character:FindFirstChildOfClass("Humanoid")
     local RootPart = Character:FindFirstChild("HumanoidRootPart")
-    if not Humanoid or not RootPart then 
-        return 
-    end
-    if Humanoid.Health <= 0 then 
-        return
-    end
+    if not Humanoid or not RootPart then return end
+    if Humanoid.Health <= 0 then return end
     local Distance = (RootPart.Position - EndPoint.Position).Magnitude
     local Time = Distance / Speed
     local TweenInfo = TweenInfo.new(Time, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
@@ -74,50 +67,40 @@ function TweenTo(EndPoint, Speed)
     RongPart()
 end
 
+local function UpdateCharacter()
+    Character = Client.Character or Client.CharacterAdded:Wait()
+    Humanoid = Character:WaitForChild("Humanoid")
+    RootPart = Character:WaitForChild("HumanoidRootPart")
+end
+
+UpdateCharacter()
+Client.CharacterAdded:Connect(UpdateCharacter)
+
+
 function CheckLvl()
     local lvl = plrdata.Level.Value
-    if lvl < 50 then
-        return 1
-    end
-    if lvl < 1700 and lvl >= 1600 then
-        return 31
-    end
-    if lvl >= 1700 then
-        return math.floor(lvl / 50) - 1
-    end
-    return math.floor(lvl / 50) + 1
+    if lvl < 50 then return 1 end
+    if lvl < 1700 and lvl >= 1600 then return 31 end
+    if lvl >= 1700 then return math.floor(lvl / 50) - 1 end
+    return math.floor(lvl / 50) + 1 
 end
 
 local SkipIns = { 9, 12, 15, 19, 23, 29, 32 }
 function SkipBoss()
     local GetLvl = CheckLvl()
-    if table.find(SkipIns, GetLvl) then
-        return GetLvl - 1
-    end
-    return CheckLvl()
+    if table.find(SkipIns, GetLvl) then return GetLvl - 1 end return CheckLvl()
 end
 
 local OldLevel = SkipBoss()
 function ChangeQuest()
-    if OldLevel ~= SkipBoss() then
-        local args = { "Abandon_Quest", { QuestSlot = "QuestSlot1" }}
-        ReplicatedStorage.OtherEvent.QuestEvents.Quest:FireServer(unpack(args))
-        OldLevel = SkipBoss()
-    end
+    if OldLevel ~= SkipBoss() then local args = { "Abandon_Quest", { QuestSlot = "QuestSlot1" }} ReplicatedStorage.OtherEvent.QuestEvents.Quest:FireServer(unpack(args)) OldLevel = SkipBoss() end
 end
 
 AllQuests = {}
-for _,Quest in pairs(QuestLocation:GetChildren()) do
-    table.insert(AllQuests, { QuestCFrame = Quest.CFrame, QuestName = tonumber(string.match(Quest.Name, "%d+")) })
-end
+for _,Quest in pairs(QuestLocation:GetChildren()) do table.insert(AllQuests, { QuestCFrame = Quest.CFrame, QuestName = tonumber(string.match(Quest.Name, "%d+")) }) end
 
 function CheckQuestCFrame()
-    for i,v in pairs(AllQuests) do
-        local Skip = SkipBoss()
-        if Skip == v.QuestName then
-            return v.QuestCFrame
-        end
-    end
+    for i,v in pairs(AllQuests) do local Skip = SkipBoss() if Skip == v.QuestName then return v.QuestCFrame end end
 end
 
 function GetQuest()
@@ -126,39 +109,24 @@ function GetQuest()
         local BlockQuest = Quest:FindFirstChild("Block")
         local QuestPrompt = BlockQuest.QuestPrompt
         local Dis = (RootPart.Position - BlockQuest.Position).Magnitude
-        if Dis < 20 then
-            fireproximityprompt(QuestPrompt)
-            return
-        end
+        if Dis < 20 then fireproximityprompt(QuestPrompt) return end
     end
     return
 end
 
 function TpQuest()
     if PlayerGui.QuestGui.Holder.QuestSlot1.Visible == false then
-        repeat
-            TweenTo(CheckQuestCFrame() * CFrame.new(0 , 15, 0) * CFrame.Angles(math.rad(-90), 0, 0), 100)
-            task.wait(.2)
-            GetQuest()
-        until PlayerGui.QuestGui.Holder.QuestSlot1.Visible == true
-            return "success"
-    end 
+        repeat TweenTo(CheckQuestCFrame() * CFrame.new(0 , 15, 0) * CFrame.Angles(math.rad(-90), 0, 0), 100) task.wait(.2) GetQuest()
+        until PlayerGui.QuestGui.Holder.QuestSlot1.Visible == true return "success" end 
     return false
 end
 
 local MonFol = {}
 local module = require(ReplicatedStorage.ModuleScript.Quest_Settings)
 for i,v in pairs(module) do
-    if not string.match(i, "Floppa Quest") then
-        continue
-    end
+    if not string.match(i, "Floppa Quest") then continue end
     local QuestLine = string.match(i, "%d+")
-    if QuestLine then
-        table.insert(MonFol, {
-            Level = tonumber(QuestLine),
-            Target = v.Target
-        })
-    end
+    if QuestLine then table.insert(MonFol, { Level = tonumber(QuestLine), Target = v.Target }) end 
 end
 
 function GetMon()
@@ -250,7 +218,35 @@ function GetNear(mon)
     end
     TweenTo(right, 150)
 end
-    
+
+local ToolInv = {}
+function ResetTool(tool)
+    for _,tools in pairs(Client.Backpack:GetChildren()) do
+        table.insert(ToolInv, tools.Name)
+    end
+end
+
+ResetTool()
+
+function Equip(tool)
+    if not Character then 
+        return 
+    end
+    local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+    local RootPart = Character:FindFirstChild("HumanoidRootPart")
+    if not Humanoid or not RootPart then 
+        return 
+    end
+    if Humanoid.Health <= 0 then 
+        return
+    end
+    local find = Client.Backpack:FindFirstChild(tool)
+    if not Humanoid then return end
+    if find and find:IsA("Tool") then 
+        Humanoid:EquipTool(find) 
+    end
+end
+Equip("Combat")
 
 local Window = Fluent:CreateWindow({
     Title = "Fluent " .. Fluent.Version,
@@ -326,18 +322,26 @@ do
                         OpFloppa()
                     end
                 }
-                    -- {
-                    --     Title = "Cancel",
-                    --     Callback = function()
-                    --         print("Cancelled the dialog.")
-                    --     end
-                    -- }
                 }
             })
         end
     })
 
-
+    local selectWeapon = "Combat"
+    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+    Title = "Select Weapon",
+    Values = ToolInv,
+    Multi = false,
+    Default = 1,
+    })
+    
+    Dropdown:SetValue("Combat")
+    
+    Dropdown:OnChanged(function(tool)
+        print("Dropdown changed:", tool)
+        ResetTool()
+        selectWeapon = tool
+    end)
 
     local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "AutoKaitun", Default = false })
 
@@ -346,6 +350,7 @@ do
             while Options.MyToggle.Value do task.wait()
                 CheckMonSpawn(GetMon())
                 ChangeQuest()
+                Equip(selectWeapon)
                 for amount,v in pairs(Workspace.Monster:GetChildren()) do
                     local MonHum = v:FindFirstChild("Humanoid")
                     local MonRoot  = v:FindFirstChild("HumanoidRootPart")
@@ -370,17 +375,13 @@ do
     end)
 
     Options.MyToggle:SetValue(false)
-
-
     local SelectedStat = "MeleeLevel"
-
     local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
         Title = "Select stat",
         Values = {"MeleeLevel", "DefenseLevel", "SwordLevel", "MemePowerLevel"},
         Multi = false,
         Default = 1,
     })
-    
     Dropdown:SetValue("MeleeLevel")
     
     Dropdown:OnChanged(function(Value)
@@ -415,7 +416,6 @@ do
         selectMon = Value1
     end)
 
-
     local Toggle3 = Tabs.Main:AddToggle("MyToggle3", {Title = "Auto Quest", Default = false })
 
     Toggle3:OnChanged(function()
@@ -432,12 +432,13 @@ do
 
     Options.MyToggle3:SetValue(false)
 
-    local Toggle2 = Tabs.Main:AddToggle("MyToggle2", {Title = "Autofarm", Default = false })
+    local Toggle2 = Tabs.Main:AddToggle("MyToggle2", {Title = "Auto Farm", Default = false })
 
     Toggle2:OnChanged(function()
         task.spawn(function()
             while Options.MyToggle2.Value do task.wait()
                 CheckMonSpawn(selectMon)
+                Equip(selectWeapon)
                 for _,v in pairs(Workspace.Monster:GetChildren()) do
                     local MonHum = v:FindFirstChild("Humanoid")
                     local MonRoot  = v:FindFirstChild("HumanoidRootPart")
@@ -484,10 +485,6 @@ do
         end
         print("Mutlidropdown changed:", table.concat(Values, ", "))
     end)
-
-
-
-
 
     local Keybind = Tabs.Main:AddKeybind("Keybind", {
         Title = "KeyBind",
