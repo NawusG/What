@@ -1,0 +1,561 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+repeat
+task.wait()    
+until game:IsLoaded()
+
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Client = Players.LocalPlayer
+local Character = Client.Character or Client.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild("Humanoid")
+local RootPart = Character:WaitForChild("HumanoidRootPart")
+local plrdata = Client.PlayerData
+local PlayerGui = Client:WaitForChild("PlayerGui")
+local TweenService = game:GetService("TweenService")
+
+-- //  Redeem codes
+
+local codes = require(ReplicatedStorage.ModuleScript.CodeList)
+function RedeemAllCodes() local lvl = Client.PlayerData.Level.Value if lvl <= 25 then return end 
+for code,_ in pairs(codes) do ReplicatedStorage.OtherEvent.MainEvents.Code:InvokeServer(code) end end
+
+-- // attack 
+function ClickDes()
+    local VirtualUser = game:GetService("VirtualUser")
+    VirtualUser:CaptureController()
+    VirtualUser:Button1Down(Vector2.new(999, 999))
+    task.wait()
+    VirtualUser:Button1Up(Vector2.new(999, 999))
+end
+
+local PartLoy = Workspace:FindFirstChild("PartLoy")
+local PartLoy1 = Workspace:FindFirstChild("PartLoy1")
+local PartLoy2 = Workspace:FindFirstChild("PartLoy2")
+local PartLoy3 = Workspace:FindFirstChild("PartLoy3")
+
+if not PartLoy3 then PartLoy3 = Instance.new("Part") PartLoy3.Name = "PartLoy3" PartLoy3.Size = Vector3.new(10, 2, 10) PartLoy3.Parent = Workspace PartLoy3.Transparency = 1 PartLoy3.Anchored = true end
+if not PartLoy2 then PartLoy2 = Instance.new("Part") PartLoy2.Name = "PartLoy2" PartLoy2.Size = Vector3.new(10, 2, 10) PartLoy2.Parent = Workspace PartLoy2.Transparency = 1 PartLoy2.Anchored = true end
+if not PartLoy1 then PartLoy1 = Instance.new("Part") PartLoy1.Name = "PartLoy1" PartLoy1.Size = Vector3.new(10, 2, 10) PartLoy1.Parent = Workspace PartLoy1.Transparency = 1 PartLoy1.Anchored = true end
+if not PartLoy then PartLoy = Instance.new("Part") PartLoy.Name = "PartLoy" PartLoy.Size = Vector3.new(10, 3, 10) PartLoy.Parent = Workspace PartLoy.Transparency = 1 PartLoy.Anchored = true end
+
+function RongPart()
+    PartLoy.CFrame = RootPart.CFrame * CFrame.new(0, 0, 1.1) * CFrame.Angles(math.rad(-90), 0, 0)
+    PartLoy1.CFrame = RootPart.CFrame * CFrame.new(0, 0, -2.2) * CFrame.Angles(math.rad(-90), 0, 0)
+    PartLoy2.CFrame = RootPart.CFrame * CFrame.new(0, 3, 0)
+    PartLoy3.CFrame = RootPart.CFrame * CFrame.new(0, -3, 0)
+end
+
+
+local Location = Workspace.Location
+local QuestLocation = Location.QuestLocaion
+
+function TweenTo(EndPoint, Speed)
+    if not Character then 
+        return 
+    end
+    local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+    local RootPart = Character:FindFirstChild("HumanoidRootPart")
+    if not Humanoid or not RootPart then 
+        return 
+    end
+    if Humanoid.Health <= 0 then 
+        return
+    end
+    local Distance = (RootPart.Position - EndPoint.Position).Magnitude
+    local Time = Distance / Speed
+    local TweenInfo = TweenInfo.new(Time, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+    local Tween = TweenService:Create(RootPart, TweenInfo, {CFrame = EndPoint})
+    Tween:Play()
+    Tween.Completed:Wait()
+    RongPart()
+end
+
+function CheckLvl()
+    local lvl = plrdata.Level.Value
+    if lvl < 50 then
+        return 1
+    end
+    if lvl < 1700 and lvl >= 1600 then
+        return 31
+    end
+    if lvl >= 1700 then
+        return math.floor(lvl / 50) - 1
+    end
+    return math.floor(lvl / 50) + 1
+end
+
+local SkipIns = { 9, 12, 15, 19, 23, 29, 32 }
+function SkipBoss()
+    local GetLvl = CheckLvl()
+    if table.find(SkipIns, GetLvl) then
+        return GetLvl - 1
+    end
+    return CheckLvl()
+end
+
+local OldLevel = SkipBoss()
+function ChangeQuest()
+    if OldLevel ~= SkipBoss() then
+        local args = { "Abandon_Quest", { QuestSlot = "QuestSlot1" }}
+        ReplicatedStorage.OtherEvent.QuestEvents.Quest:FireServer(unpack(args))
+        OldLevel = SkipBoss()
+    end
+end
+
+AllQuests = {}
+for _,Quest in pairs(QuestLocation:GetChildren()) do
+    table.insert(AllQuests, { QuestCFrame = Quest.CFrame, QuestName = tonumber(string.match(Quest.Name, "%d+")) })
+end
+
+function CheckQuestCFrame()
+    for i,v in pairs(AllQuests) do
+        local Skip = SkipBoss()
+        if Skip == v.QuestName then
+            return v.QuestCFrame
+        end
+    end
+end
+
+function GetQuest()
+    local QuestPrompt = Workspace.NPCs.Quests_Npc
+    for _,Quest in pairs(QuestPrompt:GetChildren()) do
+        local BlockQuest = Quest:FindFirstChild("Block")
+        local QuestPrompt = BlockQuest.QuestPrompt
+        local Dis = (RootPart.Position - BlockQuest.Position).Magnitude
+        if Dis < 20 then
+            fireproximityprompt(QuestPrompt)
+            return
+        end
+    end
+    return
+end
+
+function TpQuest()
+    if PlayerGui.QuestGui.Holder.QuestSlot1.Visible == false then
+        repeat
+            TweenTo(CheckQuestCFrame() * CFrame.new(0 , 15, 0) * CFrame.Angles(math.rad(-90), 0, 0), 100)
+            task.wait(.2)
+            GetQuest()
+        until PlayerGui.QuestGui.Holder.QuestSlot1.Visible == true
+            return "success"
+    end 
+    return false
+end
+
+local MonFol = {}
+local module = require(ReplicatedStorage.ModuleScript.Quest_Settings)
+for i,v in pairs(module) do
+    if not string.match(i, "Floppa Quest") then
+        continue
+    end
+    local QuestLine = string.match(i, "%d+")
+    if QuestLine then
+        table.insert(MonFol, {
+            Level = tonumber(QuestLine),
+            Target = v.Target
+        })
+    end
+end
+
+function GetMon()
+    local lvl = SkipBoss()
+    for i,v in pairs(MonFol) do
+        if v.Level == lvl then
+            return v.Target
+        end
+    end
+end
+
+function CheckMonSpawn(mon)
+    local MonSpawn = Workspace.Location.Enemy_Location[mon]
+    local dis = (RootPart.Position - MonSpawn.Position).Magnitude
+    if dis > 350 then
+        TweenTo(MonSpawn.CFrame * CFrame.new(0, 20, 0), 200)
+        return "success"
+    end
+    return "In range"
+end
+
+function UpStat(stat)
+    local SkillPoint = plrdata.SkillPoint.Value
+    local MeleeLvl = plrdata.MeleeLevel.Value
+    local DefenseLvl = plrdata.DefenseLevel.Value
+    local SwordLvl = plrdata.SwordLevel.Value
+    local PowerLevel = plrdata.MemePowerLevel.Value
+    if SkillPoint > 0 then     
+        local args = {{Target = stat, Action = "UpgradeStats", Amount = 1}}
+        ReplicatedStorage.OtherEvent.MainEvents.StatsFunction:InvokeServer(unpack(args))
+    end
+end
+
+function UpStatKatan()
+    local SkillPoint = plrdata.SkillPoint.Value
+    local MeleeLvl = plrdata.MeleeLevel.Value
+    local DefenseLvl = plrdata.DefenseLevel.Value
+    local SwordLvl = plrdata.SwordLevel.Value
+    local PowerLevel = plrdata.MemePowerLevel.Value
+    if SkillPoint > 0 and DefenseLvl < 150 then
+        local args = {{Target = "SwordLevel",Action = "UpgradeStats",Amount = 1}}
+        ReplicatedStorage.OtherEvent.MainEvents.StatsFunction:InvokeServer(unpack(args))
+        local args1 = {{Target = "DefenseLevel",Action = "UpgradeStats",Amount = 1}}
+        ReplicatedStorage.OtherEvent.MainEvents.StatsFunction:InvokeServer(unpack(args1))
+    else
+        local args = {{Target = "SwordLevel", Action = "UpgradeStats", Amount = 1}}
+        ReplicatedStorage.OtherEvent.MainEvents.StatsFunction:InvokeServer(unpack(args))
+    end
+end
+
+
+function OpFloppa()
+    local Floppa_Weapon = Client.Items.Weapon.Floppa.Value
+    if Floppa_Weapon < 1 then
+        RootPart.CFrame = CFrame.new(758, -32, -424)
+        task.wait(.3)
+        fireproximityprompt(Workspace.NPCs.Quests_Npc["Cool Floppa Quest"].Block.QuestPrompt)
+        task.wait(.3)
+        repeat task.wait()
+            RootPart.CFrame = CFrame.new(794, -32, -440)
+            fireproximityprompt(Workspace.Island.FloppaIsland["Lava Floppa"].ClickPart.ProximityPrompt)
+        until PlayerGui.QuestGui.Holder.QuestSlot1.Visible == false
+    end
+end
+
+function UpdateCharacter()
+    Character = Client.Character or Client.CharacterAdded:Wait()
+    Humanoid = Character:WaitForChild("Humanoid")
+    RootPart = Character:WaitForChild("HumanoidRootPart")
+end
+
+local monDropdown = {}
+for i,v in pairs(MonFol) do
+    table.insert(monDropdown, v.Target)
+end
+
+local NearQuest = {}
+function GetNear(mon)
+    local nearest = math.huge
+    local right = nil
+    for i,v in pairs(AllQuests) do
+        local MonSpawn = Workspace.Location.Enemy_Location[mon]
+        local ins = v.QuestCFrame
+        local dis = (MonSpawn.Position - ins.Position).Magnitude
+        if dis < nearest then
+            nearest = dis
+            right = ins
+        end
+    end
+    TweenTo(right, 150)
+end
+    
+
+local Window = Fluent:CreateWindow({
+    Title = "Fluent " .. Fluent.Version,
+    SubTitle = "by dawid",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+})
+
+--Fluent provides Lucide Icons https://lucide.dev/icons/ for the tabs, icons are optional
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+do
+    Fluent:Notify({
+        Title = "Notification",
+        Content = "This is a notification",
+        SubContent = "SubContent", -- Optional
+        Duration = 5 -- Set to nil to make the notification not disappear
+    })
+
+
+
+    Tabs.Main:AddParagraph({
+        Title = "Paragraph",
+        Content = "This is a paragraph.\nSecond line!"
+    })
+
+
+
+    Tabs.Main:AddButton({
+        Title = "Redeem all codes",
+        Description = "code",
+        Callback = function()
+            Window:Dialog({
+                Title = "Title",
+                Content = "Click confirm to redeem",
+                Buttons = {
+                    {
+                        Title = "Confirm",
+                        Callback = function()
+                            RedeemAllCodes()
+                        end
+                    }
+                    -- {
+                    --     Title = "Cancel",
+                    --     Callback = function()
+                    --         print("Cancelled the dialog.")
+                    --     end
+                    -- }
+                }
+            })
+        end
+    })
+
+    Tabs.Main:AddButton({
+    Title = "Get Floppa",
+    Description = "Op Sword",
+    Callback = function()
+        Window:Dialog({
+            Title = "Title",
+            Content = "Click confirm",
+            Buttons = {
+                {
+                    Title = "Confirm",
+                    Callback = function()
+                        OpFloppa()
+                    end
+                }
+                    -- {
+                    --     Title = "Cancel",
+                    --     Callback = function()
+                    --         print("Cancelled the dialog.")
+                    --     end
+                    -- }
+                }
+            })
+        end
+    })
+
+
+
+    local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "AutoKaitun", Default = false })
+
+    Toggle:OnChanged(function()
+        task.spawn(function()
+            while Options.MyToggle.Value do task.wait()
+                CheckMonSpawn(GetMon())
+                ChangeQuest()
+                for amount,v in pairs(Workspace.Monster:GetChildren()) do
+                    local MonHum = v:FindFirstChild("Humanoid")
+                    local MonRoot  = v:FindFirstChild("HumanoidRootPart")
+                    if not MonHum or not MonRoot then
+                        continue
+                    end
+                    if MonHum and MonRoot and v.Humanoid.Health > 0 and v.Name == GetMon() then
+                         -- Camara.CameraSubject = v.Humanoid
+                        repeat
+                            if PlayerGui.QuestGui.Holder.QuestSlot1.Visible == false then
+                                TpQuest()
+                                break
+                            end
+                            UpStatKatan()
+                            TweenTo(v.HumanoidRootPart.CFrame * CFrame.new(0, 10.3, 0) * CFrame.Angles(math.rad(-90), 0, 0), 150)
+                            ClickDes()
+                        until v.Humanoid.Health <= 0 or not Options.MyToggle.Value
+                    end
+                end
+            end
+        end)
+    end)
+
+    Options.MyToggle:SetValue(false)
+
+
+    local SelectedStat = "MeleeLevel"
+
+    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+        Title = "Select stat",
+        Values = {"MeleeLevel", "DefenseLevel", "SwordLevel", "MemePowerLevel"},
+        Multi = false,
+        Default = 1,
+    })
+    
+    Dropdown:SetValue("MeleeLevel")
+    
+    Dropdown:OnChanged(function(Value)
+        print("Dropdown changed:", Value)
+        SelectedStat = Value
+    end)
+
+    local Toggle1 = Tabs.Main:AddToggle("MyToggle1", {Title = "Upgrade stats", Default = false })
+
+    Toggle1:OnChanged(function()
+        task.spawn(function()
+            while Options.MyToggle1.Value do task.wait()
+                UpStat(SelectedStat)
+            end
+        end)
+    end)
+
+    Options.MyToggle1:SetValue(false)
+
+    local selectMon = "Floppa"
+    local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
+    Title = "Select Mon",
+    Values = monDropdown,
+    Multi = false,
+    Default = 1,
+    })
+    
+    Dropdown:SetValue("Floppa")
+    
+    Dropdown:OnChanged(function(Value1)
+        print("Dropdown changed:", Value1)
+        selectMon = Value1
+    end)
+
+
+    local Toggle3 = Tabs.Main:AddToggle("MyToggle3", {Title = "Auto Quest", Default = false })
+
+    Toggle3:OnChanged(function()
+        task.spawn(function()
+            while Options.MyToggle3.Value do task.wait()
+                if PlayerGui.QuestGui.Holder.QuestSlot1.Visible == false then
+                    GetNear(selectMon)
+                    task.wait(.2)
+                    GetQuest()
+                end
+            end
+        end)
+    end)
+
+    Options.MyToggle3:SetValue(false)
+
+    local Toggle2 = Tabs.Main:AddToggle("MyToggle2", {Title = "Autofarm", Default = false })
+
+    Toggle2:OnChanged(function()
+        task.spawn(function()
+            while Options.MyToggle2.Value do task.wait()
+                CheckMonSpawn(selectMon)
+                for _,v in pairs(Workspace.Monster:GetChildren()) do
+                    local MonHum = v:FindFirstChild("Humanoid")
+                    local MonRoot  = v:FindFirstChild("HumanoidRootPart")
+                    if not MonHum or not MonRoot then
+                        continue
+                    end
+                    if MonHum and MonRoot and v.Humanoid.Health > 0 and v.Name == selectMon then
+                         -- Camara.CameraSubject = v.Humanoid
+                        repeat
+                            if PlayerGui.QuestGui.Holder.QuestSlot1.Visible == false and Options.MyToggle3.Value then
+                                break
+                            end
+                            TweenTo(v.HumanoidRootPart.CFrame * CFrame.new(0, 10.3, 0) * CFrame.Angles(math.rad(-90), 0, 0), 150)
+                            ClickDes()
+                        until v.Humanoid.Health <= 0 or not Options.MyToggle2.Value
+                    end
+                end
+            end
+        end)
+    end)
+
+    Options.MyToggle2:SetValue(false)
+
+
+    
+    local MultiDropdown = Tabs.Main:AddDropdown("MultiDropdown", {
+        Title = "Dropdown",
+        Description = "You can select multiple values.",
+        Values = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen"},
+        Multi = true,
+        Default = {"seven", "twelve"},
+    })
+
+    MultiDropdown:SetValue({
+        three = true,
+        five = true,
+        seven = false
+    })
+
+    MultiDropdown:OnChanged(function(Value)
+        local Values = {}
+        for Value, State in next, Value do
+            table.insert(Values, Value)
+        end
+        print("Mutlidropdown changed:", table.concat(Values, ", "))
+    end)
+
+
+
+
+
+    local Keybind = Tabs.Main:AddKeybind("Keybind", {
+        Title = "KeyBind",
+        Mode = "Toggle", -- Always, Toggle, Hold
+        Default = "LeftControl", -- String as the name of the keybind (MB1, MB2 for mouse buttons)
+
+        -- Occurs when the keybind is clicked, Value is `true`/`false`
+        Callback = function(Value)
+            print("Keybind clicked!", Value)
+        end,
+
+        -- Occurs when the keybind itself is changed, `New` is a KeyCode Enum OR a UserInputType Enum
+        ChangedCallback = function(New)
+            print("Keybind changed!", New)
+        end
+    })
+
+
+    local Input = Tabs.Main:AddInput("Input", {
+        Title = "Input",
+        Default = "Default",
+        Placeholder = "Placeholder",
+        Numeric = false, -- Only allows numbers
+        Finished = false, -- Only calls callback when you press enter
+        Callback = function(Value)
+            print("Input changed:", Value)
+        end
+    })
+
+    Input:OnChanged(function()
+        print("Input updated:", Input.Value)
+    end)
+end
+
+
+-- Addons:
+-- SaveManager (Allows you to have a configuration system)
+-- InterfaceManager (Allows you to have a interface managment system)
+
+-- Hand the library over to our managers
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+
+-- Ignore keys that are used by ThemeManager.
+-- (we dont want configs to save themes, do we?)
+SaveManager:IgnoreThemeSettings()
+
+-- You can add indexes of elements the save manager should ignore
+SaveManager:SetIgnoreIndexes({})
+
+-- use case for doing it this way:
+-- a script hub could have themes in a global folder
+-- and game configs in a separate folder per game
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/specific-game")
+
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+
+Window:SelectTab(1)
+
+Fluent:Notify({
+    Title = "Fluent",
+    Content = "The script has been loaded.",
+    Duration = 8
+})
+
+-- You can use the SaveManager:LoadAutoloadConfig() to load a config
+-- which has been marked to be one that auto loads!
+SaveManager:LoadAutoloadConfig()
