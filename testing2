@@ -485,12 +485,12 @@ task.spawn(function()
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
-                Locked1Slot = true
-                Locked2Slot = true
-                Locked3Slot = true
-                Locked4Slot = true
-                Locked5Slot = true
-                Locked6Slot = true
+                Locked1Slot = false
+                Locked2Slot = false
+                Locked3Slot = false
+                Locked4Slot = false
+                Locked5Slot = false
+                Locked6Slot = false
             end
         end
     end
@@ -858,6 +858,7 @@ if AutoWinter and _G.Auto then
                     Placeunit(2, CFrame.new(93.3233642578125, -129.20761108398438, 83.51871490478516))
                     task.wait(.3)
                     Placeunit(4, CFrame.new(99.13190460205078, -128.6086883544922, 72.10289001464844))
+                    Locked1Slot = true
                 end
             end
         end
