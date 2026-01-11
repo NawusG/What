@@ -845,10 +845,11 @@ if AutoWinter and _G.Auto then
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(138.72592163085938, -131.00296020507812, 76.1960678100586))
                 end
-                if Wave >= 3 and Wave <= 5 and Yen >= 3200 then
+                if Wave >= 3 and Wave <= 5 and Yen >= 3200 and not Locked2Slot then
                     Placeunit(6, CFrame.new(96.1998062133789, -128.6078338623047, 74.57203674316406))
                     task.wait(.2)
                     Placeunit(1, CFrame.new(94.64216613769531, -128.60848999023438, 69.75340270996094))
+                    Locked2Slot = true
                 end
                 if Wave == 10 then
                     Placeunit(5, CFrame.new(92.82159423828125, -128.61383056640625, 63.094181060791016))
