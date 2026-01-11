@@ -250,7 +250,7 @@ end)
                 if Wave == 10 then
                     Placeunit(5, CFrame.new(92.82159423828125, -128.61383056640625, 63.094181060791016))
                 end
-                if Wave >= 10 and Yen > 3000 and not Locked then
+                if Wave >= 12 and Yen > 3000 and not Locked then
                     Placeunit(2, CFrame.new(93.3233642578125, -129.20761108398438, 83.51871490478516))
                     task.wait(.3)
                     Placeunit(2, CFrame.new(75.2608642578125, -129.6837921142578, 74.01399993896484))
