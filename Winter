@@ -1,0 +1,284 @@
+-- ichigo
+repeat task.wait()
+until game:IsLoaded()
+if game.PlaceId ~= 106402284955512 then
+    return
+    print("Not Virtual Marine")
+end
+_G.aa = "Winter Event"
+print("Running Script")
+local Replica = game:GetService("ReplicatedStorage")
+local Package = Replica.Packages
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local plrgui = player.PlayerGui
+local Light = game:GetService("Lighting")
+local Wave = Workspace:GetAttribute("Wave")
+local Finish = Workspace:GetAttribute("MatchFinished")
+local coreGui = game:GetService("CoreGui")
+local LocalName = tostring(Players.LocalPlayer.Name)
+
+
+Light:FindFirstChild("Bloom").Enabled = not _G.Optimize
+local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
+
+if _G.Optimize then
+    if not BlackScreen then
+        local screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "BlackoutOverlay"
+        screenGui.ResetOnSpawn = false
+        screenGui.IgnoreGuiInset = true
+        screenGui.DisplayOrder = -1
+        screenGui.Parent = coreGui
+
+        local blackoutFrame = Instance.new("Frame")
+        blackoutFrame.Size = UDim2.new(1, 0, 1, 0)
+        blackoutFrame.Position = UDim2.new(0, 0, 0, 0)
+        blackoutFrame.BackgroundColor3 = Color3.new(0, 0, 0)
+        blackoutFrame.BackgroundTransparency = 0
+        blackoutFrame.ZIndex = -1
+        blackoutFrame.Parent = screenGui
+    end
+end
+if BlackScreen and not _G.Optimize then
+    BlackScreen:Destroy()
+end
+
+if _G.Optimize then
+    for _,part in pairs(Workspace[LocalName]:GetChildren()) do
+        if string.match(part.Name, "Blessing") then
+            part:Destroy()
+        end
+    end
+end
+
+--- Webhook---
+local url = _G.webhook
+local HttpService = game:GetService("HttpService")
+local Request = (syn and syn.request) or request or (http and http.request)
+
+local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
+local Gems = Players.LocalPlayer:GetAttribute("Gems")
+
+function PlayTime()
+    for i,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+        if v.Name == "Stat" then
+            for _,child in pairs(v:GetChildren()) do
+                if child:IsA("TextLabel") then
+                    if string.match(child.Text, ":") then
+                        return child.Text
+                    end
+                end
+            end
+        end
+    end
+end
+
+local Players = game:GetService("Players")
+function DamageNum()
+    for i,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+        if v.Name == "Stat" then
+            for _,child in pairs(v:GetChildren()) do
+                if child:IsA("TextLabel") then
+                    if string.match(child.Text, ",") then
+                        return child.Text
+                    end
+                end
+            end
+        end
+    end
+end
+
+
+function Placeunit(unit, cf)
+    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.PlaceUnit:InvokeServer(unit, cf * CFrame.Angles(-0, 0, -0))
+end
+
+function UpAll()
+    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if #monbyte.Name > 10 then
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.TowerService.RF.UpgradeUnit:InvokeServer(monbyte.Name)
+        end
+    end
+end
+
+function replay()
+    Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RE.VoteReplay:FireServer()
+end
+replay()
+-------- Check item------------
+
+local seen = {}
+local s = {}
+
+function GetReward()
+    local Rewards = plrgui:FindFirstChild("Rewards")
+    if #Rewards:GetChildren() <= 0 then
+        return
+    end
+    task.wait(.3)
+    local ViewReward = Rewards:FindFirstChild("ViewReward")
+    if not ViewReward then
+        return
+    end
+    local UnitInformation = ViewReward:WaitForChild("UnitInformation")
+    local HoverFrame = UnitInformation:WaitForChild("HoverFrame")
+    local Frame = HoverFrame:WaitForChild("Frame")
+    local itemName = Frame:WaitForChild("UnitName").Text
+    local RareName = Frame:WaitForChild("Rarity").Text
+    local Stats = Frame:WaitForChild("Stat"):WaitForChild("Stat")
+    local Amount = Stats.Text
+    task.wait(.1)
+    print("item is "..itemName, Amount, "Rarity : "..RareName)
+    local key = itemName .. "|" .. RareName .."|" .. Amount
+    print(key)
+    if not seen[key] then
+        print("Set key:", key)
+        seen[key] = true
+        table.insert(s, {
+            item = itemName,
+            Rarity = RareName,
+            Count = Amount
+        })
+    end
+end
+
+local function FormatRewards(list)
+    local text = ""
+    for _, v in ipairs(list) do
+        text = text .. "Item: " .. v.item .. " | Count: " .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
+    end
+    return text
+end
+
+function Webhook(Result)
+    if typeof(url) ~= "string" or url == "" then
+        return
+    end
+    local Damage = tostring(DamageNum() or 0)
+    local Time = tostring(PlayTime() or "0:00")
+    local LocalName = tostring(Players.LocalPlayer.Name)
+    local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
+    local VirtualTokens = Players.LocalPlayer:GetAttribute("VirtualTokens")
+    local Gems = Players.LocalPlayer:GetAttribute("Gems")
+    local Spirit = Players.LocalPlayer:GetAttribute("SpiritSouls")
+    local response = Request(
+    {
+        Url = url,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = HttpService:JSONEncode({
+            ["content"] = "",
+            ["embeds"] = {{
+                ["title"] = "End Round ! ",
+                ["description"] = Players.LocalPlayer.DisplayName.." has finished the round.",
+                ["type"] = "rich",
+                ["color"] = tonumber("A6DC41", 16),
+                ["fields"] = {
+                    {
+                        ["name"] = "Player Info",
+                        ["value"] = "🐼 Player : ".. tostring(LocalName).." | Level : ".. tostring(Level),
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Info",
+                        ["value"] = "🍀 Total Virtual Tokens : ".. tostring(VirtualTokens).."\n💎 Total Gems : ".. tostring(Gems).."\nTotal Souls : " .. tostring(Spirit),
+                        ["inline"] = false
+                    },
+                    {
+                        ["name"] = "Round Info",
+                        ["value"] = "Round Time : ".. Time .."\nTotal Damage : ".. Damage .. "\nTotal Items: " .. Result,
+                        ["inline"] = false
+                    } 
+                }
+            }}
+        })
+    }
+    )
+table.clear(s)
+table.clear(seen)
+end
+
+---------------------------------- Web Hook ---------------------------
+task.spawn(function()
+    while _G.Auto do task.wait()
+        local Wave = Workspace:GetAttribute("Wave")
+        local Finish = Workspace:GetAttribute("MatchFinished")
+        if Finish == true then
+            GetReward()
+            task.wait(.2)
+        end
+        if Wave == 1 and #s >= 3 then
+            local asdd = FormatRewards(s)
+            task.wait(.3)
+            Webhook(asdd)
+            task.wait(180)
+        end
+    end
+end)
+
+-- เช็คจำนวน Reward ----
+
+
+------------------------------------------------- Ichigo  -----------------------
+
+task.spawn(function()
+    while _G.Auto do task.wait()
+        local Wave = Workspace:GetAttribute("Wave")
+        local Yen = player:GetAttribute("Yen")
+        local Finish = Workspace:GetAttribute("MatchFinished")
+        task.wait()
+        if Finish == false then
+            UpAll()
+            task.wait(.1)
+            if Wave <= 3 then
+                Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
+            end
+            if Wave >= 2 and Wave <= 3 then
+                Placeunit(6, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
+            end
+            if Wave >= 7 and Wave <= 10 then
+                Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
+                task.wait(.2)
+                Placeunit(1, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+            end
+            if Wave >= 20 and Wave <= 22 then
+                task.wait(.2)
+                Placeunit(4, CFrame.new(-20.973888397216797, 299.98406982421875, -268.64276123046875))
+            end
+            if Wave >= 15 and Wave <= 20 then
+                Placeunit(2, CFrame.new(-48.193443298339844, 305.49993896484375, -259.3066101074219))
+                task.wait(.2)
+            end
+        end
+    end
+end)
+
+
+
+task.spawn(function()
+    while _G.Auto do task.wait()
+        local Finish = Workspace:GetAttribute("MatchFinished")
+        if plrgui.GameUI.HUD.Vote.Visible == true then
+            Package._Index:FindFirstChild("sleitnick_knit@1.7.0").knit.Services.WaveService.RF.Vote:InvokeServer(true)
+            task.wait(.5)
+        end
+        if Finish == true then
+            GetReward()
+            task.wait(.2)
+        end
+        if plrgui.GameUI.MissionResultFrame.Main.Visible == true then
+            replay()
+            task.wait(2)
+        end
+    end
+end)
+
+task.spawn(function()
+    if player then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/NawusG/What/refs/heads/Ongtauwnhub/1/2/4"))()
+    end
+end)
