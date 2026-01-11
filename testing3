@@ -32,19 +32,24 @@ local MapName = Workspace:GetAttribute("MapName")
 local Act = Workspace:GetAttribute("Act")
 _G.State = _G.State
 
+-- // Virtual
 local AutoNinjaVirtual = false
 local AutoMarineVirtual = false
 local AutoBleachVirtual = false
 
+-- // Story
 local AutoNinjaStory = false
 local AutoMarineStory = false
 local AutoBleachStory = false
 
-local AutoIchigo = false
+local AutoRagna = false
 
 local AutoCard = false
 
-local AutoRagna = false
+-- // Featured Challange
+
+local AutoWinter = false
+local AutoIchigo = false
 
 local AutoReplay = false
 
@@ -91,6 +96,10 @@ elseif Category == "Raid" and MapName == "Top of Hueco Castle" then
     AutoReplay = true
     print("Ichigo Raid")
     _G.State = "Ichigo Raid"
+elseif Category == "Story" and MapName == "Winter Rush" then
+    AutoReplay = true
+    AutoWinter = true
+    _G.State = "Event Winter Rush ❄️"
 else
     return
 end
@@ -190,7 +199,7 @@ end
 
 --- Auto Miku ---
 
-function AutoMiku()
+function FindMiku()
     for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
         if string.len(MyUnit.Name) < 10 then 
             continue 
@@ -198,12 +207,19 @@ function AutoMiku()
         for _,NameUnit in pairs(MyUnit:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
                 task.wait(.2)
-                knit.Services.TowerService.RE.UseAbility:FireServer(MyUnit.Name, 3)
-                return true
+                return MyUnit.Name
             end
         end
     end
     return false
+end
+
+function AutoMiku()
+    knit.Services.TowerService.RE.UseAbility:FireServer(FindMiku(), 3)
+end
+
+function SelectBuffMiku(type)
+    knit.Services.TowerService.RF.SetSelectedAbility:InvokeServer(FindMiku(), type)
 end
 
 --- Auto SJW ---
@@ -812,6 +828,44 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
     end)
 end
 
+-- Winter Rush
+
+if AutoWinter and _G.Auto then
+    task.spawn(function()
+        while AutoWinter and _G.Auto do
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait()
+            if Finish == false then
+                task.wait(.1)
+                AutoMiku()
+                UpAll()
+                AutoSJW(1)
+                if Wave < 3 then
+                    Placeunit(3, CFrame.new(138.72592163085938, -131.00296020507812, 76.1960678100586))
+                end
+                if Wave >= 3 and Wave <= 5 and Yen >= 3200 then
+                    Placeunit(6, CFrame.new(96.1998062133789, -128.6078338623047, 74.57203674316406))
+                    task.wait(.2)
+                    Placeunit(1, CFrame.new(94.64216613769531, -128.60848999023438, 69.75340270996094))
+                end
+                if Wave == 10 then
+                    Placeunit(5, CFrame.new(92.82159423828125, -128.61383056640625, 63.094181060791016))
+                    SelectBuffMiku(2)
+                end
+            end
+        end
+    end)
+end
+
+local args = {
+	"9894984f-36b4-4a5b-97c4-7147879dc39d",
+	2
+}
+game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.7.0"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("TowerService"):WaitForChild("RF"):WaitForChild("SetSelectedAbility"):InvokeServer(unpack(args))
+
+
 --Auto replay
 
 task.spawn(function()
@@ -952,13 +1006,3 @@ task.spawn(function()
 end)
 print("Script loaded")
 
-task.spawn(function()
-    while _G.Auto do task.wait()
-        local Wave = Workspace:GetAttribute("Wave")
-        Placeunit(6, CFrame.new(860.187255859375, 1027.9942626953125, -8817.423828125))
-        UpAll()
-        if Wave == 14 then
-            replay()
-        end
-    end
-end)
