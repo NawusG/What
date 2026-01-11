@@ -230,9 +230,8 @@ end)
 
 ------------------------------------------------- Winter  -----------------------
 
-if AutoWinter and _G.Auto then
     task.spawn(function()
-        while AutoWinter and _G.Auto do
+        while _G.Auto do
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
