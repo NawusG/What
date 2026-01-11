@@ -844,21 +844,22 @@ if AutoWinter and _G.Auto then
                     Placeunit(3, CFrame.new(138.72592163085938, -131.00296020507812, 76.1960678100586))
                 end
                 if Wave >= 3 and Wave <= 5 and Yen >= 3200 and not Locked2Slot then
-                    Placeunit(6, CFrame.new(96.1998062133789, -128.6078338623047, 74.57203674316406))
-                    task.wait(.2)
-                    Placeunit(1, CFrame.new(94.64216613769531, -128.60848999023438, 69.75340270996094))
+                    Placeunit(2, CFrame.new(93.3233642578125, -129.20761108398438, 83.51871490478516))
+                    task.wait(.3)
+                    Placeunit(2, CFrame.new(75.2608642578125, -129.6837921142578, 74.01399993896484))
+                    task.wait(.3)
+                    Placeunit(2, CFrame.new(95.99139404296875, -129.51702880859375, 56.720314025878906))
+                    task.wait(.3)
                     Locked2Slot = true
                 end
                 if Wave == 10 then
                     Placeunit(5, CFrame.new(92.82159423828125, -128.61383056640625, 63.094181060791016))
                     SelectBuffMiku(2)
                 end
-                if Wave >= 20 and not Locked1Slot and Yen > 3000 then
-                    Placeunit(2, CFrame.new(93.3233642578125, -129.20761108398438, 83.51871490478516))
-                    task.wait(.3)
-                    Placeunit(2, CFrame.new(75.2608642578125, -129.6837921142578, 74.01399993896484))
-                    task.wait(.3)
-                    Placeunit(2, CFrame.new(95.99139404296875, -129.51702880859375, 56.720314025878906))
+                if Wave >= 16 and not Locked1Slot and Yen > 5000 then
+                    Placeunit(6, CFrame.new(96.1998062133789, -128.6078338623047, 74.57203674316406))
+                    task.wait(.2)
+                    Placeunit(1, CFrame.new(94.64216613769531, -128.60848999023438, 69.75340270996094))
                     task.wait(.3)
                     Placeunit(4, CFrame.new(99.13190460205078, -128.6086883544922, 72.10289001464844))
                     Locked1Slot = true
