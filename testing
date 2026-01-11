@@ -839,7 +839,7 @@ if AutoWinter and _G.Auto then
                 task.wait(.1)
                 AutoMiku()
                 UpAll()
-                AutoSJW(2)
+                AutoSJW(1)
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(138.72592163085938, -131.00296020507812, 76.1960678100586))
                 end
