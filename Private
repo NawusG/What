@@ -356,7 +356,7 @@ end
 local function FormatRewards(list)
     local text = ""
     for _, v in ipairs(list) do
-        text = text .. "💼 | Item: " .. v.item .. " | Count: " .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
+        text = text .. "💼 | Item: " .. v.item .. " | " .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
     end
     return text
 end
