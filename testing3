@@ -859,13 +859,6 @@ if AutoWinter and _G.Auto then
     end)
 end
 
-local args = {
-	"9894984f-36b4-4a5b-97c4-7147879dc39d",
-	2
-}
-game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.7.0"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("TowerService"):WaitForChild("RF"):WaitForChild("SetSelectedAbility"):InvokeServer(unpack(args))
-
-
 --Auto replay
 
 task.spawn(function()
