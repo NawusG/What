@@ -96,7 +96,7 @@ elseif Category == "Raid" and MapName == "Top of Hueco Castle" then
     AutoReplay = true
     print("Ichigo Raid")
     _G.State = "Ichigo Raid"
-elseif Category == "Story" and MapName == "Winter Rush" then
+elseif Category == "Story" and MapName == "Winter" then
     AutoReplay = true
     AutoWinter = true
     _G.State = "Event Winter Rush ❄️"
