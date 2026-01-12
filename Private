@@ -479,19 +479,19 @@ task.spawn(function()
                 Saved = true
             end
         end
-        if Wave == 1 and #s >= 1 then
+        if Wave == 1 then
+            Locked1Slot = false
+            Locked2Slot = false
+            Locked3Slot = false
+            Locked4Slot = false
+            Locked5Slot = false
+            Locked6Slot = false
             local asdd = FormatRewards(s)
             task.wait(.3)
-            if not WebhookSend then
+            if not WebhookSend and #s >= 1 then
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
-                Locked1Slot = false
-                Locked2Slot = false
-                Locked3Slot = false
-                Locked4Slot = false
-                Locked5Slot = false
-                Locked6Slot = false
             end
         end
     end
