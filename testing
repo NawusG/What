@@ -270,7 +270,7 @@ function Placeunit(unit, cf)
 end
 
 function UpAll()
-    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+    for _,monbyte in ipairs(Workspace.Ignore.Units:GetChildren()) do
         if #monbyte.Name > 10 then
             Upgrade:InvokeServer(monbyte.Name)
         end
