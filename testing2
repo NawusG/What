@@ -385,6 +385,8 @@ function Webhook(Result)
     local Rerolls = tostring(math.floor(Players.LocalPlayer:GetAttribute("Rerolls")))
     local Spirit = tostring(math.floor(Players.LocalPlayer:GetAttribute("SpiritSouls")))
     local stackReroll = Players.LocalPlayer:GetAttribute("Rerolls") - startReroll
+    local IceGifts = Players.LocalPlayer:GetAttribute("IceGifts")
+    local calIceGifts = math.floor(tonumber(IceGifts / 1000))
     local Act = Workspace:GetAttribute("Act")
     local response = Request(
     {
@@ -409,6 +411,7 @@ function Webhook(Result)
                             "👑 | Username : " .. LocalName .." 📈 | Level : " .. Level ..
                             "\n💎 | Total Gems : " .. Gems .." ♦️ | Virtual Tokens : " .. VirtualTokens ..
                             "\n👹 | Total Spirit Souls : " .. Spirit ..
+                            "\n❄️ | Total Ice Shards : " .. calIceGifts .. "k" ..
                             "\n✨ | Total Rerolls : " .. Rerolls.." | Stack Rerolls for daily : ".. stackReroll,
                         inline = false
                     },
@@ -476,19 +479,19 @@ task.spawn(function()
                 Saved = true
             end
         end
-        if Wave == 1 and #s >= 1 then
+        if Wave == 1 then
+            Locked1Slot = false
+            Locked2Slot = false
+            Locked3Slot = false
+            Locked4Slot = false
+            Locked5Slot = false
+            Locked6Slot = false
             local asdd = FormatRewards(s)
             task.wait(.3)
-            if not WebhookSend then
+            if not WebhookSend and #s >= 1 then
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
-                Locked1Slot = false
-                Locked2Slot = false
-                Locked3Slot = false
-                Locked4Slot = false
-                Locked5Slot = false
-                Locked6Slot = false
             end
         end
     end
