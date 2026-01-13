@@ -18,7 +18,6 @@ local Finish = Workspace:GetAttribute("MatchFinished")
 
 local LocalName = tostring(player.Name)
 
-
 if game.PlaceId == 133410800847665 then -- main world
     print("Main world")
     return
