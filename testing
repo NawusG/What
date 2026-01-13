@@ -7,12 +7,12 @@ local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local Light = game:GetService("Lighting")
 local coreGui = game:GetService("CoreGui")
-local Package = Replica.Packages
-local Index = Package._Index
-local Sleit = Index:FindFirstChild("sleitnick_knit@1.7.0")
-local knit = Sleit.knit
-local player = Players.LocalPlayer
-local plrgui = player.PlayerGui
+local Package = Replica:WaitForChild("Packages")
+local Index = Package:WaitForChild("_Index")
+local Sleit = Index:WaitForChild("sleitnick_knit@1.7.0")
+local knit = Sleit:WaitForChild("knit")
+local player = Players:WaitForChild("LocalPlayer")
+local plrgui = player:WaitForChild("PlayerGui")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 
@@ -159,7 +159,7 @@ function PlayTime()
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ":") then
-                        return child.Text
+                        return child.Text or "00:00:00"
                     end
                 end
             end
@@ -187,7 +187,7 @@ function DamageNum()
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ",") then
-                        return child.Text
+                        return child.Text or 0
                     end
                 end
             end
