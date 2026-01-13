@@ -5,19 +5,18 @@ print("Running Script")
 local Replica = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
+local player = Players.LocalPlayer
 local Light = game:GetService("Lighting")
 local coreGui = game:GetService("CoreGui")
-local Package = Replica.Packages
-local Index = Package._Index
-local Sleit = Index:FindFirstChild("sleitnick_knit@1.7.0")
-local knit = Sleit.knit
-local player = Players.LocalPlayer
-local plrgui = player.PlayerGui
+local Package = Replica:WaitForChild("Packages")
+local Index = Package:WaitForChild("_Index")
+local Sleit = Index:WaitForChild("sleitnick_knit@1.7.0")
+local knit = Sleit:WaitForChild("knit")
+local plrgui = player:WaitForChild("PlayerGui")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 
 local LocalName = tostring(player.Name)
-
 
 if game.PlaceId == 133410800847665 then -- main world
     print("Main world")
@@ -100,8 +99,6 @@ elseif Category == "Story" and MapName == "Winter" then
     AutoReplay = true
     AutoWinter = true
     _G.State = "Event Winter Rush ❄️"
-else
-    return
 end
 print("Running Script")
 
@@ -151,8 +148,6 @@ local HttpService = game:GetService("HttpService")
 local Request = (syn and syn.request) or request or (http and http.request)
 
 
-
-
 --- Calculate Play Time ---
 
 function PlayTime()
@@ -161,7 +156,7 @@ function PlayTime()
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ":") then
-                        return child.Text
+                        return child.Text or "00:00:00"
                     end
                 end
             end
@@ -184,12 +179,12 @@ end
 --- Calculate DamageNum ---
 
 function DamageNum()
-    for i,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+    for _,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         if v.Name == "Stat" then
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ",") then
-                        return child.Text
+                        return child.Text or 0
                     end
                 end
             end
@@ -543,7 +538,7 @@ if AutoMarineStory and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 UpAll()
                 task.wait(.1)
                 AutoMiku()
@@ -582,11 +577,11 @@ if AutoMarineVirtual and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 UpAll()
                 task.wait(.1)
                 AutoMiku()
-                if Wave <= 3 then
+                if Wave <= 3 and Wave >= 1 then
                     Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
                 end
                 if Wave >= 2 and Wave <= 3 then
@@ -641,7 +636,7 @@ if AutoRagna and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait(.1)
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
                     UpAll()
@@ -706,7 +701,7 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 AutoMiku()
                 UpAll()
                 task.wait(.1)
@@ -742,7 +737,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 task.wait(.1)
                 AutoMiku()
                 UpAll()
@@ -838,12 +833,12 @@ if AutoWinter and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 task.wait(.1)
                 AutoMiku()
                 UpAll()
                 AutoSJW(1)
-                if Wave < 3 then
+                if Wave <= 3 then
                     Placeunit(3, CFrame.new(138.72592163085938, -131.00296020507812, 76.1960678100586))
                 end
                 if Wave >= 3 and Wave <= 5 and Yen >= 3200 and not Locked2Slot then
