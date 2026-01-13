@@ -99,8 +99,6 @@ elseif Category == "Story" and MapName == "Winter" then
     AutoReplay = true
     AutoWinter = true
     _G.State = "Event Winter Rush ❄️"
-else
-    return
 end
 print("Running Script")
 
@@ -540,7 +538,7 @@ if AutoMarineStory and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 UpAll()
                 task.wait(.1)
                 AutoMiku()
