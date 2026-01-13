@@ -151,8 +151,6 @@ local HttpService = game:GetService("HttpService")
 local Request = (syn and syn.request) or request or (http and http.request)
 
 
-
-
 --- Calculate Play Time ---
 
 function PlayTime()
@@ -184,7 +182,7 @@ end
 --- Calculate DamageNum ---
 
 function DamageNum()
-    for i,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+    for _,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         if v.Name == "Stat" then
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
@@ -582,11 +580,11 @@ if AutoMarineVirtual and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 UpAll()
                 task.wait(.1)
                 AutoMiku()
-                if Wave <= 3 then
+                if Wave <= 3 and Wave >= 1 then
                     Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
                 end
                 if Wave >= 2 and Wave <= 3 then
@@ -641,7 +639,7 @@ if AutoRagna and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait(.1)
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
                     UpAll()
@@ -706,7 +704,7 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 AutoMiku()
                 UpAll()
                 task.wait(.1)
@@ -742,7 +740,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 task.wait(.1)
                 AutoMiku()
                 UpAll()
@@ -838,12 +836,12 @@ if AutoWinter and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 task.wait(.1)
                 AutoMiku()
                 UpAll()
                 AutoSJW(1)
-                if Wave < 3 then
+                if Wave <= 3 then
                     Placeunit(3, CFrame.new(138.72592163085938, -131.00296020507812, 76.1960678100586))
                 end
                 if Wave >= 3 and Wave <= 5 and Yen >= 3200 and not Locked2Slot then
