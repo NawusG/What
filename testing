@@ -138,14 +138,19 @@ if BlackScreen and not _G.Optimize then
 end
 
 if _G.Optimize then
+    Lighting.GlobalShadows = false
+    Lighting.FogEnd = 9e9
+    Lighting.ShadowSoftness = 0
     for _,part in pairs(Workspace[LocalName]:GetChildren()) do
         if string.match(part.Name, "Blessing") then
             part:Destroy()
         end
     end
+    task.wait()
+    Workspace.Map.TerrainParts.Map:Destroy()
+    task.wait()
+    Workspace.Map.Decoration.Visuals:Destroy()
 end
-
-
 
 
 ---  // Webhook---
