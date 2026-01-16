@@ -150,9 +150,15 @@ if _G.Optimize then
     end
     if AutoWinter then
         task.wait()
-        Workspace.Map.TerrainParts.Map:Destroy()
+        local Map = Workspace.Map.TerrainParts:FindFirstChild("Map")
+        local Visual = Workspace.Map.Decoration:FindFirstChild("Visuals")
+        if Map then
+            Workspace.Map.TerrainParts.Map:Destroy()
+        end
         task.wait()
-        Workspace.Map.Decoration.Visuals:Destroy()
+        if Visual then
+            Workspace.Map.Decoration.Visuals:Destroy()
+        end
     end
 end
 
