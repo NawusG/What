@@ -107,6 +107,7 @@ print("Running Script")
 
 -- // Optimize
 
+
 local Bloom = Light:WaitForChild("Bloom")
 if Bloom then
     Bloom.Enabled = not _G.Optimize
@@ -244,7 +245,6 @@ function AutoSJW(Ability)
         end
         for _,NameUnit in pairs(MyUnit:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "SJWEVO" then
-                task.wait(.2)
                 local Fk = NameUnit.Parent.Name
                 print(Fk)
                 knit.Services.TowerService.RE.UseAbility:FireServer(Fk, Ability)
@@ -881,6 +881,10 @@ if AutoWinter and _G.Auto then
                     Placeunit(1, CFrame.new(94.64216613769531, -128.60848999023438, 69.75340270996094))
                     task.wait(.3)
                     Placeunit(4, CFrame.new(99.13190460205078, -128.6086883544922, 72.10289001464844))
+                end
+                if Wave >= 16 and Wave <= 19 and not Locked1Slot then
+                    Placeunit(4, CFrame.new(99.13190460205078, -128.6086883544922, 72.10289001464844))
+                    Locked1Slot = true
                 end
             end
         end
