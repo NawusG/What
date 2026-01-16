@@ -884,6 +884,7 @@ if AutoWinter and _G.Auto then
                 end
                 if Wave >= 16 and Wave <= 19 and not Locked1Slot then
                     Placeunit(4, CFrame.new(99.13190460205078, -128.6086883544922, 72.10289001464844))
+                    task.wait(.5)
                     Locked1Slot = true
                 end
             end
