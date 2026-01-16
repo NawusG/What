@@ -150,9 +150,15 @@ if _G.Optimize then
     end
     if AutoWinter then
         task.wait()
-        Workspace.Map.TerrainParts.Map:Destroy()
+        local Map = Workspace.Map.TerrainParts:FindFirstChild("Map")
+        local Visual = Workspace.Map.Decoration:FindFirstChild("Visuals")
+        if Map then
+            Workspace.Map.TerrainParts.Map:Destroy()
+        end
         task.wait()
-        Workspace.Map.Decoration.Visuals:Destroy()
+        if Visual then
+            Workspace.Map.Decoration.Visuals:Destroy()
+        end
     end
 end
 
@@ -387,7 +393,6 @@ local Locked6Slot = false
 local Saved = false
 local WebhookSend = false
 SaveKill = Kill()
-local StartWave = false
 
 -- // Main Webhook Config
 
@@ -490,7 +495,7 @@ task.spawn(function()
                 Saved = true
             end
         end
-        if Wave == 1 and not StartWave then
+        if Wave == 1 then
             Locked1Slot = false
             Locked2Slot = false
             Locked3Slot = false
@@ -498,13 +503,13 @@ task.spawn(function()
             Locked5Slot = false
             Locked6Slot = false
             task.wait(.3)
+            print(#s)
             local asdd = FormatRewards(s)
             if not WebhookSend and #s >= 1 then
-                Webhook("asdd")
+                Webhook(asdd)
                 WebhookSend = true
                 Saved = false
             end
-            StartWave = true
         end
     end
 end)
