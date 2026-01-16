@@ -5,19 +5,18 @@ print("Running Script")
 local Replica = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
+local player = Players.LocalPlayer
 local Light = game:GetService("Lighting")
 local coreGui = game:GetService("CoreGui")
-local Package = Replica.Packages
-local Index = Package._Index
-local Sleit = Index:FindFirstChild("sleitnick_knit@1.7.0")
-local knit = Sleit.knit
-local player = Players.LocalPlayer
-local plrgui = player.PlayerGui
+local Package = Replica:WaitForChild("Packages")
+local Index = Package:WaitForChild("_Index")
+local Sleit = Index:WaitForChild("sleitnick_knit@1.7.0")
+local knit = Sleit:WaitForChild("knit")
+local plrgui = player:WaitForChild("PlayerGui")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 
 local LocalName = tostring(player.Name)
-
 
 if game.PlaceId == 133410800847665 then -- main world
     print("Main world")
@@ -103,11 +102,17 @@ elseif Category == "Story" and MapName == "Winter" then
 else
     return
 end
+
 print("Running Script")
 
 -- // Optimize
 
-Light:FindFirstChild("Bloom").Enabled = not _G.Optimize
+
+local Bloom = Light:WaitForChild("Bloom")
+if Bloom then
+    Bloom.Enabled = not _G.Optimize
+end
+
 local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
 
 
@@ -129,19 +134,27 @@ if _G.Optimize then
         blackoutFrame.Parent = screenGui
     end
 end
+
 if BlackScreen and not _G.Optimize then
     BlackScreen:Destroy()
 end
 
 if _G.Optimize then
+    Light.GlobalShadows = false
+    Light.FogEnd = 9e9
+    Light.ShadowSoftness = 0
     for _,part in pairs(Workspace[LocalName]:GetChildren()) do
         if string.match(part.Name, "Blessing") then
             part:Destroy()
         end
     end
+    if AutoWinter then
+        task.wait()
+        Workspace.Map.TerrainParts.Map:Destroy()
+        task.wait()
+        Workspace.Map.Decoration.Visuals:Destroy()
+    end
 end
-
-
 
 
 ---  // Webhook---
@@ -149,8 +162,6 @@ end
 local url = _G.webhook
 local HttpService = game:GetService("HttpService")
 local Request = (syn and syn.request) or request or (http and http.request)
-
-
 
 
 --- Calculate Play Time ---
@@ -161,7 +172,7 @@ function PlayTime()
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ":") then
-                        return child.Text
+                        return child.Text or "00:00:00"
                     end
                 end
             end
@@ -184,7 +195,7 @@ end
 --- Calculate DamageNum ---
 
 function DamageNum()
-    for i,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+    for _,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         if v.Name == "Stat" then
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
@@ -199,27 +210,30 @@ end
 
 --- Auto Miku ---
 
-function FindMiku()
+function AutoMiku()
+    for _,Miku in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if string.len(Miku.Name) < 10 then 
+            continue 
+        end
+        for _,NameUnit in pairs(Miku:GetChildren()) do
+            if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
+                knit.Services.TowerService.RE.UseAbility:FireServer(Miku.Name, 3)
+            end
+        end
+    end
+end
+
+function SelectBuffMiku(type)
     for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
         if string.len(MyUnit.Name) < 10 then 
             continue 
         end
         for _,NameUnit in pairs(MyUnit:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
-                task.wait(.2)
-                return MyUnit.Name
+                knit.Services.TowerService.RF.SetSelectedAbility:InvokeServer(MyUnit.Name, type)
             end
         end
     end
-    return false
-end
-
-function AutoMiku()
-    knit.Services.TowerService.RE.UseAbility:FireServer(FindMiku(), 3)
-end
-
-function SelectBuffMiku(type)
-    knit.Services.TowerService.RF.SetSelectedAbility:InvokeServer(FindMiku(), type)
 end
 
 --- Auto SJW ---
@@ -231,15 +245,12 @@ function AutoSJW(Ability)
         end
         for _,NameUnit in pairs(MyUnit:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "SJWEVO" then
-                task.wait(.2)
                 local Fk = NameUnit.Parent.Name
                 print(Fk)
                 knit.Services.TowerService.RE.UseAbility:FireServer(Fk, Ability)
-                return true
             end
         end
     end
-    return false
 end
 
 -- Auto Nelle mode --
@@ -272,7 +283,7 @@ function Placeunit(unit, cf)
 end
 
 function UpAll()
-    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+    for _,monbyte in ipairs(Workspace.Ignore.Units:GetChildren()) do
         if #monbyte.Name > 10 then
             Upgrade:InvokeServer(monbyte.Name)
         end
@@ -356,7 +367,7 @@ end
 local function FormatRewards(list)
     local text = ""
     for _, v in ipairs(list) do
-        text = text .. "💼 | Item: " .. v.item .. " | Count: " .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
+        text = text .. "💼 | Item: " .. v.item .. " | " .. v.Count .. " | Rarity: " .. v.Rarity .. "\n"
     end
     return text
 end
@@ -378,8 +389,8 @@ function Webhook(Result)
     if typeof(url) ~= "string" or url == "" then
         return
     end
-    local Damage = tostring(DamageNum() or 0)
-    local Time = tostring(PlayTime() or "0:00")
+    local Damage = tostring(DamageNum())
+    local Time = tostring(PlayTime())
     local LocalName = tostring(Players.LocalPlayer.Name)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
     local VirtualTokens = tostring(math.floor(Players.LocalPlayer:GetAttribute("VirtualTokens")))
@@ -387,6 +398,8 @@ function Webhook(Result)
     local Rerolls = tostring(math.floor(Players.LocalPlayer:GetAttribute("Rerolls")))
     local Spirit = tostring(math.floor(Players.LocalPlayer:GetAttribute("SpiritSouls")))
     local stackReroll = Players.LocalPlayer:GetAttribute("Rerolls") - startReroll
+    local IceGifts = Players.LocalPlayer:GetAttribute("IceGifts")
+    local calIceGifts = math.floor(tonumber(IceGifts / 1000))
     local Act = Workspace:GetAttribute("Act")
     local response = Request(
     {
@@ -411,6 +424,7 @@ function Webhook(Result)
                             "👑 | Username : " .. LocalName .." 📈 | Level : " .. Level ..
                             "\n💎 | Total Gems : " .. Gems .." ♦️ | Virtual Tokens : " .. VirtualTokens ..
                             "\n👹 | Total Spirit Souls : " .. Spirit ..
+                            "\n❄️ | Total Ice Shards : " .. calIceGifts .. "k" ..
                             "\n✨ | Total Rerolls : " .. Rerolls.." | Stack Rerolls for daily : ".. stackReroll,
                         inline = false
                     },
@@ -455,7 +469,7 @@ local Locked4Slot = false
 local Locked5Slot = false
 local Locked6Slot = false
 
-
+local StartWave = false
 
 ---------------------------------- Webhook Procress ---------------------------
 
@@ -478,20 +492,21 @@ task.spawn(function()
                 Saved = true
             end
         end
-        if Wave == 1 and #s >= 1 then
-            local asdd = FormatRewards(s)
+        if Wave == 1 and not StartWave then
+            Locked1Slot = false
+            Locked2Slot = false
+            Locked3Slot = false
+            Locked4Slot = false
+            Locked5Slot = false
+            Locked6Slot = false
             task.wait(.3)
-            if not WebhookSend then
+            local asdd = FormatRewards(s)
+            if not WebhookSend and #s >= 1 then
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
-                Locked1Slot = true
-                Locked2Slot = true
-                Locked3Slot = true
-                Locked4Slot = true
-                Locked5Slot = true
-                Locked6Slot = true
             end
+            StartWave = true
         end
     end
 end)
@@ -542,7 +557,7 @@ if AutoMarineStory and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 UpAll()
                 task.wait(.1)
                 AutoMiku()
@@ -581,11 +596,11 @@ if AutoMarineVirtual and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 UpAll()
                 task.wait(.1)
                 AutoMiku()
-                if Wave <= 3 then
+                if Wave <= 3 and Wave >= 1 then
                     Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
                 end
                 if Wave >= 2 and Wave <= 3 then
@@ -640,7 +655,7 @@ if AutoRagna and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait(.1)
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
                     UpAll()
@@ -705,7 +720,7 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 AutoMiku()
                 UpAll()
                 task.wait(.1)
@@ -741,7 +756,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 task.wait(.1)
                 AutoMiku()
                 UpAll()
@@ -836,28 +851,49 @@ if AutoWinter and _G.Auto then
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
-            task.wait()
-            if Finish == false then
+            task.wait(.1)
+            if Finish == false and Wave >= 1 then
                 task.wait(.1)
                 AutoMiku()
+                task.wait()
                 UpAll()
+                task.wait()
                 AutoSJW(1)
-                if Wave < 3 then
+                task.wait()
+                SelectBuffMiku(2)
+                task.wait()
+                if Wave <= 3 then
                     Placeunit(3, CFrame.new(138.72592163085938, -131.00296020507812, 76.1960678100586))
                 end
                 if Wave >= 3 and Wave <= 5 and Yen >= 3200 then
+                    Placeunit(2, CFrame.new(93.3233642578125, -129.20761108398438, 83.51871490478516))
+                    task.wait(.3)
+                    Placeunit(2, CFrame.new(75.2608642578125, -129.6837921142578, 74.01399993896484))
+                    task.wait(.3)
+                    Placeunit(2, CFrame.new(95.99139404296875, -129.51702880859375, 56.720314025878906))
+                    task.wait(.3)
+                end
+                if Wave >= 10 and Yen >= 1500 and Wave <= 20 then
+                    Placeunit(5, CFrame.new(92.82159423828125, -128.61383056640625, 63.094181060791016))
+                end
+                if Wave >= 16 and Wave <= 19 and Yen >= 5000 then
                     Placeunit(6, CFrame.new(96.1998062133789, -128.6078338623047, 74.57203674316406))
                     task.wait(.2)
                     Placeunit(1, CFrame.new(94.64216613769531, -128.60848999023438, 69.75340270996094))
+                    task.wait(.3)
+                    Placeunit(4, CFrame.new(99.13190460205078, -128.6086883544922, 72.10289001464844))
                 end
-                if Wave == 10 then
-                    Placeunit(5, CFrame.new(92.82159423828125, -128.61383056640625, 63.094181060791016))
-                    SelectBuffMiku(2)
+                if Wave >= 16 and Wave <= 19 and not Locked1Slot then
+                    Placeunit(4, CFrame.new(99.13190460205078, -128.6086883544922, 72.10289001464844))
+                    task.wait(.5)
+                    Locked1Slot = true
                 end
             end
         end
     end)
 end
+
+
 
 --Auto replay
 
@@ -999,3 +1035,4 @@ task.spawn(function()
 end)
 print("Script loaded")
 
+Webhook("Result")
