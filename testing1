@@ -390,7 +390,7 @@ function Webhook(Result)
         return
     end
     local Damage = "0" --tostring(DamageNum())
-    local Time = tostring(PlayTime())
+    local Time = "0" --tostring(PlayTime())
     local LocalName = tostring(Players.LocalPlayer.Name)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
     local VirtualTokens = tostring(math.floor(Players.LocalPlayer:GetAttribute("VirtualTokens")))
