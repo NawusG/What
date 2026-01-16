@@ -102,9 +102,11 @@ elseif Category == "Story" and MapName == "Winter" then
 else
     return
 end
+
 print("Running Script")
 
 -- // Optimize
+
 
 local Bloom = Light:WaitForChild("Bloom")
 if Bloom then
@@ -208,27 +210,30 @@ end
 
 --- Auto Miku ---
 
-function FindMiku()
+function AutoMiku()
+    for _,Miku in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if string.len(Miku.Name) < 10 then 
+            continue 
+        end
+        for _,NameUnit in pairs(Miku:GetChildren()) do
+            if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
+                knit.Services.TowerService.RE.UseAbility:FireServer(Miku.Name, 3)
+            end
+        end
+    end
+end
+
+function SelectBuffMiku(type)
     for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
         if string.len(MyUnit.Name) < 10 then 
             continue 
         end
         for _,NameUnit in pairs(MyUnit:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
-                task.wait(.2)
-                return MyUnit.Name
+                knit.Services.TowerService.RF.SetSelectedAbility:InvokeServer(MyUnit.Name, type)
             end
         end
     end
-    return false
-end
-
-function AutoMiku()
-    knit.Services.TowerService.RE.UseAbility:FireServer(FindMiku(), 3)
-end
-
-function SelectBuffMiku(type)
-    knit.Services.TowerService.RF.SetSelectedAbility:InvokeServer(FindMiku(), type)
 end
 
 --- Auto SJW ---
@@ -240,7 +245,6 @@ function AutoSJW(Ability)
         end
         for _,NameUnit in pairs(MyUnit:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "SJWEVO" then
-                task.wait(.2)
                 local Fk = NameUnit.Parent.Name
                 print(Fk)
                 knit.Services.TowerService.RE.UseAbility:FireServer(Fk, Ability)
@@ -846,13 +850,17 @@ if AutoWinter and _G.Auto then
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
-            task.wait()
+            task.wait(.1)
             if Finish == false and Wave >= 1 then
                 task.wait(.1)
                 AutoMiku()
+                task.wait()
                 UpAll()
+                task.wait()
                 AutoSJW(1)
+                task.wait()
                 SelectBuffMiku(2)
+                task.wait()
                 if Wave <= 3 then
                     Placeunit(3, CFrame.new(138.72592163085938, -131.00296020507812, 76.1960678100586))
                 end
@@ -873,6 +881,11 @@ if AutoWinter and _G.Auto then
                     Placeunit(1, CFrame.new(94.64216613769531, -128.60848999023438, 69.75340270996094))
                     task.wait(.3)
                     Placeunit(4, CFrame.new(99.13190460205078, -128.6086883544922, 72.10289001464844))
+                end
+                if Wave >= 16 and Wave <= 19 and not Locked1Slot then
+                    Placeunit(4, CFrame.new(99.13190460205078, -128.6086883544922, 72.10289001464844))
+                    task.wait(.5)
+                    Locked1Slot = true
                 end
             end
         end
