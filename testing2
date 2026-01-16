@@ -375,7 +375,19 @@ task.spawn(function()
     end
 end)
 
+-- // Setting Place Lock \\ --
 
+local Locked1Slot = false
+local Locked2Slot = false
+local Locked3Slot = false
+local Locked4Slot = false
+local Locked5Slot = false
+local Locked6Slot = false
+
+local Saved = false
+local WebhookSend = false
+SaveKill = Kill()
+local StartWave = false
 
 -- // Main Webhook Config
 
@@ -457,22 +469,10 @@ table.clear(s)
 table.clear(seen)
 end
 
--- // Setting Place Lock \\ --
 
-local Locked1Slot = false
-local Locked2Slot = false
-local Locked3Slot = false
-local Locked4Slot = false
-local Locked5Slot = false
-local Locked6Slot = false
-
-local StartWave = false
 
 ---------------------------------- Webhook Procress ---------------------------
 
-local Saved = false
-local WebhookSend = false
-SaveKill = Kill()
 
 task.spawn(function()
     while _G.Auto do task.wait()
@@ -1033,4 +1033,4 @@ task.spawn(function()
 end)
 print("Script loaded")
 
-Webhook("Result")
+Webhook("Wave is started")
