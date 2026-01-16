@@ -102,6 +102,7 @@ elseif Category == "Story" and MapName == "Winter" then
 else
     return
 end
+
 print("Running Script")
 
 -- // Optimize
@@ -146,10 +147,12 @@ if _G.Optimize then
             part:Destroy()
         end
     end
-    task.wait()
-    Workspace.Map.TerrainParts.Map:Destroy()
-    task.wait()
-    Workspace.Map.Decoration.Visuals:Destroy()
+    if AutoWinter then
+        task.wait()
+        Workspace.Map.TerrainParts.Map:Destroy()
+        task.wait()
+        Workspace.Map.Decoration.Visuals:Destroy()
+    end
 end
 
 
@@ -206,27 +209,30 @@ end
 
 --- Auto Miku ---
 
-function FindMiku()
+function AutoMiku()
     for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
         if string.len(MyUnit.Name) < 10 then 
             continue 
         end
         for _,NameUnit in pairs(MyUnit:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
-                task.wait(.2)
-                return MyUnit.Name
+                knit.Services.TowerService.RE.UseAbility:FireServer(MyUnit.Name, 3)
             end
         end
     end
-    return false
-end
-
-function AutoMiku()
-    knit.Services.TowerService.RE.UseAbility:FireServer(FindMiku(), 3)
 end
 
 function SelectBuffMiku(type)
-    knit.Services.TowerService.RF.SetSelectedAbility:InvokeServer(FindMiku(), type)
+    for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if string.len(MyUnit.Name) < 10 then 
+            continue 
+        end
+        for _,NameUnit in pairs(MyUnit:GetChildren()) do
+            if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
+                knit.Services.TowerService.RF.SetSelectedAbility:InvokeServer(MyUnit.Name, type)
+            end
+        end
+    end
 end
 
 --- Auto SJW ---
@@ -844,13 +850,17 @@ if AutoWinter and _G.Auto then
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
-            task.wait()
+            task.wait(.1)
             if Finish == false and Wave >= 1 then
                 task.wait(.1)
                 AutoMiku()
+                task.wait()
                 UpAll()
+                task.wait()
                 AutoSJW(1)
+                task.wait()
                 SelectBuffMiku(2)
+                task.wait()
                 if Wave <= 3 then
                     Placeunit(3, CFrame.new(138.72592163085938, -131.00296020507812, 76.1960678100586))
                 end
