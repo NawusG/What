@@ -431,9 +431,9 @@ function Webhook(Result)
                     {
                         name = "Round Infomation | 📍",
                         value =
-                            "⏱️ | Round Time : " .. Time ..
-                            "\n⚔️ |Enemies Takedown : " .. SaveKill ..
-                            "\n🩸 | Total Damage : " .. Damage,
+                            "⏱️ | Round Time : " .. Level ..
+                            "\n⚔️ |Enemies Takedown : " .. Level ..
+                            "\n🩸 | Total Damage : " .. Level,
                         inline = false
                     },
                     {
