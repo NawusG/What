@@ -5,19 +5,18 @@ print("Running Script")
 local Replica = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
+local player = Players.LocalPlayer
 local Light = game:GetService("Lighting")
 local coreGui = game:GetService("CoreGui")
-local Package = Replica.Packages
-local Index = Package._Index
-local Sleit = Index:FindFirstChild("sleitnick_knit@1.7.0")
-local knit = Sleit.knit
-local player = Players.LocalPlayer
-local plrgui = player.PlayerGui
+local Package = Replica:WaitForChild("Packages")
+local Index = Package:WaitForChild("_Index")
+local Sleit = Index:WaitForChild("sleitnick_knit@1.7.0")
+local knit = Sleit:WaitForChild("knit")
+local plrgui = player:WaitForChild("PlayerGui")
 local Wave = Workspace:GetAttribute("Wave")
 local Finish = Workspace:GetAttribute("MatchFinished")
 
 local LocalName = tostring(player.Name)
-
 
 if game.PlaceId == 133410800847665 then -- main world
     print("Main world")
@@ -107,7 +106,11 @@ print("Running Script")
 
 -- // Optimize
 
-Light:FindFirstChild("Bloom").Enabled = not _G.Optimize
+local Bloom = Light:WaitForChild("Bloom")
+if Bloom then
+    Bloom.Enabled = not _G.Optimize
+end
+
 local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
 
 
@@ -129,19 +132,27 @@ if _G.Optimize then
         blackoutFrame.Parent = screenGui
     end
 end
+
 if BlackScreen and not _G.Optimize then
     BlackScreen:Destroy()
 end
 
 if _G.Optimize then
+    Light.GlobalShadows = false
+    Light.FogEnd = 9e9
+    Light.ShadowSoftness = 0
     for _,part in pairs(Workspace[LocalName]:GetChildren()) do
         if string.match(part.Name, "Blessing") then
             part:Destroy()
         end
     end
+    if AutoWinter then
+        task.wait()
+        Workspace.Map.TerrainParts.Map:Destroy()
+        task.wait()
+        Workspace.Map.Decoration.Visuals:Destroy()
+    end
 end
-
-
 
 
 ---  // Webhook---
@@ -149,8 +160,6 @@ end
 local url = _G.webhook
 local HttpService = game:GetService("HttpService")
 local Request = (syn and syn.request) or request or (http and http.request)
-
-
 
 
 --- Calculate Play Time ---
@@ -161,7 +170,7 @@ function PlayTime()
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ":") then
-                        return child.Text
+                        return child.Text or "00:00:00"
                     end
                 end
             end
@@ -184,12 +193,12 @@ end
 --- Calculate DamageNum ---
 
 function DamageNum()
-    for i,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
+    for _,v in pairs(plrgui.GameUI.MissionResultFrame.Main.Content.Description.Content.Stats.frame:GetChildren()) do
         if v.Name == "Stat" then
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ",") then
-                        return child.Text
+                        return child.Text or 0
                     end
                 end
             end
@@ -270,7 +279,7 @@ function Placeunit(unit, cf)
 end
 
 function UpAll()
-    for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+    for _,monbyte in ipairs(Workspace.Ignore.Units:GetChildren()) do
         if #monbyte.Name > 10 then
             Upgrade:InvokeServer(monbyte.Name)
         end
@@ -486,8 +495,8 @@ task.spawn(function()
             Locked4Slot = false
             Locked5Slot = false
             Locked6Slot = false
-            local asdd = FormatRewards(s)
             task.wait(.3)
+            local asdd = FormatRewards(s)
             if not WebhookSend and #s >= 1 then
                 Webhook(asdd)
                 WebhookSend = true
@@ -543,7 +552,7 @@ if AutoMarineStory and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 UpAll()
                 task.wait(.1)
                 AutoMiku()
@@ -582,11 +591,11 @@ if AutoMarineVirtual and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 UpAll()
                 task.wait(.1)
                 AutoMiku()
-                if Wave <= 3 then
+                if Wave <= 3 and Wave >= 1 then
                     Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
                 end
                 if Wave >= 2 and Wave <= 3 then
@@ -641,7 +650,7 @@ if AutoRagna and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait(.1)
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 if Wave < 3 then
                     Placeunit(3, CFrame.new(227.9215850830078, 0.2517051696777344, -57.99631118774414))
                     UpAll()
@@ -706,7 +715,7 @@ if AutoIchigo and _G.Auto and Act ~= "Boss Rush" then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 AutoMiku()
                 UpAll()
                 task.wait(.1)
@@ -742,7 +751,7 @@ if AutoIchigo and _G.Auto and Act == "Boss Rush" then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 task.wait(.1)
                 AutoMiku()
                 UpAll()
@@ -838,34 +847,32 @@ if AutoWinter and _G.Auto then
             local Yen = player:GetAttribute("Yen")
             local Finish = Workspace:GetAttribute("MatchFinished")
             task.wait()
-            if Finish == false then
+            if Finish == false and Wave >= 1 then
                 task.wait(.1)
                 AutoMiku()
                 UpAll()
                 AutoSJW(1)
-                if Wave < 3 then
+                SelectBuffMiku(2)
+                if Wave <= 3 then
                     Placeunit(3, CFrame.new(138.72592163085938, -131.00296020507812, 76.1960678100586))
                 end
-                if Wave >= 3 and Wave <= 5 and Yen >= 3200 and not Locked2Slot then
+                if Wave >= 3 and Wave <= 5 and Yen >= 3200 then
                     Placeunit(2, CFrame.new(93.3233642578125, -129.20761108398438, 83.51871490478516))
                     task.wait(.3)
                     Placeunit(2, CFrame.new(75.2608642578125, -129.6837921142578, 74.01399993896484))
                     task.wait(.3)
                     Placeunit(2, CFrame.new(95.99139404296875, -129.51702880859375, 56.720314025878906))
                     task.wait(.3)
-                    Locked2Slot = true
                 end
-                if Wave == 10 then
+                if Wave >= 10 and Yen >= 1500 and Wave <= 20 then
                     Placeunit(5, CFrame.new(92.82159423828125, -128.61383056640625, 63.094181060791016))
-                    SelectBuffMiku(2)
                 end
-                if Wave >= 16 and not Locked1Slot and Yen > 5000 then
+                if Wave >= 16 and Wave <= 19 and Yen >= 5000 then
                     Placeunit(6, CFrame.new(96.1998062133789, -128.6078338623047, 74.57203674316406))
                     task.wait(.2)
                     Placeunit(1, CFrame.new(94.64216613769531, -128.60848999023438, 69.75340270996094))
                     task.wait(.3)
                     Placeunit(4, CFrame.new(99.13190460205078, -128.6086883544922, 72.10289001464844))
-                    Locked1Slot = true
                 end
             end
         end
