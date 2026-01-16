@@ -172,12 +172,13 @@ function PlayTime()
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ":") then
-                        return child.Text or "00:00:00"
+                        return child.Text
                     end
                 end
             end
         end
     end
+    return "00:00:00"
 end
 
 
@@ -200,12 +201,13 @@ function DamageNum()
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ",") then
-                        return child.Text or 0
+                        return child.Text
                     end
                 end
             end
         end
     end
+    return 0
 end
 
 --- Auto Miku ---
@@ -432,7 +434,7 @@ function Webhook(Result)
                         name = "Round Infomation | 📍",
                         value =
                             "⏱️ | Round Time : " .. Time ..
-                            "\n⚔️ |Enemies Takedown : " .. SaveKill ..
+                            "\n⚔️ |Enemies Takedown : " .. Level ..
                             "\n🩸 | Total Damage : " .. Damage,
                         inline = false
                     },
