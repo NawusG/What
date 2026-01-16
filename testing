@@ -210,13 +210,13 @@ end
 --- Auto Miku ---
 
 function AutoMiku()
-    for _,MyUnit in pairs(Workspace.Ignore.Units:GetChildren()) do
-        if string.len(MyUnit.Name) < 10 then 
+    for _,Miku in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if string.len(Miku.Name) < 10 then 
             continue 
         end
-        for _,NameUnit in pairs(MyUnit:GetChildren()) do
+        for _,NameUnit in pairs(Miku:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "miku" then
-                knit.Services.TowerService.RE.UseAbility:FireServer(MyUnit.Name, 3)
+                knit.Services.TowerService.RE.UseAbility:FireServer(Miku.Name, 3)
             end
         end
     end
