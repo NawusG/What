@@ -469,7 +469,7 @@ local Locked4Slot = false
 local Locked5Slot = false
 local Locked6Slot = false
 
-
+local StartWave = false
 
 ---------------------------------- Webhook Procress ---------------------------
 
@@ -492,7 +492,7 @@ task.spawn(function()
                 Saved = true
             end
         end
-        if Wave == 1 then
+        if Wave == 1 and not StartWave then
             Locked1Slot = false
             Locked2Slot = false
             Locked3Slot = false
@@ -506,6 +506,7 @@ task.spawn(function()
                 WebhookSend = true
                 Saved = false
             end
+            StartWave = true
         end
     end
 end)
