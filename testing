@@ -200,7 +200,7 @@ function DamageNum()
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ",") then
-                        return child.Text or 0
+                        return child.Text
                     end
                 end
             end
@@ -389,8 +389,8 @@ function Webhook(Result)
     if typeof(url) ~= "string" or url == "" then
         return
     end
-    local Damage = tostring(DamageNum() or 0)
-    local Time = tostring(PlayTime() or "0:00")
+    local Damage = "0" --tostring(DamageNum())
+    local Time = "0" --tostring(PlayTime())
     local LocalName = tostring(Players.LocalPlayer.Name)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
     local VirtualTokens = tostring(math.floor(Players.LocalPlayer:GetAttribute("VirtualTokens")))
