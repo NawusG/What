@@ -389,8 +389,8 @@ function Webhook(Result)
     if typeof(url) ~= "string" or url == "" then
         return
     end
-    local Damage = tostring(DamageNum() or 0)
-    local Time = tostring(PlayTime() or "0:00")
+    local Damage = tostring(DamageNum())
+    local Time = tostring(PlayTime())
     local LocalName = tostring(Players.LocalPlayer.Name)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
     local VirtualTokens = tostring(math.floor(Players.LocalPlayer:GetAttribute("VirtualTokens")))
@@ -469,7 +469,7 @@ local Locked4Slot = false
 local Locked5Slot = false
 local Locked6Slot = false
 
-
+local StartWave = false
 
 ---------------------------------- Webhook Procress ---------------------------
 
@@ -492,7 +492,7 @@ task.spawn(function()
                 Saved = true
             end
         end
-        if Wave == 1 then
+        if Wave == 1 and not StartWave then
             Locked1Slot = false
             Locked2Slot = false
             Locked3Slot = false
@@ -506,6 +506,7 @@ task.spawn(function()
                 WebhookSend = true
                 Saved = false
             end
+            StartWave = true
         end
     end
 end)
@@ -1034,4 +1035,4 @@ task.spawn(function()
 end)
 print("Script loaded")
 
-
+Webhook("Result")
