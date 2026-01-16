@@ -188,11 +188,6 @@ function Kill()
     return plrgui.GameUI.HUD.StageInfos.Infos.Takedowns.Value.Text
 end
 
-function SaveTakedown()
-    return tostring(Kill()) or 0
-end
-
-
 --- Calculate DamageNum ---
 
 function DamageNum()
@@ -434,7 +429,7 @@ function Webhook(Result)
                         name = "Round Infomation | 📍",
                         value =
                             "⏱️ | Round Time : " .. Time ..
-                            "\n⚔️ |Enemies Takedown : " .. Level ..
+                            "\n⚔️ |Enemies Takedown : " .. SaveKill ..
                             "\n🩸 | Total Damage : " .. Damage,
                         inline = false
                     },
@@ -477,6 +472,7 @@ local StartWave = false
 
 local Saved = false
 local WebhookSend = false
+SaveKill = Kill()
 
 task.spawn(function()
     while _G.Auto do task.wait()
@@ -490,7 +486,7 @@ task.spawn(function()
             if not Saved then
                 Round = Round + 1
                 task.wait()
-                SaveKill = SaveTakedown()
+                SaveKill = Kill()
                 Saved = true
             end
         end
