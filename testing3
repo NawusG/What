@@ -172,12 +172,13 @@ function PlayTime()
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ":") then
-                        return child.Text or "00:00:00"
+                        return child.Text
                     end
                 end
             end
         end
     end
+    return "00:00:00"
 end
 
 
@@ -186,11 +187,6 @@ end
 function Kill()
     return plrgui.GameUI.HUD.StageInfos.Infos.Takedowns.Value.Text
 end
-
-function SaveTakedown()
-    return tostring(Kill()) or 0
-end
-
 
 --- Calculate DamageNum ---
 
@@ -206,6 +202,7 @@ function DamageNum()
             end
         end
     end
+    return 0
 end
 
 --- Auto Miku ---
@@ -475,6 +472,7 @@ local StartWave = false
 
 local Saved = false
 local WebhookSend = false
+SaveKill = Kill()
 
 task.spawn(function()
     while _G.Auto do task.wait()
@@ -488,7 +486,7 @@ task.spawn(function()
             if not Saved then
                 Round = Round + 1
                 task.wait()
-                SaveKill = SaveTakedown()
+                SaveKill = Kill()
                 Saved = true
             end
         end
@@ -1035,4 +1033,4 @@ task.spawn(function()
 end)
 print("Script loaded")
 
-Webhook("Result")
+Webhook("Wave is started")
