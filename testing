@@ -249,7 +249,6 @@ function AutoSJW(Ability)
         for _,NameUnit in pairs(MyUnit:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "SJWEVO" then
                 local Fk = NameUnit.Parent.Name
-                print(Fk)
                 knit.Services.TowerService.RE.UseAbility:FireServer(Fk, Ability)
             end
         end
