@@ -489,6 +489,7 @@ task.spawn(function()
             task.wait(.2)
             WebhookSend = false
             if not Saved then
+                print("Saved Kill")
                 Round = Round + 1
                 task.wait()
                 SaveKill = Kill()
@@ -506,6 +507,7 @@ task.spawn(function()
             print(#s)
             local asdd = FormatRewards(s)
             if not WebhookSend and #s >= 1 then
+                print("send Webhook")
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
