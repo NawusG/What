@@ -31,6 +31,7 @@ local MapName = Workspace:GetAttribute("MapName")
 local Act = Workspace:GetAttribute("Act")
 _G.State = _G.State
 
+
 -- // Virtual
 local AutoNinjaVirtual = false
 local AutoMarineVirtual = false
