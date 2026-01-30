@@ -205,11 +205,22 @@ if getgenv().Settings.PotatoGraphic then
         if TerrainParts then
             local PartBleach = Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
             local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
+            local Structure = Workspace.Map:FindFirstChild("Structures")
             if PartBleach then
                 Workspace.Map.TerrainParts.IAmnotorganizingthis:Destroy()
             end
             if Hill then
                 Workspace.Map.TerrainParts.Hills:Destroy()
+            end
+            if Structure then
+                for _,part in pairs(Workspace.Map.Structures:GetChildren()) do
+                    if part:IsA("Model") and part.Name ~= "VOLUMES" then
+                        part:Destroy()
+                    end
+                    if part:IsA("MeshPart") then
+                        part:Destroy()
+                    end
+                end
             end
         end
     end
@@ -697,7 +708,7 @@ if AutoBleachStory and _G.AutoMarco then
         while AutoBleachStory and _G.AutoMarco do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
-            print("BleachVirtual")
+            print("BleachStory")
         end
     end) 
 end
