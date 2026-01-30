@@ -23,7 +23,11 @@ if game.PlaceId == 133410800847665 then -- main world
     return
 end
 
-
+if setfpscap then
+    setfpscap(getgenv().Settings.FPS_CAP or 60)
+else
+    print("No setfpscap function found")
+end
 -- // Stage Toggle \\ --
 
 local Category = Workspace:GetAttribute("Category")
@@ -195,19 +199,19 @@ if getgenv().Settings.PotatoGraphic then
         if PartMain then
             Workspace.Map.TerrainParts.IAmnotorganizingthis:Destroy()
         end
-        if Hill then
-            Workspace.Map.TerrainParts.Hills:Destroy()
-        end
-        if Floor then
-            for _,part in pairs(Workspace.Map.TerrainParts.Floor:GetChildren()) do
-                if part:IsA("Model") then
-                    part:Destroy()
-                end
-                if part:IsA("MeshPart") and part.Name ~= "Meshes/WALL_GLOBAL (1)" then
-                    part:Destroy()
-                end
-            end
-        end
+        -- if Hill then
+        --     Workspace.Map.TerrainParts.Hills:Destroy()
+        -- end
+        -- if Floor then
+        --     for _,part in pairs(Workspace.Map.TerrainParts.Floor:GetChildren()) do
+        --         if part:IsA("Model") then
+        --             part:Destroy()
+        --         end
+        --         if part:IsA("MeshPart") and not string.match(part.Name, "WALL_GLOBAL") then
+        --             part:Destroy()
+        --         end
+        --     end
+        -- end
     end
     if AutoMarineStory or AutoMarineVirtual then
         print("Work in procress")
