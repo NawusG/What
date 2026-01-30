@@ -105,18 +105,23 @@ end
 
 print("Running Script")
 
+
+
 -- // Optimize
-
-
+getgenv().Settings = {
+    ["AutoMarco"] = false,
+    ["PotatoGraphic"] = false,
+    ["Blackscreen"] = false,
+    ["WebhookUrl"] = "https://discord.com/api/webhooks/1463881185657753622/sWN6litFAUyBw1x0TfklbUeu8HuEyKAUUT7ReeYAUuAyofMOBG67qbvib_pqGTiAIyjd"
+}
+--getgenv().Settings.AutoMarco
 local Bloom = Light:WaitForChild("Bloom")
 if Bloom then
-    Bloom.Enabled = not _G.Optimize
+    Bloom.Enabled = not getgenv().Settings.PotatoGraphic
 end
 
 local BlackScreen = coreGui:FindFirstChild("BlackoutOverlay")
-
-
-if _G.Optimize then
+if getgenv().Settings.Blackscreen then
     if not BlackScreen then
         local screenGui = Instance.new("ScreenGui")
         screenGui.Name = "BlackoutOverlay"
@@ -135,11 +140,14 @@ if _G.Optimize then
     end
 end
 
-if BlackScreen and not _G.Optimize then
+if BlackScreen and not getgenv().Settings.Blackscreen then
     BlackScreen:Destroy()
 end
 
-if _G.Optimize then
+local TerrainParts = Workspace.Map:FindFirstChild("TerrainParts")
+local Atmos = Workspace.Map.TerrainParts:FindFirstChild("Atmospheric effects")
+
+if getgenv().Settings.PotatoGraphic then
     Light.GlobalShadows = false
     Light.FogEnd = 9e9
     Light.ShadowSoftness = 0
@@ -149,17 +157,54 @@ if _G.Optimize then
         end
     end
     if AutoWinter then
-        task.wait()
-        Workspace.Map.TerrainParts.Map:Destroy()
-        task.wait()
-        Workspace.Map.Decoration.Visuals:Destroy()
+        local Map = Workspace.Map.TerrainParts:FindFirstChild("Map")
+        local Visual = Workspace.Map.Decoration:FindFirstChild("Visuals")
+        if Map then
+            Workspace.Map.TerrainParts.Map:Destroy()
+        end
+        if Visual then
+            Workspace.Map.Decoration.Visuals:Destroy()
+        end
     end
+    if AutoRagna then
+        print("Work in procress")
+        if Atmos then
+            Workspace.Map.TerrainParts["Atmospheric effects"]:Destroy()
+        end
+        if TerrainParts then
+            for _,part in pairs(TerrainParts:GetChildren()) do
+                if part:IsA("Model") then
+                    part:Destroy()
+                end
+                if part:IsA("MeshPart") then
+                    part.MeshId = ""
+                end
+            end
+        end
+    end
+    if AutoNinjaStory or AutoNinjaVirtual then
+        print("Work in procress")
+    end
+    if AutoMarineStory or AutoMarineVirtual then
+        print("Work in procress")
+        if TerrainParts then
+            for _,part in pairs(TerrainParts:GetChildren()) do
+                if part:IsA("Model") or part:IsA("MeshPart") then
+                    part:Destroy()
+                end
+            end
+        end
+    end
+    if AutoBleachStory or AutoBleachVirtual then
+        print("Work in procress")
+    end
+    print("Optimize is successful !")
 end
 
 
 ---  // Webhook---
 
-local url = _G.webhook
+local url = getgenv().Settings.WebhookUrl
 local HttpService = game:GetService("HttpService")
 local Request = (syn and syn.request) or request or (http and http.request)
 
@@ -172,12 +217,13 @@ function PlayTime()
             for _,child in pairs(v:GetChildren()) do
                 if child:IsA("TextLabel") then
                     if string.match(child.Text, ":") then
-                        return child.Text or "00:00:00"
+                        return child.Text
                     end
                 end
             end
         end
     end
+    return "00:00:00"
 end
 
 
@@ -186,11 +232,6 @@ end
 function Kill()
     return plrgui.GameUI.HUD.StageInfos.Infos.Takedowns.Value.Text
 end
-
-function SaveTakedown()
-    return tostring(Kill()) or 0
-end
-
 
 --- Calculate DamageNum ---
 
@@ -206,6 +247,7 @@ function DamageNum()
             end
         end
     end
+    return 0
 end
 
 --- Auto Miku ---
@@ -246,7 +288,6 @@ function AutoSJW(Ability)
         for _,NameUnit in pairs(MyUnit:GetChildren()) do
             if NameUnit:IsA("Model") and NameUnit.Name == "SJWEVO" then
                 local Fk = NameUnit.Parent.Name
-                print(Fk)
                 knit.Services.TowerService.RE.UseAbility:FireServer(Fk, Ability)
             end
         end
@@ -350,11 +391,11 @@ function GetReward()
     local Stats = Frame:WaitForChild("Stat"):WaitForChild("Stat")
     local Amount = Stats.Text
     task.wait(.1)
-    print("item is "..itemName, Amount, "Rarity : "..RareName)
+    --print("item is "..itemName, Amount, "Rarity : "..RareName)
     local key = itemName .. "|" .. RareName .."|" .. Amount
-    print(key)
+    --print(key)
     if not seen[key] then
-        print("Set key:", key)
+        --print("Set key:", key)
         seen[key] = true
         table.insert(s, {
             item = itemName,
@@ -378,7 +419,18 @@ task.spawn(function()
     end
 end)
 
+-- // Setting Place Lock \\ --
 
+local Locked1Slot = false
+local Locked2Slot = false
+local Locked3Slot = false
+local Locked4Slot = false
+local Locked5Slot = false
+local Locked6Slot = false
+
+local Saved = false
+local WebhookSend = false
+SaveKill = Kill()
 
 -- // Main Webhook Config
 
@@ -389,8 +441,8 @@ function Webhook(Result)
     if typeof(url) ~= "string" or url == "" then
         return
     end
-    local Damage = "0" --tostring(DamageNum())
-    local Time = "0" --tostring(PlayTime())
+    local Damage = tostring(DamageNum())
+    local Time = tostring(PlayTime())
     local LocalName = tostring(Players.LocalPlayer.Name)
     local Level = tostring(Workspace[LocalName].HumanoidRootPart.BillboardGui.LevelAmount.Text)
     local VirtualTokens = tostring(math.floor(Players.LocalPlayer:GetAttribute("VirtualTokens")))
@@ -431,9 +483,9 @@ function Webhook(Result)
                     {
                         name = "Round Infomation | 📍",
                         value =
-                            "⏱️ | Round Time : " .. Level ..
-                            "\n⚔️ |Enemies Takedown : " .. Level ..
-                            "\n🩸 | Total Damage : " .. Level,
+                            "⏱️ | Round Time : " .. Time ..
+                            "\n⚔️ |Enemies Takedown : " .. SaveKill ..
+                            "\n🩸 | Total Damage : " .. Damage,
                         inline = false
                     },
                     {
@@ -460,21 +512,10 @@ table.clear(s)
 table.clear(seen)
 end
 
--- // Setting Place Lock \\ --
 
-local Locked1Slot = false
-local Locked2Slot = false
-local Locked3Slot = false
-local Locked4Slot = false
-local Locked5Slot = false
-local Locked6Slot = false
-
-local StartWave = false
 
 ---------------------------------- Webhook Procress ---------------------------
 
-local Saved = false
-local WebhookSend = false
 
 task.spawn(function()
     while _G.Auto do task.wait()
@@ -486,13 +527,14 @@ task.spawn(function()
             task.wait(.2)
             WebhookSend = false
             if not Saved then
+                --print("Saved Kill")
                 Round = Round + 1
                 task.wait()
-                SaveKill = SaveTakedown()
+                SaveKill = Kill()
                 Saved = true
             end
         end
-        if Wave == 1 and not StartWave then
+        if Wave == 1 then
             Locked1Slot = false
             Locked2Slot = false
             Locked3Slot = false
@@ -500,13 +542,14 @@ task.spawn(function()
             Locked5Slot = false
             Locked6Slot = false
             task.wait(.3)
+            --print(#s)
             local asdd = FormatRewards(s)
             if not WebhookSend and #s >= 1 then
+                --print("send Webhook")
                 Webhook(asdd)
                 WebhookSend = true
                 Saved = false
             end
-            StartWave = true
         end
     end
 end)
@@ -530,6 +573,10 @@ if AutoNinjaStory and _G.Auto then
                 task.wait(.3)
                 UpAll()
                 task.wait(.3)
+                if Wave == 14 then
+                    replay()
+                    task.wait(2)
+                end
             end
         end
     end)
@@ -544,6 +591,7 @@ if AutoNinjaVirtual and _G.Auto then
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
             print("Nnija aaa")
+            
         end
     end)
 end
@@ -565,12 +613,15 @@ if AutoMarineStory and _G.Auto then
                     Placeunit(3, CFrame.new(-24, 299.98406982421875, -187))
                 end
                 if Wave >= 2 and Wave <= 3 then
-                    Placeunit(1, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
+                    Placeunit(2, CFrame.new(-12.740373611450195, 299.98406982421875, -244.00558471679688))
                 end
                 if Wave >= 7 and Wave <= 10 then
                     Placeunit(5, CFrame.new(-17.376726150512695, 299.98406982421875, -243.16683959960938))
                     task.wait(.2)
-                    Placeunit(6, CFrame.new(-18.358205795288086, 299.98406982421875, -243.60015869140625))
+                end
+                if Wave == 14 then
+                    replay()
+                    task.wait(2)
                 end
                 -- if Wave >= 20 and Wave <= 22 then
                 --     task.wait(.2)
@@ -626,7 +677,15 @@ end
 
 ----------------------- Bleach Story  -----------------------
 
-
+if AutoBleachStory and _G.Auto then
+    task.spawn(function()
+        while AutoBleachStory and _G.Auto do task.wait()
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            print("BleachVirtual")
+        end
+    end) 
+end
 
 
 
@@ -1016,7 +1075,7 @@ task.spawn(function()
             end)
             local select = CardFound[1]
             if select then 
-                print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
+                --print("The best card is", select.CardNum, select.Title, select.Rare, select.Class, "RarityNum = " .. select.Priorities)
                 knit.Services.BlessingService.RE.GetNewBlessing:FireServer(select.CardNum)
                 task.wait()
                 continue
@@ -1024,7 +1083,7 @@ task.spawn(function()
         elseif #CardFound >= 5 then
             for _,check in pairs(CardFound) do
                if check.Rare == "[Path]" and check.Title == "Magic's Manifest" then
-                    print("Check Path : ", check.CardNum, check.Title)
+                    --print("Check Path : ", check.CardNum, check.Title)
                     knit.Services.BlessingService.RE.GetNewPath:FireServer(check.CardNum)
                     task.wait()
                     break
@@ -1035,4 +1094,4 @@ task.spawn(function()
 end)
 print("Script loaded")
 
-Webhook("Result")
+Webhook("Wave is started")
