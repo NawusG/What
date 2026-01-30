@@ -24,7 +24,7 @@ if game.PlaceId == 133410800847665 then -- main world
 end
 
 if setfpscap then
-    setfpscap(getgenv.Settings.FPS_CAP or 60)
+    setfpscap(getgenv().Settings.FPS_CAP or 60)
 else
     print("No setfpscap function found")
 end
