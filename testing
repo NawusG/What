@@ -206,6 +206,8 @@ if getgenv().Settings.PotatoGraphic then
             local PartBleach = Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
             local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
             local Structure = Workspace.Map:FindFirstChild("Structures")
+            local Decoration = Workspace.Map:FindFirstChild("Decoration")
+            local Floor = Workspace.Map.TerrainParts:FindFirstChild("Floor")
             if PartBleach then
                 Workspace.Map.TerrainParts.IAmnotorganizingthis:Destroy()
             end
@@ -219,6 +221,16 @@ if getgenv().Settings.PotatoGraphic then
                     end
                     if part:IsA("MeshPart") then
                         part:Destroy()
+                    end
+                end
+            end
+            if Decoration then
+                Workspace.Map.Decoration:Destroy()
+            end
+            if Floor then
+                for _,MeshPart in pairs(Workspace.Map.TerrainParts.Floor:GetChildren()) do
+                    if MeshPart:IsA("MeshPart") then
+                        MeshPart.MeshId = ""
                     end
                 end
             end
