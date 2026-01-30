@@ -108,12 +108,7 @@ print("Running Script")
 
 
 -- // Optimize
-getgenv().Settings = {
-    ["AutoMarco"] = false,
-    ["PotatoGraphic"] = false,
-    ["Blackscreen"] = false,
-    ["WebhookUrl"] = "https://discord.com/api/webhooks/1463881185657753622/sWN6litFAUyBw1x0TfklbUeu8HuEyKAUUT7ReeYAUuAyofMOBG67qbvib_pqGTiAIyjd"
-}
+
 --getgenv().Settings.AutoMarco
 local Bloom = Light:WaitForChild("Bloom")
 if Bloom then
