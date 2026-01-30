@@ -180,7 +180,7 @@ if getgenv().Settings.PotatoGraphic then
                     part:Destroy()
                 end
             end
-            for _,part in pairs(workspace.Map.Decorations:GetChildren()) do
+            for _,part in pairs(Workspace.Map.Decorations:GetChildren()) do
                 if part:IsA("Model") then
                     part:Destroy()
                 end
@@ -202,6 +202,16 @@ if getgenv().Settings.PotatoGraphic then
     end
     if AutoBleachStory or AutoBleachVirtual then
         print("Work in procress")
+        if TerrainParts then
+            local PartBleach = Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
+            local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
+            if PartBleach then
+                Workspace.Map.TerrainParts.IAmnotorganizingthis:Destroy()
+            end
+            if Hill then
+                Workspace.Map.TerrainParts.Hills:Destroy()
+            end
+        end
     end
     print("Optimize is successful !")
 end
