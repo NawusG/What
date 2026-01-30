@@ -189,6 +189,25 @@ if getgenv().Settings.PotatoGraphic then
     end
     if AutoNinjaStory or AutoNinjaVirtual then
         print("Work in procress")
+        local PartMain= Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
+        local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
+        local Floor = Workspace.Map.TerrainParts:FindFirstChild("Floor")
+        if PartMain then
+            Workspace.Map.TerrainParts.IAmnotorganizingthis:Destroy()
+        end
+        if Hill then
+            Workspace.Map.TerrainParts.Hills:Destroy()
+        end
+        if Floor then
+            for _,part in pairs(Workspace.Map.TerrainParts.Floor:GetChildren()) do
+                if part:IsA("Model") then
+                    part:Destroy()
+                end
+                if part:IsA("MeshPart") and not string.match(part.Name, "WALL_GLOBAL") then
+                    part:Destroy()
+                end
+            end
+        end
     end
     if AutoMarineStory or AutoMarineVirtual then
         print("Work in procress")
@@ -203,12 +222,12 @@ if getgenv().Settings.PotatoGraphic then
     if AutoBleachStory or AutoBleachVirtual then
         print("Work in procress")
         if TerrainParts then
-            local PartBleach = Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
+            local PartMain= Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
             local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
             local Structure = Workspace.Map:FindFirstChild("Structures")
             local Decoration = Workspace.Map:FindFirstChild("Decoration")
             local Floor = Workspace.Map.TerrainParts:FindFirstChild("Floor")
-            if PartBleach then
+            if PartMain then
                 Workspace.Map.TerrainParts.IAmnotorganizingthis:Destroy()
             end
             if Hill then
