@@ -1170,4 +1170,6 @@ task.spawn(function()
 end)
 print("Script loaded")
 
-Webhook("Wave is started")
+if _G.AutoMarco then
+    Webhook("Wave is started")
+end
