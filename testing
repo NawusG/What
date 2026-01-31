@@ -197,7 +197,7 @@ if getgenv().Settings.PotatoGraphic then
         local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
         local Floor = Workspace.Map.TerrainParts:FindFirstChild("Floor")
         if PartMain then
-            for _,part in pairs(Workspace.Map.TerrainParts.IAmnotorganizingthis:GetChildren()) do
+            for _,part in pairs(Workspace.Map.TerrainParts.Iamnotorganizingthis:GetChildren()) do
                 part:Destroy()
             end
         end
