@@ -196,6 +196,7 @@ if getgenv().Settings.PotatoGraphic then
         local PartMain = Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
         local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
         local Floor = Workspace.Map.TerrainParts:FindFirstChild("Floor")
+        local Decoration = Workspace.Map:FindFirstChild("Decoration")
         if PartMain then
             for _,part in pairs(Workspace.Map.TerrainParts.Iamnotorganizingthis:GetChildren()) do
                 part:Destroy()
@@ -212,6 +213,16 @@ if getgenv().Settings.PotatoGraphic then
                     part:Destroy()
                 end
                 if part:IsA("MeshPart") and not string.match(part.Name, "WALL_GLOBAL") then
+                    part:Destroy()
+                end
+            end
+        end
+        if Decoration then
+            for _,part in pairs(Workspace.Map.Decoration:GetChildren()) do
+                if part:IsA("Model") then
+                    part:Destroy()
+                end
+                if part:IsA("MeshPart") then
                     part:Destroy()
                 end
             end
