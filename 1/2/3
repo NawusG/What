@@ -46,7 +46,7 @@ _G.Premium = _G.Premium
 if not table.find(Whitelist, game:GetService("Players").LocalPlayer.UserId) then
     game:GetService("Players").LocalPlayer:Kick("Invalid HWID\n50,000บาทแล้วอิอิ")
     WebhookLogger("🔴 Not pass 🔴")
-elseif _G.Auto and not _G.Premium then
+elseif _G.AutoMarco and not _G.Premium then
     print("You have Whitelist")
     WebhookLogger("Pass 🟢")
     _G.Premium = true
