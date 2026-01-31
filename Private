@@ -193,22 +193,36 @@ if getgenv().Settings.PotatoGraphic then
     end
     if AutoNinjaStory or AutoNinjaVirtual then
         print("Work in procress")
-        local PartMain= Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
+        local PartMain = Workspace.Map.TerrainParts:FindFirstChild("Iamnotorganizingthis")
         local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
         local Floor = Workspace.Map.TerrainParts:FindFirstChild("Floor")
+        local Decoration = Workspace.Map:FindFirstChild("Decoration")
         if PartMain then
-            Workspace.Map.TerrainParts.IAmnotorganizingthis:Destroy()
+            for _,part in pairs(Workspace.Map.TerrainParts.Iamnotorganizingthis:GetChildren()) do
+                part:Destroy()
+            end
         end
-        -- if Hill then
-        --     Workspace.Map.TerrainParts.Hills:Destroy()
-        -- end
-        -- Error Destroy hill
+        if Hill then
+            for _,part in pairs(Workspace.Map.TerrainParts.Hills:GetChildren()) do
+                part:Destroy()
+            end
+        end
         if Floor then
             for _,part in pairs(Workspace.Map.TerrainParts.Floor:GetChildren()) do
                 if part:IsA("Model") then
                     part:Destroy()
                 end
                 if part:IsA("MeshPart") and not string.match(part.Name, "WALL_GLOBAL") then
+                    part:Destroy()
+                end
+            end
+        end
+        if Decoration then
+            for _,part in pairs(Workspace.Map.Decoration:GetChildren()) do
+                if part:IsA("Model") then
+                    part:Destroy()
+                end
+                if part:IsA("MeshPart") then
                     part:Destroy()
                 end
             end
