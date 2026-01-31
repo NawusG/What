@@ -193,7 +193,7 @@ if getgenv().Settings.PotatoGraphic then
     end
     if AutoNinjaStory or AutoNinjaVirtual then
         print("Work in procress")
-        local PartMain= Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
+        local PartMain = Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
         local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
         local Floor = Workspace.Map.TerrainParts:FindFirstChild("Floor")
         if PartMain then
