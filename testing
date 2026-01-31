@@ -203,16 +203,16 @@ if getgenv().Settings.PotatoGraphic then
         --     Workspace.Map.TerrainParts.Hills:Destroy()
         -- end
         -- Error Destroy hill
-        if Floor then
-            for _,part in pairs(Workspace.Map.TerrainParts.Floor:GetChildren()) do
-                if part:IsA("Model") then
-                    part:Destroy()
-                end
-                if part:IsA("MeshPart") and not string.match(part.Name, "WALL_GLOBAL") then
-                    part:Destroy()
-                end
-            end
-        end
+        -- if Floor then
+        --     for _,part in pairs(Workspace.Map.TerrainParts.Floor:GetChildren()) do
+        --         if part:IsA("Model") then
+        --             part:Destroy()
+        --         end
+        --         if part:IsA("MeshPart") and not string.match(part.Name, "WALL_GLOBAL") then
+        --             part:Destroy()
+        --         end
+        --     end
+        -- end
     end
     if AutoMarineStory or AutoMarineVirtual then
         print("Work in procress")
