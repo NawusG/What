@@ -23,7 +23,11 @@ if game.PlaceId == 133410800847665 then -- main world
     return
 end
 
-
+if setfpscap then
+    setfpscap(getgenv().Settings.FPS_CAP or 60)
+else
+    print("No setfpscap function found")
+end
 -- // Stage Toggle \\ --
 
 local Category = Workspace:GetAttribute("Category")
@@ -50,6 +54,16 @@ local AutoCard = false
 
 local AutoWinter = false
 local AutoIchigo = false
+
+-- // Legend Stage
+
+local LegendNinja = false
+local LegendMarine = false
+local LegendBleach = false
+local LegendDragonBall = false
+
+-- // Portal
+local PortalDBZ = false
 
 local AutoReplay = false
 
@@ -100,6 +114,14 @@ elseif Category == "Story" and MapName == "Winter" then
     AutoReplay = true
     AutoWinter = true
     _G.State = "Event Winter Rush ❄️"
+elseif Category == "LegendStage" and MapName == "The Invasion" then
+    AutoReplay = true
+    LegendDragonBall = true
+    _G.State = "Legend Stage"
+elseif Category == "UltraBoss" and MapName == "Destroyed Games Arena" then
+    PortalDBZ = true
+    AutoReplay = true
+    _G.State = "Ultra Boss"
 else
     return
 end
@@ -189,6 +211,40 @@ if getgenv().Settings.PotatoGraphic then
     end
     if AutoNinjaStory or AutoNinjaVirtual then
         print("Work in procress")
+        local PartMain = Workspace.Map.TerrainParts:FindFirstChild("Iamnotorganizingthis")
+        local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
+        local Floor = Workspace.Map.TerrainParts:FindFirstChild("Floor")
+        local Decoration = Workspace.Map:FindFirstChild("Decoration")
+        if PartMain then
+            for _,part in pairs(Workspace.Map.TerrainParts.Iamnotorganizingthis:GetChildren()) do
+                part:Destroy()
+            end
+        end
+        if Hill then
+            for _,part in pairs(Workspace.Map.TerrainParts.Hills:GetChildren()) do
+                part:Destroy()
+            end
+        end
+        if Floor then
+            for _,part in pairs(Workspace.Map.TerrainParts.Floor:GetChildren()) do
+                if part:IsA("Model") then
+                    part:Destroy()
+                end
+                if part:IsA("MeshPart") and not string.match(part.Name, "WALL_GLOBAL") then
+                    part:Destroy()
+                end
+            end
+        end
+        if Decoration then
+            for _,part in pairs(Workspace.Map.Decoration:GetChildren()) do
+                if part:IsA("Model") then
+                    part:Destroy()
+                end
+                if part:IsA("MeshPart") then
+                    part:Destroy()
+                end
+            end
+        end
     end
     if AutoMarineStory or AutoMarineVirtual then
         print("Work in procress")
@@ -203,10 +259,12 @@ if getgenv().Settings.PotatoGraphic then
     if AutoBleachStory or AutoBleachVirtual then
         print("Work in procress")
         if TerrainParts then
-            local PartBleach = Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
+            local PartMain= Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
             local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
             local Structure = Workspace.Map:FindFirstChild("Structures")
-            if PartBleach then
+            local Decoration = Workspace.Map:FindFirstChild("Decoration")
+            local Floor = Workspace.Map.TerrainParts:FindFirstChild("Floor")
+            if PartMain then
                 Workspace.Map.TerrainParts.IAmnotorganizingthis:Destroy()
             end
             if Hill then
@@ -219,6 +277,16 @@ if getgenv().Settings.PotatoGraphic then
                     end
                     if part:IsA("MeshPart") then
                         part:Destroy()
+                    end
+                end
+            end
+            if Decoration then
+                Workspace.Map.Decoration:Destroy()
+            end
+            if Floor then
+                for _,MeshPart in pairs(Workspace.Map.TerrainParts.Floor:GetChildren()) do
+                    if MeshPart:IsA("MeshPart") then
+                        MeshPart.MeshId = ""
                     end
                 end
             end
@@ -978,9 +1046,58 @@ if AutoWinter and _G.AutoMarco then
     end)
 end
 
+-- Legend stage Dragon Ball
 
+if LegendDragonBall and _G.AutoMarco then
+    task.spawn(function()
+        while LegendDragonBall and _G.AutoMarco do task.wait()
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait(.1)
+            if Finish == false and Wave >= 1 then
+                Placeunit(3, CFrame.new(-38.56075668334961, -268.280517578125, -25.854310989379883))
+                UpAll()
+                task.wait(.1)
+                if Wave >= 3 and Yen > 3200 then
+                    Placeunit(6, CFrame.new(-1.6054120063781738, -268.280517578125, -35.05610656738281))
+                end
+            end
+        end
+    end)
+end
 
---Auto replay
+-- Portal DBZ
+
+if PortalDBZ and _G.AutoMarco then
+    task.spawn(function()
+        while PortalDBZ and _G.AutoMarco do task.wait()
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait(.1)
+            if Finish == false and Wave >= 1 then
+                Placeunit(3, CFrame.new(-132.5238494873047, 149.39080810546875, 50.942054748535156))
+                task.wait(.2)
+                Placeunit(4, CFrame.new(-121.11943817138672, 149.40634155273438, 56.13621520996094))
+                UpAll()
+                task.wait(.1)
+                if Wave >= 2 and Wave <= 3 then
+                    Placeunit(5, CFrame.new(-103.16921997070312, 149.5090789794922, 43.05731201171875))
+                    task.wait(.3)
+                    Placeunit(2, CFrame.new(-106.79971313476562, 149.47511291503906, 49.28059387207031))
+                end
+                if Wave > 4 and Wave <= 7 then
+                    Placeunit(6, CFrame.new(-101.59111022949219, 149.5003204345703, 46.73662567138672))
+                    task.wait(.3)
+                    Placeunit(1, CFrame.new(-92.00433349609375, 152.99969482421875, 33.578712463378906))
+                end
+            end
+        end
+    end)
+end
+
+-- // Auto replay
 
 task.spawn(function()
     while AutoReplay and _G.AutoMarco do task.wait()
@@ -1120,4 +1237,6 @@ task.spawn(function()
 end)
 print("Script loaded")
 
-Webhook("Wave is started")
+if _G.AutoMarco then
+    Webhook("Wave is started")
+end
