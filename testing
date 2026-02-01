@@ -1098,7 +1098,7 @@ if PortalDBZ and _G.AutoMarco then
                 Placeunit(4, CFrame.new(-121.11943817138672, 149.40634155273438, 56.13621520996094))
                 UpAll()
                 task.wait(.1)
-                if Wave >= 2 and Wave <= 3 then
+                if Wave >= 2 and Wave <= 5 then
                     Placeunit(5, CFrame.new(-103.16921997070312, 149.5090789794922, 43.05731201171875))
                     task.wait(.3)
                     Placeunit(2, CFrame.new(-106.79971313476562, 149.47511291503906, 49.28059387207031))
