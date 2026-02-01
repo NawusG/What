@@ -185,7 +185,6 @@ if getgenv().Settings.PotatoGraphic then
         end
     end
     if AutoRagna then
-        print("Work in procress")
         if Atmos then
             Workspace.Map.TerrainParts["Atmospheric effects"]:Destroy()
         end
@@ -210,7 +209,6 @@ if getgenv().Settings.PotatoGraphic then
         end
     end
     if AutoNinjaStory or AutoNinjaVirtual then
-        print("Work in procress")
         local PartMain = Workspace.Map.TerrainParts:FindFirstChild("Iamnotorganizingthis")
         local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
         local Floor = Workspace.Map.TerrainParts:FindFirstChild("Floor")
@@ -247,7 +245,6 @@ if getgenv().Settings.PotatoGraphic then
         end
     end
     if AutoMarineStory or AutoMarineVirtual then
-        print("Work in procress")
         if TerrainParts then
             for _,part in pairs(TerrainParts:GetChildren()) do
                 if part:IsA("Model") or part:IsA("MeshPart") then
@@ -257,7 +254,6 @@ if getgenv().Settings.PotatoGraphic then
         end
     end
     if AutoBleachStory or AutoBleachVirtual then
-        print("Work in procress")
         if TerrainParts then
             local PartMain= Workspace.Map.TerrainParts:FindFirstChild("IAmnotorganizingthis")
             local Hill = Workspace.Map.TerrainParts:FindFirstChild("Hills")
@@ -288,6 +284,26 @@ if getgenv().Settings.PotatoGraphic then
                     if MeshPart:IsA("MeshPart") then
                         MeshPart.MeshId = ""
                     end
+                end
+            end
+        end
+    end
+    if PortalDBZ then
+        if Atmos then
+            Workspace.Map.TerrainParts["Atmospheric effects"]:Destroy()
+        end
+        if TerrainParts then
+            for _,part in pairs(TerrainParts:GetChildren()) do
+                if part:IsA("Model") then
+                    part:Destroy()
+                end
+                if part:IsA("MeshPart") then
+                    part:Destroy()
+                end
+            end
+            for _,part in pairs(Workspace.Map.Decoration:GetChildren()) do
+                if part:IsA("Model") then
+                    part:Destroy()
                 end
             end
         end
@@ -1082,13 +1098,14 @@ if PortalDBZ and _G.AutoMarco then
                 Placeunit(4, CFrame.new(-121.11943817138672, 149.40634155273438, 56.13621520996094))
                 UpAll()
                 task.wait(.1)
-                if Wave >= 2 and Yen >= 3200 then
+                if Wave >= 2 and Wave <= 3 then
                     Placeunit(5, CFrame.new(-103.16921997070312, 149.5090789794922, 43.05731201171875))
+                    task.wait(.3)
+                    Placeunit(2, CFrame.new(-106.79971313476562, 149.47511291503906, 49.28059387207031))
                 end
                 if Wave > 4 and Wave <= 7 then
-                    Placeunit(2, CFrame.new(-106.79971313476562, 149.47511291503906, 49.28059387207031))
-                    task.wait(.3)
                     Placeunit(6, CFrame.new(-101.59111022949219, 149.5003204345703, 46.73662567138672))
+                    task.wait(.3)
                     Placeunit(1, CFrame.new(-92.00433349609375, 152.99969482421875, 33.578712463378906))
                 end
             end
