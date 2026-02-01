@@ -55,6 +55,13 @@ local AutoCard = false
 local AutoWinter = false
 local AutoIchigo = false
 
+-- // Legend Stage
+
+local LegendNinja = false
+local LegendMarine = false
+local LegendBleach = false
+local LegendDragonBall = false
+
 local AutoReplay = false
 
 if Category == "Virtual" and MapName == "Ninja Forest" then 
@@ -104,6 +111,10 @@ elseif Category == "Story" and MapName == "Winter" then
     AutoReplay = true
     AutoWinter = true
     _G.State = "Event Winter Rush ❄️"
+elseif Category == "LegendStage" and MapName == "The Invasion" then
+    AutoReplay = true
+    LegendDragonBall = true
+    _G.State = "Legend Stage"
 else
     return
 end
@@ -1028,9 +1039,35 @@ if AutoWinter and _G.AutoMarco then
     end)
 end
 
+-- Legend stage Dragon Ball
+
+if LegendDragonBall and _G.AutoMarco then
+    task.spawn(function()
+        while LegendDragonBall and _G.AutoMarco do task.wait()
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait(.1)
+            if Finish == false and Wave >= 1 then
+                Placeunit(3, CFrame.new(-38.56075668334961, -268.280517578125, -25.854310989379883))
+                UpAll()
+                task.wait(.1)
+                if Wave >= 3 and Yen > 3200 then
+                    Placeunit(6, CFrame.new(-1.6054120063781738, -268.280517578125, -35.05610656738281))
+                end
+            end
+        end
+    end)
+end
+
+local args = {
+	6,
+	CFrame.new(-1.6054120063781738, -268.280517578125, -35.05610656738281, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+}
+game:GetService("ReplicatedStorage"):WaitForChild("Packages"):WaitForChild("_Index"):WaitForChild("sleitnick_knit@1.7.0"):WaitForChild("knit"):WaitForChild("Services"):WaitForChild("TowerService"):WaitForChild("RF"):WaitForChild("PlaceUnit"):InvokeServer(unpack(args))
 
 
---Auto replay
+-- // Auto replay
 
 task.spawn(function()
     while AutoReplay and _G.AutoMarco do task.wait()
