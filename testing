@@ -798,11 +798,29 @@ if AutoBleachStory and _G.AutoMarco then
         while AutoBleachStory and _G.AutoMarco do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
-            print("BleachStory")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait(.1)
+            if Finish == false and Wave >= 1 then
+                if Wave < 3 then
+                    Placeunit(3, CFrame.new(875.8963012695312, 707.8349609375, -8873.3486328125))
+                    UpAll()
+                    task.wait(.2)
+                end
+                if Wave >= 3 and Yen > 3200 and Wave < 10 then
+                    Placeunit(1, CFrame.new(859.0150146484375, 707.8349609375, -8817.84765625))
+                    task.wait(.2)
+                    Placeunit(5, CFrame.new(870.2048950195312, 707.8349609375, -8818.0625))
+                end
+                if Wave == 15 then
+                    Webhook("Check Kill")
+                    task.wait(.3)
+                    replay()
+                end
+                UpAll()
+            end
         end
     end) 
 end
-
 
 
 ----------------------- Bleach Virtual  -----------------------
