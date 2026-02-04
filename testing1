@@ -45,6 +45,7 @@ local AutoBleachVirtual = false
 local AutoNinjaStory = false
 local AutoMarineStory = false
 local AutoBleachStory = false
+local AutoDBZStory = false
 
 local AutoRagna = false
 
@@ -105,6 +106,11 @@ elseif Category == "Story" and MapName == "Hollowed Moon" then
     AutoReplay = true
     print("Bleach Story")
     _G.State = "Bleach Story"
+elseif Category == "Story" and MapName == "The Invasion" then
+    AutoReplay = true
+    AutoDBZStory = true
+    print("DBZ Story")
+    _G.State = "DBZ Story"
 elseif Category == "Raid" and MapName == "Top of Hueco Castle" then
     AutoIchigo = true
     AutoReplay = true
@@ -162,10 +168,10 @@ if BlackScreen and not getgenv().Settings.Blackscreen then
     BlackScreen:Destroy()
 end
 
-local TerrainParts = Workspace.Map:FindFirstChild("TerrainParts")
-local Atmos = Workspace.Map.TerrainParts:FindFirstChild("Atmospheric effects")
 
 if getgenv().Settings.PotatoGraphic then
+    local TerrainParts = Workspace:FindFirstChild("Map"):FindFirstChild("TerrainParts")
+    local Atmos = Workspace:FindFirstChild("Map"):FindFirstChild("TerrainParts"):FindFirstChild("Atmospheric effects")
     Light.GlobalShadows = false
     Light.FogEnd = 9e9
     Light.ShadowSoftness = 0
@@ -452,6 +458,18 @@ end
 --     end
 -- end
 
+function MoneyMaxxing()
+        for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if #monbyte.Name > 10 then
+            if monbyte:FindFirstChild("Speeedwagon") or monbyte:FindFirstChild("model") then
+                Upgrade:InvokeServer(monbyte.Name)
+            else
+                return
+            end
+        end
+    end
+end
+
 function replay()
     knit.Services.WaveService.RE.VoteReplay:FireServer()
 end
@@ -683,10 +701,10 @@ if AutoNinjaStory and _G.AutoMarco then
                 task.wait(.3)
                 UpAll()
                 task.wait(.3)
-                if Wave == 14 then
-                    replay()
-                    task.wait(2)
-                end
+                -- if Wave == 14 then
+                --     replay()
+                --     task.wait(2)
+                -- end
             end
         end
     end)
@@ -792,11 +810,29 @@ if AutoBleachStory and _G.AutoMarco then
         while AutoBleachStory and _G.AutoMarco do task.wait()
             local Wave = Workspace:GetAttribute("Wave")
             local Yen = player:GetAttribute("Yen")
-            print("BleachStory")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait(.1)
+            if Finish == false and Wave >= 1 then
+                if Wave < 3 then
+                    Placeunit(3, CFrame.new(875.8963012695312, 707.8349609375, -8873.3486328125))
+                    UpAll()
+                    task.wait(.2)
+                end
+                if Wave >= 3 and Yen > 3200 and Wave < 10 then
+                    Placeunit(1, CFrame.new(859.0150146484375, 707.8349609375, -8817.84765625))
+                    task.wait(.2)
+                    Placeunit(5, CFrame.new(870.2048950195312, 707.8349609375, -8818.0625))
+                end
+                if Wave == 15 then
+                    Webhook("Check Kill")
+                    task.wait(.3)
+                    replay()
+                end
+                UpAll()
+            end
         end
     end) 
 end
-
 
 
 ----------------------- Bleach Virtual  -----------------------
@@ -1062,6 +1098,29 @@ if AutoWinter and _G.AutoMarco then
     end)
 end
 
+-- DBZ Story
+
+if AutoDBZStory and _G.AutoMarco then
+    task.spawn(function()
+        while AutoDBZStory and _G.AutoMarco do task.wait()
+            local Wave = Workspace:GetAttribute("Wave")
+            local Yen = player:GetAttribute("Yen")
+            local Finish = Workspace:GetAttribute("MatchFinished")
+            task.wait(.1)
+            if Finish == false and Wave >= 1 then
+                Placeunit(3, CFrame.new(-38.56075668334961, -268.280517578125, -25.854310989379883))
+                UpAll()
+                task.wait(.1)
+                if Wave >= 3 and Yen > 3200 then
+                    Placeunit(6, CFrame.new(-1.6054120063781738, -268.280517578125, -35.05610656738281))
+                end
+            end
+        end
+    end)
+end
+
+
+
 -- Legend stage Dragon Ball
 
 if LegendDragonBall and _G.AutoMarco then
@@ -1096,7 +1155,7 @@ if PortalDBZ and _G.AutoMarco then
                 Placeunit(3, CFrame.new(-132.5238494873047, 149.39080810546875, 50.942054748535156))
                 task.wait(.2)
                 Placeunit(4, CFrame.new(-121.11943817138672, 149.40634155273438, 56.13621520996094))
-                UpAll()
+                MoneyMaxxing()
                 task.wait(.1)
                 if Wave >= 2 and Wave <= 5 then
                     Placeunit(5, CFrame.new(-103.16921997070312, 149.5090789794922, 43.05731201171875))
