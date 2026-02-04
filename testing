@@ -168,10 +168,10 @@ if BlackScreen and not getgenv().Settings.Blackscreen then
     BlackScreen:Destroy()
 end
 
-local TerrainParts = Workspace.Map:FindFirstChild("TerrainParts")
-local Atmos = Workspace.Map.TerrainParts:FindFirstChild("Atmospheric effects")
 
 if getgenv().Settings.PotatoGraphic then
+    local TerrainParts = Workspace:FindFirstChild("Map"):FindFirstChild("TerrainParts")
+    local Atmos = Workspace:FindFirstChild("Map"):FindFirstChild("TerrainParts"):FindFirstChild("Atmospheric effects")
     Light.GlobalShadows = false
     Light.FogEnd = 9e9
     Light.ShadowSoftness = 0
@@ -689,10 +689,10 @@ if AutoNinjaStory and _G.AutoMarco then
                 task.wait(.3)
                 UpAll()
                 task.wait(.3)
-                if Wave == 14 then
-                    replay()
-                    task.wait(2)
-                end
+                -- if Wave == 14 then
+                --     replay()
+                --     task.wait(2)
+                -- end
             end
         end
     end)
