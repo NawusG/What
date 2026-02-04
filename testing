@@ -461,7 +461,7 @@ end
 function MoneyMaxxing()
         for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
         if #monbyte.Name > 10 then
-            if monbyte:FindFirstChild("Speedwagon") or monbyte:FindFirstChild("model") then
+            if monbyte:FindFirstChild("Speeedwagon") or monbyte:FindFirstChild("model") then
                 Upgrade:InvokeServer(monbyte.Name)
             else
                 return
@@ -1155,12 +1155,20 @@ if PortalDBZ and _G.AutoMarco then
                 Placeunit(3, CFrame.new(-132.5238494873047, 149.39080810546875, 50.942054748535156))
                 task.wait(.2)
                 Placeunit(4, CFrame.new(-121.11943817138672, 149.40634155273438, 56.13621520996094))
-                MoneyMaxxing()
                 task.wait(.1)
                 if Wave >= 2 and Wave <= 5 then
                     Placeunit(5, CFrame.new(-103.16921997070312, 149.5090789794922, 43.05731201171875))
                     task.wait(.3)
                     Placeunit(2, CFrame.new(-106.79971313476562, 149.47511291503906, 49.28059387207031))
+                    task.wait(.3)
+                end
+                if Wave >= 2 then
+                    task.wait(.2)
+                    MoneyMaxxing()
+                end
+                if Wave >= 7 then
+                    UpAll()
+                    task.wait(.2)
                 end
                 if Wave > 4 and Wave <= 7 then
                     Placeunit(6, CFrame.new(-101.59111022949219, 149.5003204345703, 46.73662567138672))
