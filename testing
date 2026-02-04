@@ -458,6 +458,18 @@ end
 --     end
 -- end
 
+function MoneyMaxxing()
+        for _,monbyte in pairs(Workspace.Ignore.Units:GetChildren()) do
+        if #monbyte.Name > 10 then
+            if monbyte:FindFirstChild("Speedwagon") or monbyte:FindFirstChild("model") then
+                Upgrade:InvokeServer(monbyte.Name)
+            else
+                return
+            end
+        end
+    end
+end
+
 function replay()
     knit.Services.WaveService.RE.VoteReplay:FireServer()
 end
@@ -1143,7 +1155,7 @@ if PortalDBZ and _G.AutoMarco then
                 Placeunit(3, CFrame.new(-132.5238494873047, 149.39080810546875, 50.942054748535156))
                 task.wait(.2)
                 Placeunit(4, CFrame.new(-121.11943817138672, 149.40634155273438, 56.13621520996094))
-                UpAll()
+                MoneyMaxxing()
                 task.wait(.1)
                 if Wave >= 2 and Wave <= 5 then
                     Placeunit(5, CFrame.new(-103.16921997070312, 149.5090789794922, 43.05731201171875))
